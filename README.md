@@ -29,3 +29,4 @@ This is a website dedicated to using 6
   - [ ] What range of time to borrow? Display calendar here
   - [ ] Who will borrow? Yourself only by default, add people from same section or other sections (has to be approved by the others, unless it's the whole section and you're the president)
   - [ ] Who will be concerned? Each facility or equipment has at least one person concerned
+  
