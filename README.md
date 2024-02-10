@@ -1,38 +1,31 @@
-# create-svelte
+# Leo's Roamer
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+`[insert logo here]`
 
-## Creating a project
+This is a website dedicated to using 6
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Roadmap
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [ ] Create a basic website with the following features:
+  - [ ] A database
+  - [ ] A homepage
+  - [ ] A login or registration page that redirects into homepage
+- [ ] Create a basic database with the following features:
+  - [ ] A user table with the following:
+    - [ ] Email
+    - [ ] Password (not in plain text!)
+    - [ ] Name
+    - [ ] LRN
+    - [ ] Section (to be approved by admin or president)
+  - [ ] An equipment table
+  - [ ] A facilities table
+  - [ ] A booking table
+- [ ] The homepage should have the following features:
+  - [ ] A search bar for equipment, facilities, and people
+  - [ ] A "welcome" with your LRN and the class you're part of
+  - [ ] A "recently booked" section
+- [ ] When borrowing, it should have the options:
+  - [ ] What to borrow?
+  - [ ] What range of time to borrow? Display calendar here
+  - [ ] Who will borrow? Yourself only by default, add people from same section or other sections (has to be approved by the others, unless it's the whole section and you're the president)
+  - [ ] Who will be concerned? Each facility or equipment has at least one person concerned
