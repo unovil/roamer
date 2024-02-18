@@ -11,13 +11,96 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  name     String?
-  role     Role     @default(USER)
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  firstName  String
+  middleName String?
+  lastName   String
+  role       StudentRole @default(STUDENT)
+  admin      Admin?      @relation(name: "AdminToUser")
+  student    Student?    @relation(name: "StudentToUser")
 }
 
-enum Role {
-  USER
+model School {
+  id         Int         @id @default(autoincrement())
+  sections   Section[]   @relation(name: "SchoolToSection")
+  admins     Admin[]     @relation(name: "SchoolToAdmin")
+  facilities Facility[]  @relation(name: "FacilityToSchool")
+  equipments Equipment[] @relation(name: "EquipmentToSchool")
+  name       String
+}
+
+model Section {
+  id       Int       @id @default(autoincrement())
+  grade    Int
+  name     String    @unique
+  students Student[] @relation(name: "SectionToStudent")
+  school   School    @relation(name: "SchoolToSection", fields: [schoolId], references: [id])
+  schoolId Int
+}
+
+model Admin {
+  id         Int        @id @default(autoincrement())
+  User       User       @relation(name: "AdminToUser", fields: [UserId], references: [id])
+  UserId     Int        @unique
+  school     School     @relation(name: "SchoolToAdmin", fields: [schoolId], references: [id])
+  schoolId   Int
+  facilities Facility[] @relation(name: "FacilityToAdmin")
+  department Json
+  requests   Request[]  @relation(name: "AdminToRequest")
+}
+
+model Student {
+  id        Int       @id @default(autoincrement())
+  lrn       String    @unique
+  User      User      @relation(name: "StudentToUser", fields: [UserId], references: [id])
+  Section   Section   @relation(name: "SectionToStudent", fields: [sectionId], references: [id])
+  sectionId Int
+  UserId    Int       @unique
+  requests  Request[] @relation(name: "StudentToRequest")
+}
+
+model Facility {
+  id           Int        @id @default(autoincrement())
+  schoolId     Int
+  school       School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id])
+  admins       Admin[]    @relation(name: "FacilityToAdmin")
+  name         String
+  department   Department @default(MISC)
+  blockedDates Json
+  requests     Request[]  @relation(name: "FacilityToRequest")
+}
+
+model Equipment {
+  id           Int        @id @default(autoincrement())
+  schoolId     Int
+  school       School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id])
+  name         String
+  department   Department @default(MISC)
+  blockedDates Json
+  requests     Request[]  @relation(name: "EquipmentToRequest")
+}
+
+model Request {
+  id           Int         @id @default(autoincrement())
+  description  String
+  facilities   Facility[]  @relation(name: "FacilityToRequest")
+  equipments   Equipment[] @relation(name: "EquipmentToRequest")
+  students     Student[]   @relation(name: "StudentToRequest")
+  isAllowed    Boolean     @default(false)
+  requestDates Json
+  admins       Admin[]     @relation(name: "AdminToRequest")
+}
+
+enum StudentRole {
+  STUDENT
   ADMIN
+}
+
+enum Department {
+  SCIENCE
+  MATH
+  MAPEH
+  MISC
+  LANGUAGE
 }

@@ -1,0 +1,16 @@
+{
+    "sections": [
+        {
+            "grade": 10,
+            "sectionName": "Goldstein"
+        },
+        {
+            "grade": 10,
+            "sectionName": "Joule"
+        },
+        {
+            "grade": 9,
+            "sectionName": "Bohr"
+        }
+    ]
+}
