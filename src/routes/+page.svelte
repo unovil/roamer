@@ -4,11 +4,15 @@
   export let data: PageData;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-</p>
+<div class="flex h-screen">
+  <div class="m-auto">
+    <h1 class="font-bold text-4xl">Hello World!</h1>
+    <p>
+      Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
+    </p>
 
-<br />
+    <br />
 
-<p>Go to this link to login: <a href="/login">Login</a></p>
+    <p>Go to this link to login: <a href="/authenticate">Login</a></p>
+  </div>
+</div>

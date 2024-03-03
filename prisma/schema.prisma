@@ -5,29 +5,68 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
+// model Account {
+//   id                String  @id @default(cuid())
+//   userId            String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String? @db.Text
+//   access_token      String? @db.Text
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String? @db.Text
+//   session_state     String?
+//   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@unique([provider, providerAccountId])
+//   @@index([userId])
+// }
+
+// model Session {
+//   id           String   @id @default(cuid())
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@index([userId])
+// }
+
 model User {
-  id         Int         @id @default(autoincrement())
-  email      String      @unique
+  id         String   @id @default(cuid())
+  email      String?  @unique
+  // image      String?
   firstName  String
   middleName String?
   lastName   String
-  role       StudentRole @default(STUDENT)
-  admin      Admin?      @relation(name: "AdminToUser")
-  student    Student?    @relation(name: "StudentToUser")
+  password   String
+  school     School?  @relation(fields: [schoolId], references: [id])
+  role       UserRole @default(STUDENT)
+  admin      Admin?   @relation(name: "AdminToUser")
+  student    Student? @relation(name: "StudentToUser")
+  schoolId   Int?
+  // Account    Account[]
+  // Session    Session[]
 }
 
 model School {
   id         Int         @id @default(autoincrement())
   sections   Section[]   @relation(name: "SchoolToSection")
-  admins     Admin[]     @relation(name: "SchoolToAdmin")
   facilities Facility[]  @relation(name: "FacilityToSchool")
   equipments Equipment[] @relation(name: "EquipmentToSchool")
   name       String
+  user       User[]
 }
 
 model Section {
@@ -41,58 +80,64 @@ model Section {
 
 model Admin {
   id         Int        @id @default(autoincrement())
-  User       User       @relation(name: "AdminToUser", fields: [UserId], references: [id])
-  UserId     Int        @unique
-  school     School     @relation(name: "SchoolToAdmin", fields: [schoolId], references: [id])
-  schoolId   Int
+  user       User       @relation(name: "AdminToUser", fields: [userId], references: [id])
+  userId     String     @unique
   facilities Facility[] @relation(name: "FacilityToAdmin")
-  department Json
   requests   Request[]  @relation(name: "AdminToRequest")
+
+  /// [DepartmentsType]
+  departments Json
 }
 
 model Student {
   id        Int       @id @default(autoincrement())
-  lrn       String    @unique
-  User      User      @relation(name: "StudentToUser", fields: [UserId], references: [id])
-  Section   Section   @relation(name: "SectionToStudent", fields: [sectionId], references: [id])
+  lrn       String    @unique @db.Char(12)
+  user      User      @relation(name: "StudentToUser", fields: [userId], references: [id])
+  section   Section   @relation(name: "SectionToStudent", fields: [sectionId], references: [id])
   sectionId Int
-  UserId    Int       @unique
+  userId    String    @unique
   requests  Request[] @relation(name: "StudentToRequest")
 }
 
 model Facility {
-  id           Int        @id @default(autoincrement())
-  schoolId     Int
-  school       School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id])
-  admins       Admin[]    @relation(name: "FacilityToAdmin")
-  name         String
-  department   Department @default(MISC)
+  id         Int        @id @default(autoincrement())
+  schoolId   Int
+  school     School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id])
+  admins     Admin[]    @relation(name: "FacilityToAdmin")
+  name       String
+  department Department @default(MISC)
+  requests   Request[]  @relation(name: "FacilityToRequest")
+
+  /// [DatesType]
   blockedDates Json
-  requests     Request[]  @relation(name: "FacilityToRequest")
 }
 
 model Equipment {
-  id           Int        @id @default(autoincrement())
-  schoolId     Int
-  school       School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id])
-  name         String
-  department   Department @default(MISC)
+  id         Int        @id @default(autoincrement())
+  schoolId   Int
+  school     School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id])
+  name       String
+  department Department @default(MISC)
+  requests   Request[]  @relation(name: "EquipmentToRequest")
+
+  /// [DatesType]
   blockedDates Json
-  requests     Request[]  @relation(name: "EquipmentToRequest")
 }
 
 model Request {
-  id           Int         @id @default(autoincrement())
-  description  String
-  facilities   Facility[]  @relation(name: "FacilityToRequest")
-  equipments   Equipment[] @relation(name: "EquipmentToRequest")
-  students     Student[]   @relation(name: "StudentToRequest")
-  isAllowed    Boolean     @default(false)
+  id          Int         @id @default(autoincrement())
+  description String
+  facilities  Facility[]  @relation(name: "FacilityToRequest")
+  equipments  Equipment[] @relation(name: "EquipmentToRequest")
+  students    Student[]   @relation(name: "StudentToRequest")
+  isAllowed   Boolean     @default(false)
+  admins      Admin[]     @relation(name: "AdminToRequest")
+
+  /// [DatesType]
   requestDates Json
-  admins       Admin[]     @relation(name: "AdminToRequest")
 }
 
-enum StudentRole {
+enum UserRole {
   STUDENT
   ADMIN
 }
