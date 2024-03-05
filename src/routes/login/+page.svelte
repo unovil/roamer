@@ -1,24 +1,31 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
-  import type { ActionData } from "../routes/authenticate/$types";
+  import type { ActionData } from "./$types";
+  import {enhance} from "$app/forms";
   export let form: ActionData;
-  export let action: string;
   console.log(`form is ${form}`);
+
+  // conditional css, if needed
+  /* form?.invalidEmail
+  form?.invalidUser
+  form?.invalidPass
+  form?.incorrectPass
+  form?.duplicateUser */
 </script>
 
 {#if form?.error}
   <p>{form.error}</p>
 {/if}
 
-<form method="post" {action} use:enhance>
+<form method="post" use:enhance>
   <input
     type="email"
     placeholder="Email address"
     name="email"
-    value={form?.description ?? ""}
   />
   <br />
   <input type="password" placeholder="Password" name="password" />
   <br />
   <button type="submit">Login</button>
 </form>
+
+<a href="/register">Not a user yet? Register here.</a>

@@ -13,6 +13,6 @@
 
     <br />
 
-    <p>Go to this link to login: <a href="/authenticate">Login</a></p>
+    <p>Go to this link to login: <a href="/login">Login</a></p>
   </div>
 </div>
