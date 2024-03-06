@@ -1,25 +1,22 @@
 # Leo's Roamer
 
-`[insert logo here]`
-
-This is a website dedicated to using 6
+This is a website dedicated to seamless school function through the efficient management of school equipment and facilities, used by both students and administrators.
 
 ## Roadmap
 
-- [ ] Create a basic website with the following features:
-  - [ ] A database
-  - [ ] A homepage
-  - [ ] A login or registration page that redirects into homepage
-- [ ] Create a basic database with the following features:
-  - [ ] A user table with the following:
-    - [ ] Email
-    - [ ] Password (not in plain text!)
-    - [ ] Name
-    - [ ] LRN
-    - [ ] Section (to be approved by admin or president)
-  - [ ] An equipment table
-  - [ ] A facilities table
-  - [ ] A booking table
+- [x] Create a basic website with the following features:
+  - [x] A database
+  - [x] A homepage
+  - [x] A login or registration page that redirects into homepage
+- [x] Create a basic database with the following features:
+  - [x] A user table with the following:
+    - [x] Email
+    - [x] Password (not in plain text!)
+    - [x] Name
+    - [x] Section (to be approved by admin)
+  - [x] An equipment table
+  - [x] A facilities table
+  - [x] A booking table
 - [ ] The homepage should have the following features:
   - [ ] A search bar for equipment, facilities, and people
   - [ ] A "welcome" with your LRN and the class you're part of
