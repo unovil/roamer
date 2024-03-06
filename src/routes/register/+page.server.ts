@@ -1,9 +1,16 @@
 import db from '$lib/prisma'
 import type { Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import { lucia } from "$lib/server/auth";
 import { Argon2id } from "oslo/password";
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+
+export const load: PageServerLoad = async (event) => {
+	if (event.locals.user) {
+		redirect(302, "/dashboard");
+	}
+};
 
 export const actions = {
     default: async ({ request, cookies }) => {

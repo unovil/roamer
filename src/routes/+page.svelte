@@ -2,6 +2,14 @@
   import type { PageData } from "./$types";
 
   export let data: PageData;
+
+  let loggedIn: boolean;
+
+  if (data.isLoggedIn) {
+    loggedIn = true;
+  } else loggedIn = false;
+
+  console.log(`loggedIn status is: ${loggedIn}`);  
 </script>
 
 <div class="flex h-screen">
@@ -14,5 +22,15 @@
     <br />
 
     <p>Go to this link to login: <a href="/login">Login</a></p>
+    <p>Are you logged in? {loggedIn}</p>
+
+    {#if loggedIn}
+    <p>Logout? Click the button.</p>
+    <form method="post">
+      <button type="submit">LOGOUT</button>
+    </form>
+    
+    <p>Your name is: "{data.username}"</p>
+    {/if}
   </div>
 </div>

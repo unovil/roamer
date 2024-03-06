@@ -1,5 +1,10 @@
-import type { PageServerLoad, Actions } from "../$types";
+import { lucia } from "$lib/server/auth";
+import { fail, redirect } from "@sveltejs/kit";
 
-/* export const load: PageServerLoad = async ({ locals }) => {
-    if (!locals.user) redirect(302, "/login");
-}; */
+import type { Actions, PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = async (event) => {
+	if (!event.locals.user) {
+		redirect(302, "/login");
+	}
+};
