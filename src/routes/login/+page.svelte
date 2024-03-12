@@ -28,4 +28,4 @@
   <button type="submit">Login</button>
 </form>
 
-<a href="/register" class="font-semibold">Not a user yet? Register here.</a>
+<a href="/register" class="font-bold">Not a user yet? Register here.</a>
