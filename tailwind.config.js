@@ -6,10 +6,10 @@ export default {
       colors: {
         'log-in-green': '#478665',
       },
+      fontFamily: {
+        trocchi: ['"Trocchi"', 'serif']
+      },
     },
-    fontFace: {
-      'trocchi': ['Trocchi', 'sans-serif']
-    }
   },
   plugins: [],
 }

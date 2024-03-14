@@ -38,7 +38,6 @@
 		"seed": "tsx prisma/seed.ts"
 	},
 	"dependencies": {
-		"@fontsource/trocchi": "^5.0.19",
 		"@lucia-auth/adapter-prisma": "^4.0.0",
 		"@prisma/client": "^5.10.2",
 		"oslo": "^1.1.3",
