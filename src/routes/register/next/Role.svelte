@@ -5,7 +5,7 @@
   let userRoles = ["admin", "student"];
 </script>
 
-{#if typeof form?.error == "undefined" && form?.response.schoolName}
+{#if typeof form?.error == "undefined" && form?.response.schoolName && (form?.response.sections.length != 0)}
 
 <p>Role picked: {form?.response.role}</p>
 <p>School found: {form?.response.schoolName}</p>
@@ -20,8 +20,9 @@
     <br />
   {/each}
 
-  <slot />
-  <!-- For when the school can't be found -->
+  {#if form?.error}
+    <slot /> <!-- For errors -->
+  {/if}
 
   <p>What school are you a part of? Type its DepEd school ID.</p>
   <input type="text" name="schoolId" placeholder="School" />

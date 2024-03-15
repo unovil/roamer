@@ -31,7 +31,10 @@ export const actions = {
         }
 
         const response = await db.school.findUnique({
-            select: { name: true },
+            select: {
+                name: true,
+                sections: true
+            },
             where: { depedId: schoolId }
         })
 
@@ -43,10 +46,19 @@ export const actions = {
             })
         }
 
+        if (response.sections.length == 0 || response.sections == null) {
+            return fail(400, {
+                schoolIncomplete: true,
+                error: `The school, ${response.name}, has no sections. Please contact the school administrator.`,
+                data: { ...roleInfo }
+            })
+        }
+
         return {
             response: {
                 schoolName: response.name,
-                role: userRole
+                role: userRole,
+                sections: response.sections
             }
         };
     }
