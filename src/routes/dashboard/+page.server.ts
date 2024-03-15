@@ -1,12 +1,21 @@
 import { lucia } from "$lib/server/auth";
 import { fail, redirect } from "@sveltejs/kit";
-
 import type { Actions, PageServerLoad } from "./$types";
+import db from "$lib/prisma";
 
 export const load: PageServerLoad = async (event) => {
 	if (!event.locals.user) {
 		redirect(302, "/login");
 	}
+
+    const user = await db.user.findUnique({
+        select: { role: true, student: true, admin: true },
+        where: { id: event.locals.user.id }
+    })
+
+    if (!user?.admin && !user?.student) {
+        redirect(302, "/register/next");
+    }
 
 	return {
 		username: event.locals.user.firstName + " " + event.locals.user.lastName

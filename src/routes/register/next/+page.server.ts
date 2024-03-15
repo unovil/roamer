@@ -1,6 +1,21 @@
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { fail, redirect } from '@sveltejs/kit';
 import db from "$lib/prisma";
+
+export const load: PageServerLoad = async (event) => {
+    if (!event.locals.user) {
+        redirect(302, "/login");
+    }
+
+    const user = await db.user.findUnique({
+        select: { role: true, student: true, admin: true },
+        where: { id: event.locals.user.id }
+    })
+
+    if (user?.admin || user?.student) {
+        redirect(302, "/dashboard");
+    }
+};
 
 export const actions = {
     role: async ({ request }) => {
