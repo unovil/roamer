@@ -3,21 +3,53 @@
   import Role from "./Role.svelte";
   import RoleNext from "./RoleNext.svelte";
   export let form: ActionData;
+
+  let roleSuccess: boolean = false;
+  let roleSelected: string;
+  let schoolName: string;
+  let sections:
+    | {
+        id: number;
+        grade: number;
+        name: string;
+        schoolId: number;
+      }[]
+    | undefined;
+  $: if (form?.response) {
+    roleSuccess = true;
+    roleSelected = form?.response.role;
+    schoolName = form?.response.schoolName;
+    sections = form?.response.sections;
+
+    sections.sort((a, b) => {
+      if (a.grade === b.grade) {
+        return a.name.localeCompare(b.name)
+      } else {
+        return a.grade - b.grade
+      }
+    }) 
+
+    // to trigger reactivity
+    sections = sections
+  }
 </script>
 
-<Role {form}>
-  <p>
-    {#if form?.error}
-      {form?.error}
-    {/if}
-  </p>
-</Role>
+{#if form?.error}
+  {form?.error}
+{/if}
 
-{#if typeof form?.error === "undefined" && form?.response}
+{#if !roleSuccess}
+  <Role {form} />
+{:else}
+  <p>Role picked: {roleSelected}</p>
+  <p>School found: {schoolName}</p>
+{/if}
+
+{#if roleSuccess}
   <br />
 
   <RoleNext
-    roleSelected={form?.response.role ?? "student"}
-    sections={form?.response?.sections}
-  ></RoleNext>
+    roleSelected={roleSelected ?? "student"}
+    sections={sections ?? []}
+  />
 {/if}
