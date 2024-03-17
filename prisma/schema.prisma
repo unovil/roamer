@@ -41,6 +41,7 @@ model School {
   facilities Facility[]  @relation(name: "FacilityToSchool")
   equipments Equipment[] @relation(name: "EquipmentToSchool")
   name       String
+  depedId    String      @unique @db.Char(6)
   user       User[]
 }
 

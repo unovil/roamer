@@ -1,8 +1,7 @@
-import db from '$lib/prisma'
-import type { Prisma, User } from '@prisma/client'
 import type { PageServerLoad } from './$types'
 import { redirect, type Actions } from '@sveltejs/kit';
 import { lucia } from '$lib/server/auth';
+import db from '$lib/prisma';
 
 export const load: PageServerLoad = async (event) => {
     console.log(event.locals.user);
@@ -15,12 +14,12 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions = {
     default: async (event) => {
-        const cookieHeader = event.cookies.get("auth_session") ?? "";
-        const sessionId = lucia.readSessionCookie(cookieHeader) ?? "";
-
+        const sessionId = event.cookies.get("auth_session") ?? "";
         await lucia.invalidateSession(sessionId);
 
-        event.cookies.delete("auth_session", {path:"/"});
+        event.cookies.delete("auth_session", { path: "/" });
+        event.locals.user = null;
+        event.locals.session = null;
 
         redirect(302, "/");
     }
