@@ -16,13 +16,8 @@
     form?.invalidPass */
 </script>
 
-
-{#if form?.error}
-  <p>{form.error}</p>
-{/if}
-
 <div class="flex h-screen items-center justify-center bg-gray-100">
-  <div class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif">
+  <div class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif w-80">
     <h2
       class="text-lg font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
     >
@@ -30,7 +25,11 @@
       Roamer
     </h2>
 
-    <form method="post">
+    {#if form?.error}
+      <p class="text-red-600 overflow-auto break-words mb-2">{form.error}</p>
+    {/if}
+
+    <form method="post" use:enhance>
       <input
         type="email"
         placeholder="Email address"
@@ -39,12 +38,12 @@
       />
       
       <input 
-      type="first name" 
+      type="text" 
       placeholder="First Name" 
-      name="first name" 
+      name="firstName" 
       class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow" />
 
-      <input type="last name" placeholder="Last Name" name="last name" class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow" />
+      <input type="text" placeholder="Last Name" name="lastName" class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow" />
       <div class="relative">
         <input
           type={isHidden ? "password" : "text"}

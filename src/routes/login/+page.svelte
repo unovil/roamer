@@ -8,7 +8,7 @@
   const changePasswordVisibility = () => {
     if (isHidden == true) isHidden = false;
     else isHidden = true;
-  }
+  };
 
   // conditional css, if needed
   /* form?.invalidEmail
@@ -18,10 +18,10 @@
   form?.duplicateUser */
 </script>
 
-
-
 <div class="flex h-screen items-center justify-center bg-gray-100">
-  <div class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif">
+  <div
+    class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif w-80"
+  >
     <h2
       class="text-lg font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
     >
@@ -29,7 +29,11 @@
       Roamer
     </h2>
 
-    <form method="post">
+    {#if form?.error}
+      <p class="text-red-600 overflow-auto break-words mb-2">{form.error}</p>
+    {/if}
+
+    <form method="post" use:enhance>
       <input
         type="email"
         placeholder="Email address"
@@ -44,7 +48,7 @@
           class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
           id="password"
         />
-       
+
         <button
           type="button"
           on:click={changePasswordVisibility}
@@ -52,15 +56,11 @@
           >{isHidden ? "Show" : "Hide"}</button
         >
       </div>
-      {#if form?.error}
-      <p class="text-red-600">{form.error}</p>
-    {/if}
       <button
         type="submit"
         class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out mt-5"
         >Login</button
       >
-      
     </form>
 
     <div class="mt-5">
