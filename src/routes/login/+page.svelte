@@ -14,8 +14,7 @@
   /* form?.invalidEmail
   form?.invalidUser
   form?.invalidPass
-  form?.incorrectPass
-  form?.duplicateUser */
+  form?.incorrectPass */
 </script>
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
@@ -39,6 +38,7 @@
         placeholder="Email address"
         name="email"
         class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class:border-red-500={form?.invalidEmail || form?.invalidUser}
       />
       <div class="relative">
         <input
@@ -47,6 +47,7 @@
           name="password"
           class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
           id="password"
+          class:border-red-500={form?.incorrectPass || form?.invalidPass}
         />
 
         <button
