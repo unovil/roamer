@@ -18,9 +18,7 @@
   form?.duplicateUser */
 </script>
 
-{#if form?.error}
-  <p>{form.error}</p>
-{/if}
+
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif">
@@ -46,6 +44,7 @@
           class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
           id="password"
         />
+       
         <button
           type="button"
           on:click={changePasswordVisibility}
@@ -53,12 +52,17 @@
           >{isHidden ? "Show" : "Hide"}</button
         >
       </div>
+      {#if form?.error}
+      <p class="text-red-600">{form.error}</p>
+    {/if}
       <button
         type="submit"
         class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out mt-5"
         >Login</button
       >
+      
     </form>
+
     <div class="mt-5">
       Not a user yet? <a
         href="/register"
