@@ -2,8 +2,14 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'log-in-green': '#478665',
+      },
+      fontFamily: {
+        trocchi: ['"Trocchi"', 'serif']
+      },
+    },
   },
   plugins: [],
 }
-
