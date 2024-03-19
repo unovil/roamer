@@ -10,10 +10,10 @@ export const load: PageServerLoad = async (event) => {
     }
 
     let returnInformation: {
-        userInfo: User,
-        sectionInfo: { section: string, students: ({user: User} & Student)[] } | null
+        userInfo: Omit<User, 'hashedPassword'>,
+        sectionInfo: { section: string, students: ({ user: User } & Student)[] } | null
     } = {
-        userInfo: {...event.locals.user, hashedPassword: ""},
+        userInfo: { ...event.locals.user },
         sectionInfo: null
     }
 
@@ -22,12 +22,22 @@ export const load: PageServerLoad = async (event) => {
         where: { id: event.locals.user.id }
     })
 
-    if (user?.student) {
+    if (user?.role == "ADMIN" && user?.admin) {
+        redirect(302, "/admindashboard");
+    }
+
+    if (!user?.admin && !user?.student) {
+        redirect(302, "/register/next");
+    }
+
+    if (user?.role == "STUDENT" && user?.student) {
         const section = await db.section.findUnique({
             where: { id: user.student.sectionId },
-            include: { students: {
-                include: { user: true }
-            } }
+            include: {
+                students: {
+                    include: { user: true }
+                }
+            }
         })
 
         if (section?.students) {
@@ -35,7 +45,7 @@ export const load: PageServerLoad = async (event) => {
                 // Sort by last name
                 const lastNameComparison = a.user.lastName.localeCompare(b.user.lastName);
                 if (lastNameComparison !== 0) return lastNameComparison;
-        
+
                 // If last names are equal, sort by first name
                 return a.user.firstName.localeCompare(b.user.firstName);
             });
@@ -45,10 +55,6 @@ export const load: PageServerLoad = async (event) => {
             section: section?.grade + " " + section?.name,
             students: section?.students ?? []
         }
-    }
-
-    if (!user?.admin && !user?.student) {
-        redirect(302, "/register/next");
     }
 
     return returnInformation;

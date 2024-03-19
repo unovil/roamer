@@ -55,11 +55,12 @@ model Section {
 }
 
 model Admin {
-  id         Int        @id @default(autoincrement())
-  user       User       @relation(name: "AdminToUser", fields: [userId], references: [id], onDelete: Cascade)
-  userId     String     @unique
-  facilities Facility[] @relation(name: "FacilityToAdmin")
-  requests   Request[]  @relation(name: "AdminToRequest")
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(name: "AdminToUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId     String      @unique
+  facilities Facility[]  @relation(name: "FacilityToAdmin")
+  equipments Equipment[] @relation(name: "EquipmentToAdmin")
+  requests   Request[]   @relation(name: "AdminToRequest")
 
   /// [DepartmentsType]
   departments Json
@@ -76,25 +77,30 @@ model Student {
 }
 
 model Facility {
-  id         Int        @id @default(autoincrement())
-  schoolId   Int
-  school     School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
-  admins     Admin[]    @relation(name: "FacilityToAdmin")
-  name       String
-  department Department @default(MISC)
-  requests   Request[]  @relation(name: "FacilityToRequest")
+  id          Int        @id @default(autoincrement())
+  schoolId    Int
+  school      School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
+  admins      Admin[]    @relation(name: "FacilityToAdmin")
+  name        String
+  description String     @db.Text
+  image       Bytes      @db.Blob
+  department  Department @default(MISC)
+  requests    Request[]  @relation(name: "FacilityToRequest")
 
   /// [DatesType]
   blockedDates Json
 }
 
 model Equipment {
-  id         Int        @id @default(autoincrement())
-  schoolId   Int
-  school     School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
-  name       String
-  department Department @default(MISC)
-  requests   Request[]  @relation(name: "EquipmentToRequest")
+  id          Int        @id @default(autoincrement())
+  schoolId    Int
+  school      School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
+  name        String
+  admins      Admin[]    @relation(name: "EquipmentToAdmin")
+  description String     @db.TinyText
+  image       Bytes      @db.Blob
+  department  Department @default(MISC)
+  requests    Request[]  @relation(name: "EquipmentToRequest")
 
   /// [DatesType]
   blockedDates Json

@@ -6,9 +6,9 @@
 
 <main>
   <h1>Welcome, <strong>{data.userInfo.firstName}</strong>!</h1>
-
+  <br />
   <p>Section: {data?.sectionInfo?.section ?? "null"}</p>
-
+  <br />
   <table>
     <tr>
       <th>Student</th>
@@ -26,8 +26,11 @@
       </tr>
     {/each}
   </table>
+  <br />
+  Recent bookings:
+  <ul></ul>
 </main>
-
+<br />
 <aside>
   <form method="post">
     <button type="submit" formaction="?/logout">LOGOUT</button>
