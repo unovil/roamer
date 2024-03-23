@@ -13,6 +13,7 @@
       <th>Facility</th>
       <th>Owned by</th>
       <th>Department</th>
+      <th>Image</th>
     </tr>
     {#if data?.facilities && data?.facilities.length > 0}
       {#each data?.facilities as facility (facility.id)}
@@ -24,6 +25,13 @@
               .join(", ")}</td
           >
           <td>{facility.department}</td>
+          <td
+            ><img
+              src={`data:image/jpeg;base64,${facility.image}`}
+              class="h-32"
+              alt=""
+            /></td
+          >
         </tr>
       {/each}
     {/if}
@@ -40,6 +48,7 @@
       <th>Equipment</th>
       <th>Owned by</th>
       <th>Department</th>
+      <th>Image</th>
     </tr>
     {#if data?.equipments && data?.equipments.length > 0}
       {#each data?.equipments as equipment (equipment.id)}

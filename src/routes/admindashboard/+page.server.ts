@@ -10,8 +10,8 @@ export const load: PageServerLoad = async (event) => {
 
     let returnInformation: {
         userInfo: Omit<User, 'hashedPassword'>,
-        facilities: ({ admins: { user: Pick<User, 'id' | 'firstName' | 'lastName'> }[]; } & Facility)[] | null,
-        equipments: ({ admins: { user: Pick<User, 'id' | 'firstName' | 'lastName'> }[]; } & Equipment)[] | null
+        facilities: ({ admins: { user: Pick<User, 'id' | 'firstName' | 'lastName'> }[]; } & Omit<Facility, 'image'> & { image: string })[] | null,
+        equipments: ({ admins: { user: Pick<User, 'id' | 'firstName' | 'lastName'> }[]; } & Omit<Equipment, 'image'> & { image: string })[] | null
     } = {
         userInfo: { ...event.locals.user },
         facilities: null,
@@ -56,8 +56,20 @@ export const load: PageServerLoad = async (event) => {
             where: { userId: event.locals.user.id }
         })
 
-        returnInformation.facilities = response?.facilities ?? null
-        returnInformation.equipments = response?.equipments ?? null
+        returnInformation.facilities = (response?.facilities.map(facility => {
+            const { image, ...otherProps } = facility;
+            return {
+                ...otherProps,
+                image: image.toString('base64'),
+            };
+        })) ?? null
+        returnInformation.equipments = (response?.equipments.map(equipment => {
+            const { image, ...otherProps } = equipment;
+            return {
+                ...otherProps,
+                image: image.toString('base64'),
+            };
+        })) ?? null
     }
 
     return returnInformation;
