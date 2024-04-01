@@ -44,26 +44,7 @@
     admins = [...admins, data?.adminInfo];
   }
 
-  const handleSubmit = async (event: Event) => {
-    const target = event.target as HTMLFormElement;
-    const formData = new FormData(target);
-
-    formData.append("admins", JSON.stringify(admins.map((admin) => admin.id)));
-
-    const response = await fetch(target.action, {
-      method: "POST",
-      body: formData,
-    });
-
-    const result: ActionResult = await response.json();
-
-    if (result.type === "success") {
-      // re-run all `load` functions, following the successful update
-      await invalidateAll();
-    }
-
-    await applyAction(result);
-  };
+  $: console.log(form);
 </script>
 
 {#if form?.error}
@@ -74,7 +55,13 @@
 
 <form
   method="post"
-  on:submit|preventDefault={handleSubmit}
+  use:enhance={({ formData }) => {
+    formData.append("admins", JSON.stringify(admins.map((admin) => admin.id)));
+
+    return async({ update }) => {
+      await update();
+    };
+  }}
   enctype="multipart/form-data"
 >
   <h3>Add a title.</h3>
@@ -90,8 +77,8 @@
     </tr>
     {#each admins as admin (admin.id)}
       <tr>
-        <td
-          >{admin.user.lastName}, {admin.user.firstName}
+        <td>
+          {admin.user.lastName}, {admin.user.firstName}
           {#if admin.id === data?.adminInfo?.id}
             <span class="text-gray-600 italic">(You)</span>
           {/if}

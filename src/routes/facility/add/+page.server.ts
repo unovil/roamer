@@ -1,7 +1,8 @@
 import { fail, redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/prisma";
-import type { Admin, Facility } from "@prisma/client";
+import type { Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
+import type { Admin, Department, Facility } from "@prisma/client";
 
 export const load: PageServerLoad = async (event) => {
     if (!event.locals.user) {
@@ -36,16 +37,27 @@ export const load: PageServerLoad = async (event) => {
         return 0;
     })
 
-    const {firstName, lastName, email} = user
+    const { firstName, lastName, email } = user
 
-    return {adminInfo: { user: {email, firstName, lastName}, id: user?.admin?.id ?? 0 }, admins}
+    return { adminInfo: { user: { email, firstName, lastName }, id: user?.admin?.id ?? 0 }, admins }
 };
 
 export const actions = {
     default: async ({ request, locals }) => {
         const formInfo = Object.fromEntries(await request.formData())
-        console.log(formInfo)
-        const { title, description, file } = formInfo as { title: string, description: string, file: File }
+        const { title, description, file, admins, department } = formInfo as {
+            title: string,
+            description: string,
+            file: File,
+            admins: string,
+            department: Department
+        }
+
+        console.log(`title: ${title}`)
+        console.log(`description: ${description}`)
+        console.log(`file: ${file}`)
+        console.log(`admins: ${admins}`)
+        console.log(`department: ${department}`)
 
         if (!title || title == "") {
             return fail(400, {
@@ -61,12 +73,14 @@ export const actions = {
             })
         }
 
-        if (!(file.name) || (file.name === "undefined")) {
+        if (!(file.name) || (file.name === "undefined") || !(file.size)) {
             return fail(400, {
                 noFile: true,
                 error: "Please select a file to upload."
             })
         }
+
+
 
         const adminResponse = await db.admin.findUnique({
             where: { userId: locals.user?.id },
@@ -92,5 +106,7 @@ export const actions = {
                 schoolId: adminResponse.user.schoolId
             }
         })
+
+        return { response }
     }
-} as Actions;
+} satisfies Actions;
