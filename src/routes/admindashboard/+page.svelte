@@ -60,6 +60,13 @@
               .join(", ")}</td
           >
           <td>{equipment.department}</td>
+          <td
+            ><img
+              src={equipment.image}
+              class="h-32"
+              alt=""
+            /></td
+          >
         </tr>
       {/each}
     {/if}
