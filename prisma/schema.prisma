@@ -83,7 +83,7 @@ model Facility {
   admins      Admin[]    @relation(name: "FacilityToAdmin")
   name        String
   description String     @db.Text
-  image       Bytes      @db.Blob
+  image       String
   department  Department @default(MISC)
   requests    Request[]  @relation(name: "FacilityToRequest")
 
@@ -98,7 +98,7 @@ model Equipment {
   name        String
   admins      Admin[]    @relation(name: "EquipmentToAdmin")
   description String     @db.TinyText
-  image       Bytes      @db.Blob
+  image       String
   department  Department @default(MISC)
   requests    Request[]  @relation(name: "EquipmentToRequest")
 

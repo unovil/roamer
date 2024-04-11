@@ -27,7 +27,7 @@
           <td>{facility.department}</td>
           <td
             ><img
-              src={`data:image/jpeg;base64,${facility.image}`}
+              src={facility.image}
               class="h-32"
               alt=""
             /></td

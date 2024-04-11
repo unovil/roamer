@@ -60,14 +60,14 @@ export const load: PageServerLoad = async (event) => {
             const { image, ...otherProps } = facility;
             return {
                 ...otherProps,
-                image: image.toString('base64'),
+                image,
             };
         })) ?? null
         returnInformation.equipments = (response?.equipments.map(equipment => {
             const { image, ...otherProps } = equipment;
             return {
                 ...otherProps,
-                image: image.toString('base64'),
+                image,
             };
         })) ?? null
     }

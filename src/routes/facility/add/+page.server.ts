@@ -3,6 +3,10 @@ import db from "$lib/prisma";
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import type { Admin, Department, Facility } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { writeFile } from 'node:fs/promises';
+import path from 'path';
+import { extname } from "node:path";
 
 export const load: PageServerLoad = async (event) => {
     if (!event.locals.user) {
@@ -80,33 +84,76 @@ export const actions = {
             })
         }
 
+        if (department == null || typeof department == "undefined") {
+            return fail(400, {
+                noDepartment: true,
+                error: "Please select a specific department."
+            })
+        }
 
+        let adminsArray = admins.slice(1, admins.length - 1).split(",").map(id => parseInt(id))
 
-        const adminResponse = await db.admin.findUnique({
+        if (!admins || admins.length == 2 || adminsArray.length < 1) {
+            return fail(400, {
+                noAdmins: true,
+                error: "Please select at least one admin."
+            })
+        }
+
+        const userAdminResponse = await db.admin.findUnique({
             where: { userId: locals.user?.id },
             include: { user: { select: { schoolId: true } } }
         })
 
-        if (!adminResponse || !adminResponse.user.schoolId) {
+        if (!userAdminResponse || !userAdminResponse.user.schoolId) {
             return fail(400, {
                 unauthorized: true,
                 error: "You are not an administrator. Try refreshing the site."
             })
         }
 
-        const response = await db.facility.create({
-            data: {
-                name: title,
-                description: description,
-                image: Buffer.from(await file.arrayBuffer()),
-                admins: {
-                    connect: { id: adminResponse.id }
-                },
-                blockedDates: { dates: new Array<Date>() },
-                schoolId: adminResponse.user.schoolId
+        const chosenAdminsResponse = await db.admin.findMany({
+            select: {
+                id: true
+            },
+            where: {
+                id: { in: adminsArray }
             }
         })
 
-        return { response }
+        if (chosenAdminsResponse.length != adminsArray.length) {
+            return fail(400, {
+                invalidAdmins: true,
+                error: "One or more of the selected admins are invalid."
+            })
+        }
+
+        const filePath = path.join('uploads', `${crypto.randomUUID()}${extname(file.name)}`)
+        await writeFile(path.join('static', filePath), Buffer.from(await file.arrayBuffer()))
+
+        try {
+            const response = await db.facility.create({
+                data: {
+                    name: title,
+                    description: description,
+                    image: filePath,
+                    admins: { connect: adminsArray.map(id => ({ id })) },
+                    blockedDates: { dates: new Array<Date>() },
+                    schoolId: userAdminResponse.user.schoolId,
+                    department
+                }
+            })
+        } catch (err) {
+            if (err instanceof PrismaClientKnownRequestError) {
+                console.log(err)
+
+                return fail(400, {
+                    someError: true,
+                    error: "Something went wrong. Please try again."
+                })
+            } else throw err
+        }
+
+        return redirect(302, "/admindashboard")
     }
 } satisfies Actions;
