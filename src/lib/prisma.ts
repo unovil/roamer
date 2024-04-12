@@ -1,5 +1,4 @@
-import { Prisma, PrismaClient, UserRole } from '@prisma/client'
-import { Department, type Admin, type Facility } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 // expose a singleton
 const db = new PrismaClient()

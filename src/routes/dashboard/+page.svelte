@@ -4,12 +4,35 @@
   export let data: PageData;
 </script>
 
-<p>Sample dashboard here.</p>
-<p>If you can see this page, you are logged in.</p>
-
-<p>Logout? Click the button.</p>
-<form method="post">
-  <button type="submit">LOGOUT</button>
-</form>
-
-<p>Your name is: "{data.username}"</p>
+<main>
+  <h1>Welcome, <strong>{data.userInfo.firstName}</strong>!</h1>
+  <br />
+  <p>Section: {data?.sectionInfo?.section ?? "null"}</p>
+  <br />
+  <table>
+    <tr>
+      <th>Student</th>
+      <th>LRN</th>
+    </tr>
+    {#each data?.sectionInfo?.students ?? [] as student (student.id)}
+      <tr>
+        <td
+          >{student.user.firstName + " " + student.user.lastName}
+          {#if student.user.id == data.userInfo.id}
+            <span class="text-gray-600 italic"> (You)</span>
+          {/if}
+        </td>
+        <td>{student.lrn}</td>
+      </tr>
+    {/each}
+  </table>
+  <br />
+  Recent bookings:
+  <ul></ul>
+</main>
+<br />
+<aside>
+  <form method="post">
+    <button type="submit" formaction="?/logout">LOGOUT</button>
+  </form>
+</aside>

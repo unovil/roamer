@@ -19,7 +19,7 @@ model User {
   email          String    @unique
   firstName      String
   lastName       String
-  school         School?   @relation(fields: [schoolId], references: [id])
+  school         School?   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   role           UserRole  @default(STUDENT)
   admin          Admin?    @relation(name: "AdminToUser")
   student        Student?  @relation(name: "StudentToUser")
@@ -50,16 +50,17 @@ model Section {
   grade    Int
   name     String    @unique
   students Student[] @relation(name: "SectionToStudent")
-  school   School    @relation(name: "SchoolToSection", fields: [schoolId], references: [id])
+  school   School    @relation(name: "SchoolToSection", fields: [schoolId], references: [id], onDelete: Cascade)
   schoolId Int
 }
 
 model Admin {
-  id         Int        @id @default(autoincrement())
-  user       User       @relation(name: "AdminToUser", fields: [userId], references: [id])
-  userId     String     @unique
-  facilities Facility[] @relation(name: "FacilityToAdmin")
-  requests   Request[]  @relation(name: "AdminToRequest")
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(name: "AdminToUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId     String      @unique
+  facilities Facility[]  @relation(name: "FacilityToAdmin")
+  equipments Equipment[] @relation(name: "EquipmentToAdmin")
+  requests   Request[]   @relation(name: "AdminToRequest")
 
   /// [DepartmentsType]
   departments Json
@@ -68,33 +69,38 @@ model Admin {
 model Student {
   id        Int       @id @default(autoincrement())
   lrn       String    @unique @db.Char(12)
-  user      User      @relation(name: "StudentToUser", fields: [userId], references: [id])
-  section   Section   @relation(name: "SectionToStudent", fields: [sectionId], references: [id])
+  user      User      @relation(name: "StudentToUser", fields: [userId], references: [id], onDelete: Cascade)
+  section   Section   @relation(name: "SectionToStudent", fields: [sectionId], references: [id], onDelete: Cascade)
   sectionId Int
   userId    String    @unique
   requests  Request[] @relation(name: "StudentToRequest")
 }
 
 model Facility {
-  id         Int        @id @default(autoincrement())
-  schoolId   Int
-  school     School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id])
-  admins     Admin[]    @relation(name: "FacilityToAdmin")
-  name       String
-  department Department @default(MISC)
-  requests   Request[]  @relation(name: "FacilityToRequest")
+  id          Int        @id @default(autoincrement())
+  schoolId    Int
+  school      School     @relation(name: "FacilityToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
+  admins      Admin[]    @relation(name: "FacilityToAdmin")
+  name        String
+  description String     @db.Text
+  image       String
+  department  Department @default(MISC)
+  requests    Request[]  @relation(name: "FacilityToRequest")
 
   /// [DatesType]
   blockedDates Json
 }
 
 model Equipment {
-  id         Int        @id @default(autoincrement())
-  schoolId   Int
-  school     School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id])
-  name       String
-  department Department @default(MISC)
-  requests   Request[]  @relation(name: "EquipmentToRequest")
+  id          Int        @id @default(autoincrement())
+  schoolId    Int
+  school      School     @relation(name: "EquipmentToSchool", fields: [schoolId], references: [id], onDelete: Cascade)
+  name        String
+  admins      Admin[]    @relation(name: "EquipmentToAdmin")
+  description String     @db.TinyText
+  image       String
+  department  Department @default(MISC)
+  requests    Request[]  @relation(name: "EquipmentToRequest")
 
   /// [DatesType]
   blockedDates Json
