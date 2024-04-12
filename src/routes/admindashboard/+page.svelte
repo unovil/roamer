@@ -29,7 +29,7 @@
             ><img
               src={facility.image}
               class="h-32"
-              alt=""
+              alt={facility.name}
             /></td
           >
         </tr>
@@ -64,7 +64,7 @@
             ><img
               src={equipment.image}
               class="h-32"
-              alt=""
+              alt={equipment.name}
             /></td
           >
         </tr>
