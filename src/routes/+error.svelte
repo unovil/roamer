@@ -13,7 +13,7 @@
 
 <!-- unauthorized error -->
 {:else if $page.status === 401}
-<h1>504</h1>
+<h1>401</h1>
 <p>Sorry, you are not authorized to view this page.</p>
 
 <!-- general error -->

@@ -1,4 +1,4 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import db from "$lib/prisma";
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async (event) => {
     })
 
     if (user?.student) {
-        redirect(302, "/dashboard");
+        throw error(401, "Unauthorized");
     }
 
     if (!user?.admin && !user?.student) {
