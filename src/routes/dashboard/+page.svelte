@@ -6,17 +6,22 @@
 
   export let data: PageData;
   let searchTerm: string | null = null;
+  let searchCategory: string;
 </script>
 
 <main>
   <h1>Looking for something to roam about?</h1>
   <form
     on:submit|preventDefault={() => {
-      const query = searchQuery(searchTerm, $page)
+      const query = searchQuery(searchTerm, searchCategory, $page)
       if (query != "") goto(`/search?${query}`);
     }}
   >
     <input type="text" bind:value={searchTerm} placeholder="Search..." />
+    <select name="searchCategory" bind:value={searchCategory}>
+      <option value="facility">Facility</option>
+      <option value="equipment">Equipment</option>
+    </select>
     <input type="submit" value="Search" />
   </form>
 
