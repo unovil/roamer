@@ -11,7 +11,8 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         select: {
             role: true,
             student: true,
-            admin: true
+            admin: true,
+            schoolId: true
         },
         where: { id: locals.user.id }
     })
@@ -21,7 +22,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     }
 
     if (Number.isNaN(parseInt(params.equipmentId))) {
-        throw error(404, "Equipment not found")
+        throw error(400, "Bad request")
     }
 
     const equipment = await db.equipment.findUnique({
@@ -31,6 +32,10 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
     if (equipment === null) {
         throw error(404, "Equipment not found")
+    }
+
+    if (equipment.schoolId !== user.schoolId) {
+        throw error(401, "Unauthorized")
     }
 
     return { equipment }
