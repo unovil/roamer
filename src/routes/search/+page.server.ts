@@ -38,8 +38,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
                         }
                     }
                 },
-                image: true,
-                description: true
+                image: true
             },
             where: { name: { contains: searchTerm } },
         }) : await db.equipment.findMany({

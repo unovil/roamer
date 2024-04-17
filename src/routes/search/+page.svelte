@@ -35,17 +35,19 @@
     {#each results as result (result.id)}
       <tr>
         <td><img src={result.image} alt={result.name} class="w-20 h-20" /></td>
-        <td
-          ><div>
-            <h2 class="font-bold">{result.name}</h2>
-            <p>
-              {result.admins
-                .map((admin) => {
-                  return admin.user.firstName + " " + admin.user.lastName;
-                })
-                .join(", ")}
-            </p>
-          </div>
+        <td>
+          <a href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}>
+            <div>
+              <h2 class="font-bold">{result.name}</h2>
+              <p>
+                {result.admins
+                  .map((admin) => {
+                    return admin.user.firstName + " " + admin.user.lastName;
+                  })
+                  .join(", ")}
+              </p>
+            </div>
+          </a>
         </td>
       </tr>
     {:else}
