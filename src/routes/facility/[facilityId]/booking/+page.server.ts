@@ -1,7 +1,6 @@
-import { error } from "console";
 import type { PageServerLoad } from "./$types";
 import db from "$lib/prisma";
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({params, locals}) => {
     if (!locals.user) {
