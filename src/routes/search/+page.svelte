@@ -16,7 +16,8 @@
 
 <form
   on:submit|preventDefault={() => {
-    let query = searchQuery(searchTerm, searchCategory, $page);
+    let {query, term} = searchQuery(searchTerm, searchCategory, $page);
+    searchTerm = term;    
     if (query != "") goto(`/search?${query}`);
   }}
 >
