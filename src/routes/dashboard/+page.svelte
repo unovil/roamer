@@ -13,7 +13,8 @@
   <h1>Looking for something to roam about?</h1>
   <form
     on:submit|preventDefault={() => {
-      const query = searchQuery(searchTerm, searchCategory, $page)
+      const { query, term } = searchQuery(searchTerm, searchCategory, $page);
+      searchTerm = term;
       if (query != "") goto(`/search?${query}`);
     }}
   >
