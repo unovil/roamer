@@ -8,25 +8,29 @@
   let searchTerm = data.searchTerm;
   let searchCategory = data.searchCat;
   $: results = data.results;
+
+  let timeoutId: NodeJS.Timeout;
+  $: {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      const { query, term } = searchQuery(searchTerm, searchCategory, $page);
+      searchTerm = term;
+      if (query != "") goto(`/search?${query}`);
+    }, 500);
+  }
 </script>
 
 <svelte:head>
   <title>Roamer - Search</title>
 </svelte:head>
 
-<form
-  on:submit|preventDefault={() => {
-    const {query, term} = searchQuery(searchTerm, searchCategory, $page);
-    searchTerm = term;    
-    if (query != "") goto(`/search?${query}`);
-  }}
->
-  <input type="text" bind:value={searchTerm} placeholder="Search..." />
+<form>
+  <!-- svelte-ignore a11y-autofocus -->
+  <input type="text" bind:value={searchTerm} autofocus placeholder="Search..." />
   <select name="searchCategory" bind:value={searchCategory}>
     <option value="facility">Facility</option>
     <option value="equipment">Equipment</option>
   </select>
-  <input type="submit" value="Search" />
 </form>
 
 <br />
