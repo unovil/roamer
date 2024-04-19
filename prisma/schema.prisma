@@ -107,13 +107,16 @@ model Equipment {
 }
 
 model Request {
-  id          Int         @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   description String
-  facilities  Facility[]  @relation(name: "FacilityToRequest")
-  equipments  Equipment[] @relation(name: "EquipmentToRequest")
-  students    Student[]   @relation(name: "StudentToRequest")
-  isAllowed   Boolean     @default(false)
-  admins      Admin[]     @relation(name: "AdminToRequest")
+  facility    Facility?  @relation(name: "FacilityToRequest", fields: [facilityId], references: [id])
+  equipment   Equipment? @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
+  students    Student[]  @relation(name: "StudentToRequest")
+  isAllowed   Boolean    @default(false)
+  admins      Admin[]    @relation(name: "AdminToRequest")
+
+  facilityId  Int
+  equipmentId Int
 
   /// [DatesType]
   requestDates Json
