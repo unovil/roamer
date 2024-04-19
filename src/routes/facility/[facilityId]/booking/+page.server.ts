@@ -92,10 +92,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 export const actions = {
     default: async ({ request, params }) => {
         const formInfo = Object.fromEntries(await request.formData())
-        const { startDate, endDate, studentIds } = formInfo as {
+        const { startDate, endDate, studentIds, requestDescription } = formInfo as {
             startDate: string,
             endDate: string,
-            studentIds: string
+            studentIds: string,
+            requestDescription: string
         }
 
         const bookingDates = { start: Date.parse(startDate), end: Date.parse(endDate) }
@@ -107,29 +108,40 @@ export const actions = {
         }
 
         if ((bookingDates.end <= bookingDates.start) ||
-            (bookingDates.start <= Date.parse(Date()))) {
+            (bookingDates.start <= (new Date()).getTime())) {
             return fail(400, {
                 wrongDates: true,
                 error: "You entered the wrong dates."
             })
         }
 
-        const studentsArray = studentIds.slice(1, studentIds.length - 1).split(",").map(id => parseInt(id))
+        const parsedStudentIds = studentIds.slice(1, studentIds.length - 1).split(",").map(id => parseInt(id))
 
         // shouldn't happen as the profile user is already selected
-        if (!studentIds || studentIds.length == 2 || studentsArray.length < 1) {
+        if (!studentIds || studentIds.length == 2 || parsedStudentIds.length < 1) {
             return fail(400, {
                 noStudents: true,
                 error: "Please select at least one student."
             })
         }
 
-        const request = await db.request.create({
+        const adminIds = (await db.facility.findUnique({
+            select: { admins: { select: { id: true } } },
+            where: { id: parseInt(params.facilityId) }
+        }))?.admins.map(admin => admin.id) || []
+
+
+        await db.request.create({
             data: {
                 facilityId: parseInt(params.facilityId),
-                students: { connect },
-                bookingDates: bookingDates
+                students: { connect: parsedStudentIds.map(id => {return {id}})},
+                requestDates: [{start: new Date(bookingDates.start), end: new Date(bookingDates.end)}],
+                description: requestDescription.trim(),
+                admins: { connect: adminIds.map(id => {return {id}})},
+                requestStatus: adminIds.map(id => {return {adminId: id, requestStatus: "WAITING"}})
             }
         })
+
+        redirect(302, `/facility/${params.facilityId}`)
     }
 } satisfies Actions;

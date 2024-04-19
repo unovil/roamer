@@ -10,6 +10,7 @@
   let searchName: string = "";
   let searchSection: string = "";
   let searchEmail: string = "";
+  let descriptionText: string = "";
   let selectAll: boolean = false;
 
   const toggleCheck = (id: number, checkedSet: Set<number>) => {
@@ -65,8 +66,10 @@
   }
 
   const checkWhetherSelectedAll = () => {
-    selectAll = filteredStudents.every(student => checkedStudentIds.has(student.id))
-  }
+    selectAll = filteredStudents.every((student) =>
+      checkedStudentIds.has(student.id)
+    );
+  };
 
   const toggleAll = () => {
     if (selectAll) {
@@ -81,8 +84,8 @@
       });
     }
 
-    checkedStudentIds = checkedStudentIds
-  }
+    checkedStudentIds = checkedStudentIds;
+  };
 </script>
 
 <p>You are now roaming for: <b>{data.facility.name}</b></p>
@@ -110,9 +113,13 @@
         <tr class="sticky top-0 bg-white">
           <th class="text-left">
             <div>Select</div>
-            <div><input type="checkbox"
-              bind:checked={selectAll}
-              on:change={toggleAll} /></div>
+            <div>
+              <input
+                type="checkbox"
+                bind:checked={selectAll}
+                on:change={toggleAll}
+              />
+            </div>
           </th>
           <th class="text-left">
             <div>Name</div>
@@ -188,9 +195,30 @@
 
   <br />
 
+  <p>3. Why do you need this facility?</p>
+  <p>
+    <i
+      class={descriptionText.length > 1500
+        ? "text-red-600 font-bold"
+        : "text-gray-400"}
+    >
+      {descriptionText.length}/1500 characters
+    </i>
+  </p>
+  <textarea
+    name="requestDescription"
+    bind:value={descriptionText}
+    contenteditable
+  ></textarea> <br />
+
+  <br />
+
   <p>3. Final Information</p>
   <b>
-    You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size > 1 ? "s" : ""}:
+    You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size >
+    1
+      ? "s"
+      : ""}:
   </b>
   <ul>
     {#each checkedStudentIds as studentId (studentId)}

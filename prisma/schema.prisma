@@ -107,19 +107,21 @@ model Equipment {
 }
 
 model Request {
-  id          Int        @id @default(autoincrement())
-  description String
-  facility    Facility?  @relation(name: "FacilityToRequest", fields: [facilityId], references: [id])
-  equipment   Equipment? @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
-  students    Student[]  @relation(name: "StudentToRequest")
-  isAllowed   Boolean    @default(false)
-  admins      Admin[]    @relation(name: "AdminToRequest")
+  id            Int           @id @default(autoincrement())
+  description   String        @db.TinyText
+  facility      Facility?     @relation(name: "FacilityToRequest", fields: [facilityId], references: [id])
+  equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
+  students      Student[]     @relation(name: "StudentToRequest")
+  admins        Admin[]       @relation(name: "AdminToRequest")
 
-  facilityId  Int
-  equipmentId Int
+  facilityId  Int?
+  equipmentId Int?
 
   /// [DatesType]
   requestDates Json
+
+  /// [RequestStatusType]
+  requestStatus Json
 }
 
 enum UserRole {
