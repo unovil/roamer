@@ -16,20 +16,21 @@ export const load: PageServerLoad = async (event) => {
         throw error(401, "Unauthorized")
     }
 
-    if (user.role == "STUDENT" && user.student) {
-        throw error(401, "Unauthorized")
-    }
-
     if (!user.admin && !user.student) {
         redirect(302, "/register/next");
     }
 
-    if (!(user.role == "ADMIN" || user.admin)) {
+    const isValidStudent = (user.role == "STUDENT" && user.student) ? true : false
+    const isValidAdmin = (user.role == "ADMIN" && user.admin) ? true : false
+
+    if (!isValidAdmin && !isValidStudent) {
         throw error(401, "Unauthorized")
     }
 
     const requests = await db.request.findMany({
-        where: { admins: { some: { userId: event.locals.user.id } } },
+        where: (isValidStudent) ? 
+            { students: { some: { userId: event.locals.user.id } } } : 
+            { admins: { some: { userId: event.locals.user.id } } },
         select: {
             id: true,
             requestStatus: true,
@@ -47,7 +48,7 @@ export const load: PageServerLoad = async (event) => {
         }
     })
 
-    return { requests, user }
+    return { requests, user, isValidAdmin, isValidStudent }
 }
 
 export const actions = {
@@ -102,7 +103,7 @@ export const actions = {
                 requestStatus: placeRequest?.requestStatus
             }
         })
-        
+
         if (!(placeRequest?.requestStatus.map(status => status.requestStatus).every(status => status === "APPROVED"))) return
 
         if (type === "facility") {
