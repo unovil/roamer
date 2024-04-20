@@ -90,30 +90,44 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 }
 
 export const actions = {
-    default: async ({ request, params }) => {
+    default: async ({ request, params, cookies }) => {
+        type DateStringRange = { start: string, end: string, id: string };
+        type DateRange = { start: Date, end: Date, id: number };
         const formInfo = Object.fromEntries(await request.formData())
-        const { startDate, endDate, studentIds, requestDescription } = formInfo as {
-            startDate: string,
-            endDate: string,
+        const { requestDates, studentIds, requestDescription } = formInfo as {
+            requestDates: string
             studentIds: string,
             requestDescription: string
         }
 
-        const bookingDates = { start: Date.parse(startDate), end: Date.parse(endDate) }
-        if (Number.isNaN(bookingDates.start) || Number.isNaN(bookingDates.end)) {
+        const requestDatesArray: DateStringRange[] = JSON.parse(requestDates)
+
+        if (!requestDatesArray ||
+            (requestDatesArray.some(dateRange => Number.isNaN(new Date(dateRange.start)) || Number.isNaN(new Date(dateRange.end)) || Number.parseInt(dateRange.id)))
+        ) {
             return fail(400, {
                 noDates: true,
                 error: "No date was inputted."
             })
         }
 
-        if ((bookingDates.end <= bookingDates.start) ||
-            (bookingDates.start <= (new Date()).getTime())) {
-            return fail(400, {
-                wrongDates: true,
-                error: "You entered the wrong dates."
-            })
-        }
+        const requestDatesRanges = requestDatesArray.map(dateRange => {
+            return {
+                start: new Date(dateRange.start),
+                end: new Date(dateRange.end),
+                id: parseInt(dateRange.id)
+            }
+        })
+
+        requestDatesRanges.forEach(bookingDates => {
+            if ((bookingDates.end <= bookingDates.start) ||
+                (bookingDates.start.getTime() <= (new Date()).getTime())) {
+                return fail(400, {
+                    wrongDates: true,
+                    error: "You entered the wrong dates."
+                })
+            }
+        })
 
         const parsedStudentIds = studentIds.slice(1, studentIds.length - 1).split(",").map(id => parseInt(id))
 
@@ -125,22 +139,26 @@ export const actions = {
             })
         }
 
-        const adminIds = (await db.equipment.findUnique({
-            select: { admins: { select: { id: true } } },
+        const equipment = await db.equipment.findUnique({
+            select: { admins: { select: { id: true } }, blockedDates: true },
             where: { id: parseInt(params.equipmentId) }
-        }))?.admins.map(admin => admin.id) || []
+        })
 
+        const adminIds = equipment?.admins.map(admin => admin.id) || []
+        const blockedDates = equipment?.blockedDates || []
 
         await db.request.create({
             data: {
                 equipmentId: parseInt(params.equipmentId),
-                students: { connect: parsedStudentIds.map(id => {return {id}})},
-                requestDates: [{start: new Date(bookingDates.start), end: new Date(bookingDates.end)}],
+                students: { connect: parsedStudentIds.map(id => { return { id } }) },
+                requestDates: requestDatesRanges.map(({ start, end }) => { return { start, end } }),
                 description: requestDescription.trim(),
-                admins: { connect: adminIds.map(id => {return {id}})},
-                requestStatus: adminIds.map(id => {return {adminId: id, requestStatus: "WAITING"}})
+                admins: { connect: adminIds.map(id => { return { id } }) },
+                requestStatus: adminIds.map(id => { return { adminId: id, requestStatus: "WAITING" } })
             }
         })
+
+        cookies.set("Booking-Success", "true", { path: '/' })
 
         redirect(302, `/equipment/${params.equipmentId}`)
     }

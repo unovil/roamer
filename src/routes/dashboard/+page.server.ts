@@ -1,5 +1,5 @@
 import { lucia } from "$lib/server/auth";
-import { fail, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/prisma";
 import type { Section, Student, User } from "@prisma/client";

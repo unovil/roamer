@@ -30,7 +30,7 @@
     {/if}
     <tr class="bg-green-800">
       <td></td>
-      <td>Add more facilities under your purview.</td>
+      <td><a href="/facility/add">Add more facilities under your purview.</a></td>
       <td></td>
     </tr>
   </table>
@@ -61,7 +61,7 @@
     {/if}
     <tr class="bg-green-800">
       <td></td>
-      <td>Add more equipment under your purview.</td>
+      <td><a href="/equipment/add">Add more equipment under your purview.</a></td>
       <td></td>
     </tr>
   </table>

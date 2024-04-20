@@ -1,35 +1,53 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
   export let data: PageData;
+
+  const blockedDates = Array.isArray(data.equipment.blockedDates)
+    ? data.equipment.blockedDates
+    : [];
+  const admins = Array.isArray(data.equipment.admins)
+    ? data.equipment.admins
+    : [];
 </script>
 
-<form on:submit|preventDefault={() => {
-  goto(`${$page.url}/booking`);
-}}>
-<button type="submit">Book here!</button>
+<a href={`${$page.url}/booking`}>Book now</a>
+<br />
 
-</form>
+{#if data.isBookSuccess}
+  <p>Booking success!</p>
+{/if}
+
+<br />
 
 Name
 <h1>{data.equipment.name}</h1>
-<br>
+<br />
+
+Blocked Dates
+{#each blockedDates as date}
+  <p>{new Date(date.start).toLocaleString()} - {new Date(date.end).toLocaleString()}</p>
+{/each}
+<br />
+<br />
 
 Admins
-{#each data.equipment.admins as admin (admin.id)}
-<p>{admin.user.firstName + " " + admin.user.lastName} <i>({admin.user.email})</i></p>
+{#each admins as admin (admin.id)}
+  <p>
+    {admin.user.firstName + " " + admin.user.lastName}
+    <i>({admin.user.email})</i>
+  </p>
 {/each}
-<br>
+<br />
 
 Department
 <p>{data.equipment.department}</p>
-<br>
+<br />
 
 Description
 <p>{data.equipment.description}</p>
-<br>
+<br />
 
 Image
-<img src={`/${data.equipment.image}`} alt="">
+<img src={`/${data.equipment.image}`} alt="" />

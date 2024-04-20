@@ -41,9 +41,7 @@ export const load: PageServerLoad = async (event) => {
         return 0;
     })
 
-    const { firstName, lastName, email } = user
-
-    return { adminInfo: { user: { email, firstName, lastName }, id: user?.admin?.id ?? 0 }, admins }
+    return { adminInfo: { user, id: user?.admin?.id ?? 0 }, admins }
 };
 
 export const actions = {
@@ -138,7 +136,7 @@ export const actions = {
                     description: description,
                     image: filePath,
                     admins: { connect: adminsArray.map(id => ({ id })) },
-                    blockedDates: { dates: new Array<Date>() },
+                    blockedDates: [],
                     schoolId: userAdminResponse.user.schoolId,
                     department
                 }

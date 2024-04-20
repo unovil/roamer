@@ -2,7 +2,7 @@ import { error, fail, redirect } from "@sveltejs/kit";
 import db from "$lib/prisma";
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import type { Admin, Department, Facility } from "@prisma/client";
+import type { Admin, Department, Equipment } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { writeFile } from 'node:fs/promises';
 import path from 'path';
@@ -41,9 +41,7 @@ export const load: PageServerLoad = async (event) => {
         return 0;
     })
 
-    const { firstName, lastName, email } = user
-
-    return { adminInfo: { user: { email, firstName, lastName }, id: user?.admin?.id ?? 0 }, admins }
+    return { adminInfo: { user, id: user?.admin?.id ?? 0 }, admins }
 };
 
 export const actions = {
@@ -66,7 +64,7 @@ export const actions = {
         if (!title || title == "") {
             return fail(400, {
                 noTitle: true,
-                error: "Please enter a facility name."
+                error: "Please enter an equipment name."
             })
         }
 
@@ -138,7 +136,7 @@ export const actions = {
                     description: description,
                     image: filePath,
                     admins: { connect: adminsArray.map(id => ({ id })) },
-                    blockedDates: { dates: new Array<Date>() },
+                    blockedDates: [],
                     schoolId: userAdminResponse.user.schoolId,
                     department
                 }
