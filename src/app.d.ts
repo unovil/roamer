@@ -22,11 +22,13 @@ declare global {
 
 	namespace PrismaJson {
 		type DepartmentsType = { departments: Array<Department>?}
-		type DatesType = { dates: Array<Date>?}
+		type DatesType = { start: Date, end: Date }[]
+		type RequestStatusType = { adminId: number, requestStatus: "APPROVED" | "WAITING" | "REJECTED" }[]
 	}
 }
 
 type Departments = PrismaJson.DepartmentsType;
 type Dates = PrismaJson.DatesType;
+type RequestStatus = PrismaJson.RequestStatusType;
 
-export { Departments, Dates };
+export { Departments, Dates, RequestStatus };

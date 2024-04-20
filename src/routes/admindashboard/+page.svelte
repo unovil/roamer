@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-
   export let data: PageData;
 </script>
 
@@ -25,13 +24,7 @@
               .join(", ")}</td
           >
           <td>{facility.department}</td>
-          <td
-            ><img
-              src={facility.image}
-              class="h-32"
-              alt={facility.name}
-            /></td
-          >
+          <td><img src={facility.image} class="h-32" alt={facility.name} /></td>
         </tr>
       {/each}
     {/if}
@@ -61,11 +54,7 @@
           >
           <td>{equipment.department}</td>
           <td
-            ><img
-              src={equipment.image}
-              class="h-32"
-              alt={equipment.name}
-            /></td
+            ><img src={equipment.image} class="h-32" alt={equipment.name} /></td
           >
         </tr>
       {/each}
