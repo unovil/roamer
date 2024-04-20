@@ -61,14 +61,14 @@ export const actions = {
         }
 
         if (!type || !adminId || !requestId) {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, missing fields")
         }
 
         const parsedAdminId = Number.parseInt(adminId)
         const parsedRequestId = Number.parseInt(requestId)
 
         if (Number.isNaN(parsedAdminId) || Number.isNaN(parsedRequestId)) {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, wrong fields")
         }
 
         const placeRequest = await db.request.findUnique({
@@ -83,16 +83,16 @@ export const actions = {
         })
 
         if (!placeRequest || !placeRequest.requestStatus) {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, no request found")
         }
 
         if (!placeRequest.equipment && !placeRequest.facility) {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, wrong request fields")
         }
 
         let adminStatus = placeRequest?.requestStatus.find(status => status.adminId === parsedAdminId)
         if (!adminStatus) {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, no admin found")
         }
         adminStatus.requestStatus = "APPROVED"
 
@@ -130,10 +130,8 @@ export const actions = {
 
             console.log(`New equipment: ${newEquipment}`)
         } else {
-            throw error(400, "Invalid request")
+            throw error(400, "Invalid request, wrong type")
         }
-
-        
     },
     deny: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData())

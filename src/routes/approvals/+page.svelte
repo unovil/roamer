@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
+  import { enhance } from "$app/forms";
+  import type { ActionData, PageData } from "./$types";
   export let data: PageData;
 
   const items = data.requests
@@ -78,22 +79,33 @@ For your approvals:
           {/if}
         </td>
         <td>
-          <form method="post">
-            <input type="text" hidden value={item.requestId} name="requestId" />
-            <input type="text" hidden value={item.placeType} name="type" />
-            <input
-              type="text"
-              hidden
-              value={data.user.admin?.id}
-              name="adminId"
-            />
-            <div>
-              <button type="submit" formaction="?/approve">Approve</button>
-            </div>
-            <div>
-              <button type="submit" formaction="?/deny">Deny</button>
-            </div>
-          </form>
+          {#if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "REJECTED"}
+            <p>DENIED</p>
+          {:else if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "APPROVED"}
+            <p>APPROVED</p>
+          {:else}
+            <form method="post">
+              <input
+                type="text"
+                hidden
+                value={item.requestId}
+                name="requestId"
+              />
+              <input type="text" hidden value={item.placeType} name="type" />
+              <input
+                type="text"
+                hidden
+                value={data.user.admin?.id}
+                name="adminId"
+              />
+              <div>
+                <button type="submit" formaction="?/approve">Approve</button>
+              </div>
+              <div>
+                <button type="submit" formaction="?/deny">Deny</button>
+              </div>
+            </form>
+          {/if}
         </td>
       </tr>
     {/each}
