@@ -1,13 +1,19 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
   export let data: PageData;
+
+  const blockedDates = Array.isArray(data.facility.blockedDates)
+    ? data.facility.blockedDates
+    : [];
+  const admins = Array.isArray(data.facility.admins)
+    ? data.facility.admins
+    : [];
 </script>
 
 <a href={`${$page.url}/booking`}>Book now</a>
-<br>
+<br />
 
 {#if data.isBookSuccess}
   <p>Booking success!</p>
@@ -20,13 +26,14 @@ Name
 <br />
 
 Blocked Dates
-{#each data.facility.blockedDates as date}
-  <p>{date.start} - {date.end}</p>
+{#each blockedDates as date}
+  <p>{new Date(date.start).toLocaleString()} - {new Date(date.end).toLocaleString()}</p>
 {/each}
+<br />
 <br />
 
 Admins
-{#each data.facility.admins as admin (admin.id)}
+{#each admins as admin (admin.id)}
   <p>
     {admin.user.firstName + " " + admin.user.lastName}
     <i>({admin.user.email})</i>

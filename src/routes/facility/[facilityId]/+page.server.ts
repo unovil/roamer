@@ -5,11 +5,11 @@ import db from "$lib/prisma";
 export const load: PageServerLoad = async ({ params, locals, cookies }) => {
     
     const isBookSuccess = typeof cookies.get("Booking-Success") !== "undefined"
-    /* if (isBookSuccess) cookies.set("Booking-Success", "", {
+    if (isBookSuccess) cookies.set("Booking-Success", "", {
         httpOnly: true,
         path: "/",
         maxAge: 0
-    }) */
+    })
 
     if (!locals.user) {
         redirect(302, "/login");
