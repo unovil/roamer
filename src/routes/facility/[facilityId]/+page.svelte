@@ -6,29 +6,25 @@
   export let data: PageData;
 </script>
 
-<form
-  on:submit|preventDefault={() => {
-    goto(`${$page.url}/booking`);
-  }}
->
-  <button type="submit">Book now</button>
-</form>
-<!-- {#if data.isBookSuccess}
+<a href={`${$page.url}/booking`}>Book now</a>
+<br>
+
+{#if data.isBookSuccess}
   <p>Booking success!</p>
 {/if}
- -->
+
 <br />
 
 Name
 <h1>{data.facility.name}</h1>
 <br />
 
-<!-- Blocked Dates
+Blocked Dates
 {#each data.facility.blockedDates as date}
   <p>{date.start} - {date.end}</p>
 {/each}
 <br />
- -->
+
 Admins
 {#each data.facility.admins as admin (admin.id)}
   <p>
