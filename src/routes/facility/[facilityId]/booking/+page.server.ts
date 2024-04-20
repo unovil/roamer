@@ -90,7 +90,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 }
 
 export const actions = {
-    default: async ({ request, params }) => {
+    default: async ({ request, params, cookies }) => {
         const formInfo = Object.fromEntries(await request.formData())
         const { startDate, endDate, studentIds, requestDescription } = formInfo as {
             startDate: string,
@@ -141,6 +141,8 @@ export const actions = {
                 requestStatus: adminIds.map(id => {return {adminId: id, requestStatus: "WAITING"}})
             }
         })
+        
+        cookies.set("Booking-Success", "true", { path: '/' })
 
         redirect(302, `/facility/${params.facilityId}`)
     }
