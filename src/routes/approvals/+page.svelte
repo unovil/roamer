@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
-  import type { ActionData, PageData } from "./$types";
+  import type { PageData } from "./$types";
   export let data: PageData;
 
   const items = data.requests
@@ -35,7 +34,11 @@
     });
 </script>
 
-For your approvals:
+{#if data.isValidAdmin}
+  For your approvals:
+{:else if data.isValidStudent}
+  See your approval requests here:
+{/if}
 
 <table>
   <thead></thead>
@@ -49,9 +52,7 @@ For your approvals:
           <ul>
             {#each item.requestDates as requestDate}
               <li>
-                {new Date(requestDate.start).toLocaleDateString()} - {new Date(
-                  requestDate.end
-                ).toLocaleDateString()}
+                {new Date(requestDate.start).toLocaleString()} - {new Date(requestDate.end).toLocaleString()}
               </li>
             {:else}
               <i>No dates given.</i>
@@ -79,32 +80,63 @@ For your approvals:
           {/if}
         </td>
         <td>
-          {#if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "REJECTED"}
-            <p>DENIED</p>
-          {:else if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "APPROVED"}
-            <p>APPROVED</p>
-          {:else}
-            <form method="post">
-              <input
-                type="text"
-                hidden
-                value={item.requestId}
-                name="requestId"
-              />
-              <input type="text" hidden value={item.placeType} name="type" />
-              <input
-                type="text"
-                hidden
-                value={data.user.admin?.id}
-                name="adminId"
-              />
-              <div>
-                <button type="submit" formaction="?/approve">Approve</button>
-              </div>
-              <div>
-                <button type="submit" formaction="?/deny">Deny</button>
-              </div>
-            </form>
+          {#if data.isValidAdmin}
+            {#if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "REJECTED"}
+              <p>You said:</p>
+              <p>DENIED</p>
+              <br>
+              <p>Overall status: </p>
+              {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+                <p>DENIED</p>
+              {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+                <p>APPROVED</p>
+              {:else}
+                <p>WAITING</p>
+              {/if}
+            {:else if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "APPROVED"}
+              <p>You said:</p>
+              <p>APPROVED</p>
+              <br>
+              <p>Overall status: </p>
+              {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+                <p>DENIED</p>
+              {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+                <p>APPROVED</p>
+              {:else}
+                <p>WAITING</p>
+              {/if}
+            {:else}
+              <form method="post">
+                <input
+                  type="text"
+                  hidden
+                  value={item.requestId}
+                  name="requestId"
+                />
+                <input type="text" hidden value={item.placeType} name="type" />
+                <input
+                  type="text"
+                  hidden
+                  value={data.user.admin?.id}
+                  name="adminId"
+                />
+                <div>
+                  <button type="submit" formaction="?/approve">Approve</button>
+                </div>
+                <div>
+                  <button type="submit" formaction="?/deny">Deny</button>
+                </div>
+              </form>
+            {/if}
+          {:else if data.isValidStudent}
+            <p>Overall status: </p>
+            {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+              <p>DENIED</p>
+            {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+              <p>APPROVED</p>
+            {:else}
+              <p>WAITING</p>
+            {/if}
           {/if}
         </td>
       </tr>

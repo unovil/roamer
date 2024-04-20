@@ -1,5 +1,5 @@
 import { lucia } from "$lib/server/auth";
-import { fail, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/prisma";
 import type { Section, Student, User } from "@prisma/client";
@@ -7,14 +7,6 @@ import type { Section, Student, User } from "@prisma/client";
 export const load: PageServerLoad = async (event) => {
     if (!event.locals.user) {
         redirect(302, "/login");
-    }
-
-    let returnInformation: {
-        userInfo: Omit<User, 'hashedPassword'>,
-        sectionInfo: { section: string, students: ({ user: User } & Student)[] } | null
-    } = {
-        userInfo: { ...event.locals.user },
-        sectionInfo: null
     }
 
     const user = await db.user.findUnique({
@@ -30,34 +22,37 @@ export const load: PageServerLoad = async (event) => {
         redirect(302, "/register/next");
     }
 
-    if (user?.role == "STUDENT" && user?.student) {
-        const section = await db.section.findUnique({
-            where: { id: user.student.sectionId },
-            include: {
-                students: {
-                    include: { user: true }
-                }
+    if (!(user?.role == "STUDENT" && user?.student)) {
+        throw error(401, "Unauthorized")
+    }
+
+    const section = await db.section.findUnique({
+        where: { id: user.student.sectionId },
+        include: {
+            students: {
+                include: { user: true }
             }
-        })
-
-        if (section?.students) {
-            section.students.sort((a, b) => {
-                // Sort by last name
-                const lastNameComparison = a.user.lastName.localeCompare(b.user.lastName);
-                if (lastNameComparison !== 0) return lastNameComparison;
-
-                // If last names are equal, sort by first name
-                return a.user.firstName.localeCompare(b.user.firstName);
-            });
         }
+    })
 
-        returnInformation.sectionInfo = {
+    if (section?.students) {
+        section.students.sort((a, b) => {
+            // Sort by last name
+            const lastNameComparison = a.user.lastName.localeCompare(b.user.lastName);
+            if (lastNameComparison !== 0) return lastNameComparison;
+
+            // If last names are equal, sort by first name
+            return a.user.firstName.localeCompare(b.user.firstName);
+        });
+    }
+
+    return {
+        userInfo: {...event.locals.user},
+        sectionInfo: {
             section: section?.grade + " " + section?.name,
             students: section?.students ?? []
         }
     }
-
-    return returnInformation;
 };
 
 export const actions = {

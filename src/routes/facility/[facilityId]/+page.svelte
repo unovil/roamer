@@ -1,36 +1,39 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
   export let data: PageData;
+
+  const blockedDates = Array.isArray(data.facility.blockedDates)
+    ? data.facility.blockedDates
+    : [];
+  const admins = Array.isArray(data.facility.admins)
+    ? data.facility.admins
+    : [];
 </script>
 
-<form
-  on:submit|preventDefault={() => {
-    goto(`${$page.url}/booking`);
-  }}
->
-  <button type="submit">Book now</button>
-</form>
-<!-- {#if data.isBookSuccess}
+<a href={`${$page.url}/booking`}>Book now</a>
+<br />
+
+{#if data.isBookSuccess}
   <p>Booking success!</p>
 {/if}
- -->
+
 <br />
 
 Name
 <h1>{data.facility.name}</h1>
 <br />
 
-<!-- Blocked Dates
-{#each data.facility.blockedDates as date}
-  <p>{date.start} - {date.end}</p>
+Blocked Dates
+{#each blockedDates as date}
+  <p>{new Date(date.start).toLocaleString()} - {new Date(date.end).toLocaleString()}</p>
 {/each}
 <br />
- -->
+<br />
+
 Admins
-{#each data.facility.admins as admin (admin.id)}
+{#each admins as admin (admin.id)}
   <p>
     {admin.user.firstName + " " + admin.user.lastName}
     <i>({admin.user.email})</i>

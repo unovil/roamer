@@ -13,6 +13,12 @@
   let descriptionText: string = "";
   let selectAll: boolean = false;
 
+  let requestDates: Array<{ start: Date; end: Date, id: number }> = [];
+  let datesError: string = "";
+
+  let startDate: string = "";
+  let endDate: string = "";
+
   const toggleCheck = (id: number, checkedSet: Set<number>) => {
     let newSet = new Set(checkedSet);
     if (newSet.has(id)) {
@@ -86,6 +92,58 @@
 
     checkedStudentIds = checkedStudentIds;
   };
+
+  const datesAdd = () => {
+    if (startDate === "" || endDate === "") {
+      datesError = "Please fill in both fields.";
+      return;
+    }
+
+    if (requestDates.find((date) => date.start === new Date(startDate) && date.end === new Date(endDate))) {
+      datesError = "This date range is already added."
+      return;
+    }
+
+    if (new Date(startDate) >= new Date(endDate)) {
+      datesError = "Start date must be before end date.";
+      return;
+    }
+
+    if (new Date(startDate) <= new Date()) {
+      datesError = "Start date must be in the future.";
+      return;
+    }
+
+    const overlapping = data.facility.blockedDates.some(existingRange => {
+      const existingStart = new Date(existingRange.start).getTime();
+      const existingEnd = new Date(existingRange.end).getTime();
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
+      return (
+        end >= existingStart && start <= existingEnd
+      )
+    })
+
+    if (overlapping) {
+      datesError = "This date range overlaps with a blocked date range.";
+      return;
+    }
+
+    requestDates = [
+      ...requestDates,
+      {
+        start: new Date(startDate),
+        end: new Date(endDate),
+        id: requestDates.length
+      },
+    ];
+
+    console.log(requestDates);
+  };
+
+  const datesRemove = (id: number) => {
+    requestDates = requestDates.filter((date) => date.id !== id);
+  };
 </script>
 
 <p>You are now roaming for: <b>{data.facility.name}</b></p>
@@ -99,6 +157,7 @@
   method="post"
   use:enhance={({ formData }) => {
     formData.append("studentIds", JSON.stringify([...checkedStudentIds]));
+    formData.append("requestDates", JSON.stringify(requestDates));
 
     return async ({ update }) => {
       await update();
@@ -186,11 +245,39 @@
   <br />
 
   <p>2. Roam for what dates?</p>
-  <label for="startDate">Start your borrowing here: </label>
-  <input type="datetime-local" name="startDate" />
+  <p>Note that these dates are not available:</p>
+  <ul>
+    {#each data.facility.blockedDates as date}
+      <li>
+        {new Date(date.start).toLocaleString()} to {new Date(
+          date.end
+        ).toLocaleString()}
+      </li>
+    {/each}
+  </ul>
   <br />
-  <label for="endDate">End your borrowing here: </label>
-  <input type="datetime-local" name="endDate" />
+
+  <table>
+    <thead></thead>
+    <tbody>
+      {#each requestDates as requestDateRange (requestDateRange.id)}
+      <tr>
+        <td>{new Date(requestDateRange.start).toLocaleString()} to {new Date(requestDateRange.end).toLocaleString()}</td>
+        <td><button type="button" on:click={()=>{datesRemove(requestDateRange.id)}}>Remove</button></td>
+        <td></td>
+      </tr>
+      {/each}
+      <tr>
+        <td>
+          <input type="datetime-local" bind:value={startDate} on:change={()=>{datesError = ""}} /> (start) to
+          <input type="datetime-local" bind:value={endDate} on:change={()=>{datesError = ""}}/> (end)
+        </td>
+
+        <td><button type="button" on:click={datesAdd}>Add</button></td>
+        <td>{datesError}</td>
+      </tr>
+    </tbody>
+  </table>
   <br />
 
   <br />

@@ -2,7 +2,15 @@ import { redirect, error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import db from "$lib/prisma";
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals, cookies }) => {
+    
+    const isBookSuccess = typeof cookies.get("Booking-Success") !== "undefined"
+    if (isBookSuccess) cookies.set("Booking-Success", "", {
+        httpOnly: true,
+        path: "/",
+        maxAge: 0
+    })
+
     if (!locals.user) {
         redirect(302, "/login");
     }
@@ -38,5 +46,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
         throw error(401, "Unauthorized")
     }
 
-    return { equipment }
+    return { equipment, isBookSuccess }
 };

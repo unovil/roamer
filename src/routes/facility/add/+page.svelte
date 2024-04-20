@@ -9,9 +9,11 @@
   export let form: ActionData;
   export let data: PageData;
 
-  let admins: typeof data.admins = [];
-  let chosenAdminEmail = "";
-  let chosenAdmin: number;
+  let filteredAdmins = new Array<(typeof data.admins)[0]>();
+  let searchName: string = "";
+  let searchEmail: string = "";
+  let selectAll: boolean = false;
+  let checkedAdminIds: Set<number> = new Set([data.adminInfo.id]);
 
   let previewUrl = "";
   const onFileChange = (event: Event) => {
@@ -26,25 +28,66 @@
       reader.readAsDataURL(file);
     }
   };
-  const addChosenAdmin = (event: Event) => {
-    if (!chosenAdmin) return;
-    const foundAdmin = data.admins.find((admin) => admin.id === chosenAdmin);
-    if (typeof foundAdmin === "undefined" || foundAdmin == null) return;
 
-    admins = [...admins, foundAdmin];
-    chosenAdminEmail = "";
-  };
+  $: {
+    filteredAdmins = Object.values(data.admins)
+      .filter((student) => {
+        return (
+          `${student.user.firstName.toLowerCase()} ${student.user.lastName.toLowerCase()}`.includes(
+            searchName.toLowerCase()
+          ) &&
+          student.user.email.toLowerCase().includes(searchEmail.toLowerCase())
+        );
+      })
+      .sort((a, b) => {
+        if (a.id === data.adminInfo.id) return -1;
+        if (b.id === data.adminInfo.id) return 1;
 
-  $: chosenAdminEmail =
-    data.admins.find((admin) => admin.id === chosenAdmin)?.user.email || "";
-  $: if (
-    data?.adminInfo?.id &&
-    !admins.map((admin) => admin.id).includes(data.adminInfo.id)
-  ) {
-    admins = [...admins, data?.adminInfo];
+        if (a.user.lastName < b.user.lastName) return -1;
+        if (a.user.lastName > b.user.lastName) return 1;
+
+        if (a.user.firstName < b.user.firstName) return -1;
+        if (a.user.firstName > b.user.firstName) return 1;
+
+        if (a.user.email < b.user.email) return -1;
+        if (a.user.email > b.user.email) return 1;
+
+        return 0;
+      });
   }
 
-  $: console.log(form);
+  const toggleCheck = (id: number, checkedSet: Set<number>) => {
+    let newSet = new Set(checkedSet);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+
+    return newSet;
+  };
+
+  const toggleAll = () => {
+    if (selectAll) {
+      filteredAdmins.forEach((admin) => {
+        if (admin.id === data.adminInfo.id) return;
+        checkedAdminIds.add(admin.id);
+      });
+    } else {
+      filteredAdmins.forEach((admin) => {
+        if (admin.id === data.adminInfo.id) return;
+        checkedAdminIds.delete(admin.id);
+      });
+    }
+
+    checkedAdminIds = checkedAdminIds;
+  };
+
+  const checkWhetherSelectedAll = () => {
+    selectAll = filteredAdmins.every((admin) =>
+      checkedAdminIds.has(admin.id)
+    );
+  };
 </script>
 
 {#if form?.error}
@@ -56,7 +99,7 @@
 <form
   method="post"
   use:enhance={({ formData }) => {
-    formData.append("admins", JSON.stringify(admins.map((admin) => admin.id)));
+    formData.append("admins", JSON.stringify([...checkedAdminIds]));
 
     return async({ update }) => {
       await update();
@@ -69,46 +112,68 @@
   <br />
 
   <h3>Add administrators.</h3>
-  <table>
-    <tr>
-      <th>Administrator</th>
-      <th>Email</th>
-      <th></th>
-    </tr>
-    {#each admins as admin (admin.id)}
-      <tr>
-        <td>
-          {admin.user.lastName}, {admin.user.firstName}
-          {#if admin.id === data?.adminInfo?.id}
-            <span class="text-gray-600 italic">(You)</span>
-          {/if}
-        </td>
-        <td>{admin.user.email}</td>
-        <td></td>
-      </tr>
-    {/each}
-    {#if data.admins.filter((admin) => {
-      return admin.id !== data?.adminInfo?.id && !admins.find((a) => a.id === admin.id);
-    }).length != 0}
-      <tr>
-        <td>
-          Add an administrator... <br />
-          <select bind:value={chosenAdmin}>
-            <option value="" selected disabled></option>
-            {#each data.admins.filter((admin) => {
-              return admin.id !== data?.adminInfo?.id && !admins.find((a) => a.id === admin.id);
-            }) as admin (admin.id)}
-              <option value={admin.id}>
-                {admin.user.lastName.toUpperCase()}, {admin.user.firstName}
-              </option>
-            {/each}
-          </select>
-        </td>
-        <td>{chosenAdminEmail}</td>
-        <td><button on:click|preventDefault={addChosenAdmin}>Add</button></td>
-      </tr>
-    {/if}
-  </table>
+  <div class="max-h-[250px] overflow-auto">
+    <table>
+      <thead>
+        <tr class="sticky top-0 bg-white">
+          <th class="text-left">
+            <div>Select</div>
+            <div>
+              <input
+                type="checkbox"
+                bind:checked={selectAll}
+                on:change={toggleAll}
+              />
+            </div>
+          </th>
+          <th class="text-left">
+            <div>Administrator</div>
+            <div>
+              <input
+                type="text"
+                placeholder="Filter by name..."
+                class="font-normal text-left w-full"
+                bind:value={searchName}
+                on:input={checkWhetherSelectedAll}
+              />
+            </div>
+          </th>
+          <th class="text-left">
+            <div>Email</div>
+            <div>
+              <input
+                type="text"
+                placeholder="Filter by email..."
+                class="font-normal text-left w-full"
+                bind:value={searchEmail}
+                on:input={checkWhetherSelectedAll}
+              />
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each Object.values(filteredAdmins) as admin (admin.id)}
+          <tr>
+            <td>
+              <input
+                type="checkbox"
+                checked={checkedAdminIds.has(admin.id)}
+                disabled={admin.id === data.adminInfo.id}
+                on:change={() =>
+                  (checkedAdminIds = toggleCheck(
+                    admin.id,
+                    checkedAdminIds
+                  ))}
+              />
+            </td>
+            <td>{admin.user.lastName}, {admin.user.firstName}</td>
+            <td>{admin.user.email}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
   <br />
 
   <h3>Add a description.</h3>
