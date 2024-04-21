@@ -29,7 +29,7 @@ export const actions = {
         console.log(`school id: ${schoolId}`)
 
         if (typeof role !== "string" ||
-            role == null) {
+            role == null || role === "") {
             console.log("no user role selected")
             return fail(400, {
                 noSelectedRole: true,

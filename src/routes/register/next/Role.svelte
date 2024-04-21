@@ -2,7 +2,14 @@
   import { enhance } from "$app/forms";
   import type { ActionData } from "./$types";
   export let form: ActionData;
-  let userRoles = ["admin", "student"];
+  export let error: string | undefined;
+
+  let roleSelect = {
+    isAdmin: false,
+    isStudent: false
+  }
+
+  $: console.log(roleSelect)
 </script>
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
@@ -16,31 +23,58 @@
       Roamer
     </h2>
 
+    {#if error}
+      <p>{error}</p>
+    {/if}
 
+    {#if !(typeof form?.error == "undefined" && form?.response.schoolName && form?.response.sections.length != 0)}
+      <form method="post" action="?/role" use:enhance={({ formData })=> {
+        // construct an append formdata with the name of role, and the value being
+        // either student or admin based on the user's input, also add validation.
+        if (roleSelect.isAdmin){
+          formData.append("role", "admin");
+        } else if(roleSelect.isStudent){
+          formData.append("role", "student");
+        } else {
+          formData.append("role", "");
+        }
 
-{#if !(typeof form?.error == "undefined" && form?.response.schoolName && form?.response.sections.length != 0)}
-  <form method="post" action="?/role" use:enhance>
-    <p class="mb-4 text-lg font-semibold">
-      You are a/an...</p>
+        return async ({ update }) => {
+          await update();
+        };
+      }}>
+        <p class="mb-4 text-lg font-semibold">I am...</p>
 
-      <div class="relative flex items-center justify-center w-30 h-10 border border-gray-400 rounded-md hover:bg-green-500">
-      <input type="radio" value="admin" name="role"/>
-      <label for="admin" class = "m-2">I am an Admin</label>
-    </div> <br>
-    <div class="relative flex items-center justify-center w-30 h-10 border border-gray-400 rounded-md hover:bg-green-500">
-      <input type="radio" value="student" name="role" />
-      <label for="student" class = "m-2">I am a Student</label>
-    </div> 
+        <button 
+          type="button"
+          class="relative flex items-center justify-center w-full h-10 border border-gray-400 rounded-md {roleSelect.isAdmin ? 'bg-green-700' : 'hover:bg-green-500'} mb-1"
+          on:click={()=>{roleSelect.isAdmin = true; roleSelect.isStudent = false;}}>
+          an Admin
+        </button>
 
-    <p class=" mb-2 mt-1 text-lg font-medium">Enter your DepEd School ID here.</p>
-    <input type="text" 
-    name="schoolId" 
-    placeholder="School ID" 
-    class="block border border-gray-300 rounded-md w-full p-2 shadow"
-    />
-    <br />
-    <button type="submit" class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out">Check</button>
-  </form>
-{/if}
-</div>
+        <button 
+          type="button"
+          class="relative flex items-center justify-center w-full h-10 border border-gray-400 rounded-md {roleSelect.isStudent ? 'bg-green-700' : 'hover:bg-green-500'}"
+          on:click={()=>{roleSelect.isStudent = true; roleSelect.isAdmin = false;}}>
+          a Student
+        </button>
+
+        <p class=" mb-2 mt-1 text-lg font-medium">
+          Enter your DepEd School ID here.
+        </p>
+        <input
+          type="text"
+          name="schoolId"
+          placeholder="School ID"
+          class="block border border-gray-300 rounded-md w-full p-2 shadow"
+        />
+        <br />
+        <button
+          type="submit"
+          class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
+          >Check</button
+        >
+      </form>
+    {/if}
+  </div>
 </div>

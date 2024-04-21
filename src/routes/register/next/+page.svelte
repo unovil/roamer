@@ -1,4 +1,4 @@
-3+<script lang="ts">
+<script lang="ts">
   import type { ActionData } from "./$types";
   import Role from "./Role.svelte";
   import RoleNext from "./RoleNext.svelte";
@@ -34,12 +34,8 @@
   }
 </script>
 
-{#if form?.error}
-  {form?.error}
-{/if}
-
 {#if !roleSuccess}
-  <Role {form} />
+  <Role {form} error={form?.error} />
 {:else}
   <p>Role picked: {roleSelected}</p>
   <p>School found: {schoolName}</p>
@@ -47,7 +43,9 @@
 
 {#if roleSuccess}
   <br />
-
+  {#if form?.error}
+    {form?.error}
+  {/if}
   <RoleNext
     roleSelected={roleSelected ?? "student"}
     sections={sections ?? []}
