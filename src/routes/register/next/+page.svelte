@@ -1,4 +1,4 @@
-<script lang="ts">
+3+<script lang="ts">
   import type { ActionData } from "./$types";
   import Role from "./Role.svelte";
   import RoleNext from "./RoleNext.svelte";

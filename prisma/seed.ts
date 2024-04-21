@@ -4,8 +4,8 @@ import { Argon2id } from "oslo/password";
 import type { Departments } from "../src/app"
 
 const db = new PrismaClient()
-const repeats = 5;
-const role: "ADMIN" | "STUDENT" | null = UserRole.ADMIN
+const repeats = 200;
+const role: "ADMIN" | "STUDENT" | null = null
 
 function getWeightedUserRole() {
     // Generate a random number between 0 and 1
@@ -23,7 +23,7 @@ for (let i = 0; i < repeats; i++) {
             role: role ? role : getWeightedUserRole(),
             email: faker.internet.email(),
             hashedPassword: await new Argon2id().hash("baba black sheep"),
-            schoolId: 1
+            schoolId: 2
         },
         include: {
             school: true
