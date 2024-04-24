@@ -9,6 +9,18 @@
   let searchCategory: string;
 </script>
 
+<style>
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5cm;
+  background-color: green;
+  z-index: 1; /* Ensure banner is above the rectangle */
+}
+</style>
+
 <main>
   <h1>Looking for something to roam about?</h1>
   <form

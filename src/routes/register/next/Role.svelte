@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
+  import Page from "../+page.svelte";
   import type { ActionData } from "./$types";
   export let form: ActionData;
   export let error: string | undefined;
@@ -12,19 +13,15 @@
   $: console.log(roleSelect)
 </script>
 
-<div class="flex h-screen items-center justify-center bg-gray-100">
-  <div
-    class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif w-80"
-  >
-    <h2
-      class="text-lg font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
-    >
-      <img src="/logo.png" alt="Logo" class="h-8 mr-2" />
-      Roamer
-    </h2>
+<div class="grid grid-cols-3 grid-rows-4 h-screen text-center" style="grid-template-columns: 25% 50% 25%;">
+  <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col items-center justify-center">
+    <h2 class="text-4xl font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150">
+      Welcome to Roamer <img src="/logo.png" alt="Logo" class="h-8 mr-2 ml-2" />!   </h2>
+    <p class="text-xl font-medium mt-1">Before continuing, we just need you to answer these.</p>
+
 
     {#if error}
-      <p>{error}</p>
+      <p class="text-red-600 overflow-auto break-words mb-2">{error}</p>
     {/if}
 
     {#if !(typeof form?.error == "undefined" && form?.response.schoolName && form?.response.sections.length != 0)}
@@ -43,25 +40,28 @@
           await update();
         };
       }}>
-        <p class="mb-4 text-lg font-semibold">I am...</p>
+        <p class="mt-5 mb-4 text-2xl font-bold">You are...</p>
 
         <button 
           type="button"
-          class="relative flex items-center justify-center w-full h-10 border border-gray-400 rounded-md {roleSelect.isAdmin ? 'bg-green-700' : 'hover:bg-green-500'} mb-1"
+          class="items-center justify-center w-40 h-10 border border-gray-400 rounded-md {roleSelect.isAdmin ? 'bg-green-700' : 'hover:bg-green-500'} mb-1"
           on:click={()=>{roleSelect.isAdmin = true; roleSelect.isStudent = false;}}>
           an Admin
         </button>
 
         <button 
           type="button"
-          class="relative flex items-center justify-center w-full h-10 border border-gray-400 rounded-md {roleSelect.isStudent ? 'bg-green-700' : 'hover:bg-green-500'}"
+          class="items-center justify-center w-40 h-10 ml-6 border border-gray-400 rounded-md {roleSelect.isStudent ? 'bg-green-700' : 'hover:bg-green-500'}"
           on:click={()=>{roleSelect.isStudent = true; roleSelect.isAdmin = false;}}>
           a Student
         </button>
 
-        <p class=" mb-2 mt-1 text-lg font-medium">
-          Enter your DepEd School ID here.
+        <p class=" mb-1 mt-3 text-2xl font-bold">
+            Your school is...
         </p>
+        <p class= "mb-2 text-base font-medium">
+          Enter your DepEd School id.
+      </p>
         <input
           type="text"
           name="schoolId"
@@ -72,7 +72,7 @@
         <button
           type="submit"
           class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
-          >Check</button
+          >Check School</button
         >
       </form>
     {/if}
