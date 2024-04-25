@@ -62,7 +62,7 @@ model Admin {
   equipments Equipment[] @relation(name: "EquipmentToAdmin")
   requests   Request[]   @relation(name: "AdminToRequest")
 
-  /// [DepartmentsType]
+  /// [Departments]
   departments Json
 }
 
@@ -87,7 +87,7 @@ model Facility {
   department  Department @default(MISC)
   requests    Request[]  @relation(name: "FacilityToRequest")
 
-  /// [DatesType]
+  /// [RangeDates]
   blockedDates Json
 }
 
@@ -102,7 +102,7 @@ model Equipment {
   department  Department @default(MISC)
   requests    Request[]  @relation(name: "EquipmentToRequest")
 
-  /// [DatesType]
+  /// [RangeDates]
   blockedDates Json
 }
 
@@ -117,10 +117,10 @@ model Request {
   facilityId  Int?
   equipmentId Int?
 
-  /// [DatesType]
+  /// [RangeDates]
   requestDates Json
 
-  /// [RequestStatusType]
+  /// [RequestStatuses]
   requestStatus Json
 }
 
@@ -135,10 +135,4 @@ enum Department {
   MAPEH
   MISC
   LANGUAGE
-}
-
-enum RequestStatus {
-  APPROVED
-  WAITING
-  REJECTED
 }

@@ -17,11 +17,13 @@ declare global {
 	}
 
 	namespace PrismaJson {
+		type RequestStatus = "APPROVED" | "WAITING" | "REJECTED"
+
 		type Departments = { departments: Array<import("@prisma/client").Department>?}
 		type RangeDates = { start: Date, end: Date }[]
 		type RequestStatuses = {
 			adminId: import("@prisma/client").Admin["id"],
-			requestStatus: import("@prisma/client").RequestStatus,
+			requestStatus: RequestStatus,
 			reason: string
 		}[]
 	}
