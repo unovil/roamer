@@ -136,3 +136,9 @@ enum Department {
   MISC
   LANGUAGE
 }
+
+enum RequestStatus {
+  APPROVED
+  WAITING
+  REJECTED
+}

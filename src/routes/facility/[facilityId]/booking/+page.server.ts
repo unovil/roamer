@@ -154,7 +154,7 @@ export const actions = {
                 requestDates: requestDatesRanges.map(({ start, end }) => { return { start, end } }),
                 description: requestDescription.trim(),
                 admins: { connect: adminIds.map(id => { return { id } }) },
-                requestStatus: adminIds.map(id => { return { adminId: id, requestStatus: "WAITING" } })
+                requestStatus: adminIds.map(id => { return { adminId: id, requestStatus: "WAITING", reason: "" } })
             }
         })
 
