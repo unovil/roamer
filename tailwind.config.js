@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         "log-in-green": "#478665",
+        "top-bar-green": "#059669",
       },
       fontFamily: {
         trocchi: ['"Trocchi"', "serif"],

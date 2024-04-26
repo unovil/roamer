@@ -9,18 +9,6 @@
   let searchCategory: string;
 </script>
 
-<div class="banner">
-  <img src="/logo.png" alt="Logo" class="mb-3 ml-3 mr-3 mt-3 h-14" />
-  <span class="logo-name font-trocchi text-2xl text-white">Roamer</span>
-  <aside>
-    <form method="post">
-      <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
-        LOGOUT
-      </button>
-    </form>
-  </aside>
-</div>
-
 <div
   class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
   style="grid-template-columns: 25% 50% 25%;"
@@ -118,5 +106,13 @@
     display: flex; /* Ensure logo and logout button are in a row */
     align-items: center; /* Center items vertically */
     padding: 0 20px; /* Add padding to the sides */
+  }
+  .rectangle {
+    border: 1px solid #000; /* Black border */
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 5px; /* Add rounded corners */
+    width: fit-content; /* Make the rectangle width fit its content */
+    margin: 0 auto; /* Center the rectangle horizontally */
+    float: left;
   }
 </style>

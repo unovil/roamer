@@ -16,7 +16,7 @@ export const load: LayoutServerLoad = async (event) => {
   })
 
   if (user?.role == "STUDENT" && user?.student) {
-    return { isStudent: true }
+    return { isStudent: true, user: event.locals.user }
   }
 
   if (!user?.admin && !user?.student) {
@@ -24,6 +24,6 @@ export const load: LayoutServerLoad = async (event) => {
   }
 
   if (user?.role == "ADMIN" && user?.admin) {
-    return { isAdmin: true }
+    return { isAdmin: true, user: event.locals.user }
   }
 }
