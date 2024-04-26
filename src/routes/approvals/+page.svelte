@@ -52,9 +52,8 @@
           <ul>
             {#each item.requestDates as requestDate}
               <li>
-                {new Date(requestDate.start).toLocaleString()} - {new Date(
-                  requestDate.end,
-                ).toLocaleString()}
+                {new Date(requestDate.start).toLocaleString()} -
+                {new Date(requestDate.end).toLocaleString()}
               </li>
             {:else}
               <i>No dates given.</i>

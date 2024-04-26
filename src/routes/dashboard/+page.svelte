@@ -9,18 +9,6 @@
   let searchCategory: string;
 </script>
 
-<div class="banner">
-  <img src="/logo.png" alt="Logo" class="mb-3 ml-3 mr-3 mt-3 h-14" />
-  <span class="logo-name font-trocchi text-2xl text-white">Roamer</span>
-  <aside>
-    <form method="post">
-      <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
-        LOGOUT
-      </button>
-    </form>
-  </aside>
-</div>
-
 <div
   class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
   style="grid-template-columns: 25% 50% 25%;"
@@ -28,8 +16,7 @@
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>
-        !
+        Welcome, <strong>{data.userInfo.firstName}</strong>!
       </h1>
       <h1 class="m-4 mt-3 text-4xl font-semibold">
         Looking for something to roam about?
@@ -89,32 +76,3 @@
     <br />
   </div>
 </div>
-
-<style>
-  body {
-    background-color: #ffffff;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-  }
-
-  .banner {
-    position: fixed; /* Change to fixed position */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 79px;
-    background-color: #059669;
-    z-index: 1; /* Ensure banner is above other content */
-    display: flex; /* Ensure logo and logout button are in a row */
-    align-items: center; /* Center items vertically */
-    padding: 0 20px; /* Add padding to the sides */
-  }
-  .rectangle {
-    border: 1px solid #000; /* Black border */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 5px; /* Add rounded corners */
-    width: fit-content; /* Make the rectangle width fit its content */
-    margin: 0 auto; /* Center the rectangle horizontally */
-    float: left;
-  }
-</style>
