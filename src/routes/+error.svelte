@@ -20,7 +20,10 @@
   }
 </script>
 
-<div class="grid grid-cols-3 grid-rows-4 h-screen text-center bg-red-100 overflow-hidden" style="grid-template-columns: 25% 50% 25%;">
+<div
+  class="grid grid-cols-3 grid-rows-4 h-screen text-center bg-red-100 overflow-hidden"
+  style="grid-template-columns: 25% 50% 25%;"
+>
   <div
     class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col items-center justify-center"
   >

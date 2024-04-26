@@ -1,3 +1,3 @@
 export function adder(value: number): number {
-    return value + 1;
+  return value + 1
 }

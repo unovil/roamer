@@ -34,7 +34,7 @@
       .filter((student) => {
         return (
           `${student.user.firstName.toLowerCase()} ${student.user.lastName.toLowerCase()}`.includes(
-            searchName.toLowerCase()
+            searchName.toLowerCase(),
           ) &&
           student.user.email.toLowerCase().includes(searchEmail.toLowerCase())
         );
@@ -84,9 +84,7 @@
   };
 
   const checkWhetherSelectedAll = () => {
-    selectAll = filteredAdmins.every((admin) =>
-      checkedAdminIds.has(admin.id)
-    );
+    selectAll = filteredAdmins.every((admin) => checkedAdminIds.has(admin.id));
   };
 </script>
 
@@ -101,7 +99,7 @@
   use:enhance={({ formData }) => {
     formData.append("admins", JSON.stringify([...checkedAdminIds]));
 
-    return async({ update }) => {
+    return async ({ update }) => {
       await update();
     };
   }}
@@ -161,10 +159,7 @@
                 checked={checkedAdminIds.has(admin.id)}
                 disabled={admin.id === data.adminInfo.id}
                 on:change={() =>
-                  (checkedAdminIds = toggleCheck(
-                    admin.id,
-                    checkedAdminIds
-                  ))}
+                  (checkedAdminIds = toggleCheck(admin.id, checkedAdminIds))}
               />
             </td>
             <td>{admin.user.lastName}, {admin.user.firstName}</td>

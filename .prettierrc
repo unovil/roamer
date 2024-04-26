@@ -1,0 +1,19 @@
+{
+  "plugins": ["prettier-plugin-svelte"],
+  "overrides": [
+    { "files": "*.svelte", "options": { "parser": "svelte" } },
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript",
+        "semi": false,
+        "quoteProps": "consistent",
+        "singleQuote": false,
+        "bracketSpacing": true,
+        "arrowParens": "avoid",
+        "trailingComma": "es5",
+        "endOfLine": "auto"
+      }
+    }
+  ]
+}

@@ -26,7 +26,12 @@
 
 <form>
   <!-- svelte-ignore a11y-autofocus -->
-  <input type="text" bind:value={searchTerm} autofocus placeholder="Search..." />
+  <input
+    type="text"
+    bind:value={searchTerm}
+    autofocus
+    placeholder="Search..."
+  />
   <select name="searchCategory" bind:value={searchCategory}>
     <option value="facility">Facility</option>
     <option value="equipment">Equipment</option>
@@ -41,7 +46,9 @@
       <tr>
         <td><img src={result.image} alt={result.name} class="w-20 h-20" /></td>
         <td>
-          <a href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}>
+          <a
+            href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+          >
             <div>
               <h2 class="font-bold">{result.name}</h2>
               <p>

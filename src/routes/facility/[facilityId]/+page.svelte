@@ -27,7 +27,11 @@ Name
 
 Blocked Dates
 {#each blockedDates as date}
-  <p>{new Date(date.start).toLocaleString()} - {new Date(date.end).toLocaleString()}</p>
+  <p>
+    {new Date(date.start).toLocaleString()} - {new Date(
+      date.end,
+    ).toLocaleString()}
+  </p>
 {/each}
 <br />
 <br />

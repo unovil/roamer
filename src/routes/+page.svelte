@@ -9,7 +9,7 @@
     loggedIn = true;
   } else loggedIn = false;
 
-  console.log(`loggedIn status is: ${loggedIn}`);  
+  console.log(`loggedIn status is: ${loggedIn}`);
 </script>
 
 <div class="flex h-screen">
@@ -25,12 +25,12 @@
     <p>Are you logged in? {loggedIn}</p>
 
     {#if loggedIn}
-    <p>Logout? Click the button.</p>
-    <form method="post">
-      <button type="submit">LOGOUT</button>
-    </form>
-    
-    <p>Your name is: "{data.username}"</p>
+      <p>Logout? Click the button.</p>
+      <form method="post">
+        <button type="submit">LOGOUT</button>
+      </form>
+
+      <p>Your name is: "{data.username}"</p>
     {/if}
   </div>
 </div>

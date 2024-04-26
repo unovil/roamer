@@ -13,7 +13,7 @@
   let descriptionText: string = "";
   let selectAll: boolean = false;
 
-  let requestDates: Array<{ start: Date; end: Date, id: number }> = [];
+  let requestDates: Array<{ start: Date; end: Date; id: number }> = [];
   let datesError: string = "";
 
   let startDate: string = "";
@@ -35,10 +35,10 @@
       .filter((student) => {
         return (
           `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.includes(
-            searchName.toLowerCase()
+            searchName.toLowerCase(),
           ) &&
           `${student.grade} - ${student.section.toLowerCase()}`.includes(
-            searchSection.toLowerCase()
+            searchSection.toLowerCase(),
           ) &&
           student.email.toLowerCase().includes(searchEmail.toLowerCase())
         );
@@ -73,7 +73,7 @@
 
   const checkWhetherSelectedAll = () => {
     selectAll = filteredStudents.every((student) =>
-      checkedStudentIds.has(student.id)
+      checkedStudentIds.has(student.id),
     );
   };
 
@@ -99,8 +99,13 @@
       return;
     }
 
-    if (requestDates.find((date) => date.start === new Date(startDate) && date.end === new Date(endDate))) {
-      datesError = "This date range is already added."
+    if (
+      requestDates.find(
+        (date) =>
+          date.start === new Date(startDate) && date.end === new Date(endDate),
+      )
+    ) {
+      datesError = "This date range is already added.";
       return;
     }
 
@@ -114,15 +119,13 @@
       return;
     }
 
-    const overlapping = data.equipment.blockedDates.some(existingRange => {
+    const overlapping = data.equipment.blockedDates.some((existingRange) => {
       const existingStart = new Date(existingRange.start).getTime();
       const existingEnd = new Date(existingRange.end).getTime();
       const start = new Date(startDate).getTime();
       const end = new Date(endDate).getTime();
-      return (
-        end >= existingStart && start <= existingEnd
-      )
-    })
+      return end >= existingStart && start <= existingEnd;
+    });
 
     if (overlapping) {
       datesError = "This date range overlaps with a blocked date range.";
@@ -134,7 +137,7 @@
       {
         start: new Date(startDate),
         end: new Date(endDate),
-        id: requestDates.length
+        id: requestDates.length,
       },
     ];
 
@@ -229,7 +232,7 @@
                 on:change={() =>
                   (checkedStudentIds = toggleCheck(
                     student.id,
-                    checkedStudentIds
+                    checkedStudentIds,
                   ))}
               />
             </td>
@@ -250,7 +253,7 @@
     {#each data.equipment.blockedDates as date}
       <li>
         {new Date(date.start).toLocaleString()} to {new Date(
-          date.end
+          date.end,
         ).toLocaleString()}
       </li>
     {/each}
@@ -261,16 +264,40 @@
     <thead></thead>
     <tbody>
       {#each requestDates as requestDateRange (requestDateRange.id)}
-      <tr>
-        <td>{new Date(requestDateRange.start).toLocaleString()} to {new Date(requestDateRange.end).toLocaleString()}</td>
-        <td><button type="button" on:click={()=>{datesRemove(requestDateRange.id)}}>Remove</button></td>
-        <td></td>
-      </tr>
+        <tr>
+          <td
+            >{new Date(requestDateRange.start).toLocaleString()} to {new Date(
+              requestDateRange.end,
+            ).toLocaleString()}</td
+          >
+          <td
+            ><button
+              type="button"
+              on:click={() => {
+                datesRemove(requestDateRange.id);
+              }}>Remove</button
+            ></td
+          >
+          <td></td>
+        </tr>
       {/each}
       <tr>
         <td>
-          <input type="datetime-local" bind:value={startDate} on:change={()=>{datesError = ""}} /> (start) to
-          <input type="datetime-local" bind:value={endDate} on:change={()=>{datesError = ""}}/> (end)
+          <input
+            type="datetime-local"
+            bind:value={startDate}
+            on:change={() => {
+              datesError = "";
+            }}
+          />
+          (start) to
+          <input
+            type="datetime-local"
+            bind:value={endDate}
+            on:change={() => {
+              datesError = "";
+            }}
+          /> (end)
         </td>
 
         <td><button type="button" on:click={datesAdd}>Add</button></td>

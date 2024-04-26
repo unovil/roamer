@@ -23,14 +23,14 @@
 
     sections.sort((a, b) => {
       if (a.grade === b.grade) {
-        return a.name.localeCompare(b.name)
+        return a.name.localeCompare(b.name);
       } else {
-        return a.grade - b.grade
+        return a.grade - b.grade;
       }
-    }) 
+    });
 
     // to trigger reactivity
-    sections = sections
+    sections = sections;
   }
 </script>
 

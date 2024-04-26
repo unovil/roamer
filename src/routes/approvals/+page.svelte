@@ -13,7 +13,7 @@
         requestId: request.id,
         adminsStatus: request.admins.map((admin) => {
           const status = request.requestStatus.find(
-            (s) => s.adminId === admin.id
+            (s) => s.adminId === admin.id,
           );
           return {
             name: `${admin.user.firstName} ${admin.user.lastName}`,
@@ -52,7 +52,9 @@
           <ul>
             {#each item.requestDates as requestDate}
               <li>
-                {new Date(requestDate.start).toLocaleString()} - {new Date(requestDate.end).toLocaleString()}
+                {new Date(requestDate.start).toLocaleString()} - {new Date(
+                  requestDate.end,
+                ).toLocaleString()}
               </li>
             {:else}
               <i>No dates given.</i>
@@ -84,11 +86,11 @@
             {#if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "REJECTED"}
               <p>You said:</p>
               <p>DENIED</p>
-              <br>
-              <p>Overall status: </p>
-              {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+              <br />
+              <p>Overall status:</p>
+              {#if item.adminsStatus.every((status) => status.status === "REJECTED")}
                 <p>DENIED</p>
-              {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+              {:else if item.adminsStatus.every((status) => status.status === "APPROVED")}
                 <p>APPROVED</p>
               {:else}
                 <p>WAITING</p>
@@ -96,11 +98,11 @@
             {:else if item.adminsStatus.find((admin) => admin.id === data.user.admin?.id)?.status === "APPROVED"}
               <p>You said:</p>
               <p>APPROVED</p>
-              <br>
-              <p>Overall status: </p>
-              {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+              <br />
+              <p>Overall status:</p>
+              {#if item.adminsStatus.every((status) => status.status === "REJECTED")}
                 <p>DENIED</p>
-              {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+              {:else if item.adminsStatus.every((status) => status.status === "APPROVED")}
                 <p>APPROVED</p>
               {:else}
                 <p>WAITING</p>
@@ -129,10 +131,10 @@
               </form>
             {/if}
           {:else if data.isValidStudent}
-            <p>Overall status: </p>
-            {#if item.adminsStatus.every(status => status.status === "REJECTED")}
+            <p>Overall status:</p>
+            {#if item.adminsStatus.every((status) => status.status === "REJECTED")}
               <p>DENIED</p>
-            {:else if item.adminsStatus.every(status => status.status === "APPROVED")}
+            {:else if item.adminsStatus.every((status) => status.status === "APPROVED")}
               <p>APPROVED</p>
             {:else}
               <p>WAITING</p>
