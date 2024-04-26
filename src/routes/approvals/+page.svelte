@@ -38,7 +38,7 @@
 </script>
 
 {#if data.isValidAdmin}
-  <ApprovalsAdmin {items} {data}/>
+  <ApprovalsAdmin {items} {data} />
 {:else if data.isValidStudent}
   <ApprovalsStudent {items} {data} />
 {/if}

@@ -16,7 +16,8 @@
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>!
+        Welcome, <strong>{data.userInfo.firstName}</strong>
+        !
       </h1>
       <h1 class="m-4 mt-3 text-4xl font-semibold">
         Looking for something to roam about?
