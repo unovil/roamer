@@ -21,9 +21,10 @@
   >
     {#if roleSelected == "student"}
       <form action="?/roleNext" method="post" use:enhance>
-        <label for="lrn" class=" mb-2 mt-1 text-lg font-medium"
-          >Type your LRN.</label
-        > <br />
+        <label for="lrn" class=" mb-2 mt-1 text-lg font-medium">
+          Type your LRN.
+        </label>
+        <br />
         <input
           type="text"
           name="lrn"
@@ -33,9 +34,10 @@
 
         <br />
 
-        <label for="section" class=" mb-2 mt-1 text-lg font-medium"
-          >What's your section?</label
-        > <br />
+        <label for="section" class=" mb-2 mt-1 text-lg font-medium">
+          What's your section?
+        </label>
+        <br />
         <div
           class="relative border border-gray-400 rounded-md underflow-hidden"
         >
@@ -46,9 +48,9 @@
           >
             <option value="" disabled selected>Section</option>
             {#each sections as section (section.id)}
-              <option value={section.id}
-                >{section.grade} - {section.name}</option
-              >
+              <option value={section.id}>
+                {section.grade} - {section.name}
+              </option>
             {/each}
           </select>
         </div>

@@ -3,7 +3,7 @@ import { redirect, type Actions } from "@sveltejs/kit"
 import { lucia } from "$lib/server/auth"
 import db from "$lib/prisma"
 
-export const load: LayoutServerLoad = async event => {
+export const load: LayoutServerLoad = async (event) => {
   console.log(event.locals.user)
 
   if (!event.locals.user) {
@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async event => {
 
   const user = await db.user.findUnique({
     select: { role: true, student: true, admin: true },
-    where: { id: event.locals.user.id },
+    where: { id: event.locals.user.id }
   })
 
   if (user?.role == "STUDENT" && user?.student) {

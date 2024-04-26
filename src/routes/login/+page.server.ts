@@ -5,7 +5,7 @@ import { fail, redirect } from "@sveltejs/kit"
 import { lucia } from "$lib/server/auth"
 import { Argon2id } from "oslo/password"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (event.locals.user) {
     redirect(302, "/dashboard")
   }
@@ -23,20 +23,20 @@ export const actions = {
     ) {
       return fail(400, {
         invalidEmail: true,
-        error: "Invalid email address.",
+        error: "Invalid email address."
       })
     }
 
     const user = await db.user.findUnique({
       where: {
-        email: email.trim().toLowerCase() as string,
-      },
+        email: email.trim().toLowerCase() as string
+      }
     })
 
     if (!user)
       return fail(400, {
         invalidUser: true,
-        error: "User not found. Type your email correctly, or register first.",
+        error: "User not found. Type your email correctly, or register first."
       })
 
     console.log("User found:", user)
@@ -48,7 +48,7 @@ export const actions = {
     ) {
       return fail(400, {
         invalidPass: true,
-        error: "Incorrect password.",
+        error: "Incorrect password."
       })
     }
 
@@ -60,16 +60,16 @@ export const actions = {
     if (!validPassword)
       return fail(400, {
         incorrectPass: true,
-        error: "Incorrect password.",
+        error: "Incorrect password."
       })
 
     const session = await lucia.createSession(user.id, {})
     const sessionCookie = lucia.createSessionCookie(session.id)
     cookies.set(sessionCookie.name, sessionCookie.value, {
       path: ".",
-      ...sessionCookie.attributes,
+      ...sessionCookie.attributes
     })
 
     redirect(302, "/dashboard")
-  },
+  }
 } satisfies Actions

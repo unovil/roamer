@@ -15,9 +15,9 @@ export const load: PageServerLoad = async ({ url, locals }) => {
     select: {
       role: true,
       student: true,
-      admin: true,
+      admin: true
     },
-    where: { id: locals.user.id },
+    where: { id: locals.user.id }
   })
 
   if (!user?.admin && !user?.student) {
@@ -36,13 +36,13 @@ export const load: PageServerLoad = async ({ url, locals }) => {
             admins: {
               select: {
                 user: {
-                  select: { firstName: true, lastName: true },
-                },
-              },
+                  select: { firstName: true, lastName: true }
+                }
+              }
             },
-            image: true,
+            image: true
           },
-          where: { name: { contains: searchTerm } },
+          where: { name: { contains: searchTerm } }
         })
       : await db.equipment.findMany({
           select: {
@@ -52,13 +52,13 @@ export const load: PageServerLoad = async ({ url, locals }) => {
             admins: {
               select: {
                 user: {
-                  select: { firstName: true, lastName: true },
-                },
-              },
+                  select: { firstName: true, lastName: true }
+                }
+              }
             },
-            image: true,
+            image: true
           },
-          where: { name: { contains: searchTerm } },
+          where: { name: { contains: searchTerm } }
         })
 
   return { searchTerm, searchCat, results }

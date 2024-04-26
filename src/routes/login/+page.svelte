@@ -54,21 +54,25 @@
           type="button"
           on:click={changePasswordVisibility}
           class="absolute inset-y-0 right-0 px-3 py-2 bg-gray-200 text-gray-600 rounded-md"
-          >{isHidden ? "Show" : "Hide"}</button
         >
+          {isHidden ? "Show" : "Hide"}
+        </button>
       </div>
       <button
         type="submit"
         class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out mt-5"
-        >Login</button
       >
+        Login
+      </button>
     </form>
 
     <div class="mt-5">
       Not a user yet? <a
         href="/register"
-        class="text-green-500 mt-1 hover:text-log-in-green">Register here.</a
+        class="text-green-500 mt-1 hover:text-log-in-green"
       >
+        Register here.
+      </a>
     </div>
   </div>
 </div>

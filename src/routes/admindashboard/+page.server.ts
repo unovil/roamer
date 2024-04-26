@@ -3,14 +3,14 @@ import type { Equipment, Facility, Student, User } from "@prisma/client"
 import db from "$lib/prisma"
 import type { PageServerLoad } from "./$types"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (!event.locals.user) {
     redirect(302, "/login")
   }
 
   const user = await db.user.findUnique({
     select: { role: true, student: true, admin: true },
-    where: { id: event.locals.user.id },
+    where: { id: event.locals.user.id }
   })
 
   if (user?.role == "STUDENT" && user?.student) {
@@ -31,22 +31,22 @@ export const load: PageServerLoad = async event => {
         include: {
           admins: {
             select: {
-              user: { select: { firstName: true, lastName: true, id: true } },
-            },
-          },
-        },
+              user: { select: { firstName: true, lastName: true, id: true } }
+            }
+          }
+        }
       },
       equipments: {
         include: {
           admins: {
             select: {
-              user: { select: { firstName: true, lastName: true, id: true } },
-            },
-          },
-        },
-      },
+              user: { select: { firstName: true, lastName: true, id: true } }
+            }
+          }
+        }
+      }
     },
-    where: { userId: event.locals.user.id },
+    where: { userId: event.locals.user.id }
   })
 
   const requests = await db.request.findMany({
@@ -58,21 +58,21 @@ export const load: PageServerLoad = async event => {
       equipment: { select: { name: true, id: true, blockedDates: true } },
       students: {
         include: {
-          user: { select: { firstName: true, lastName: true, id: true } },
-        },
+          user: { select: { firstName: true, lastName: true, id: true } }
+        }
       },
       admins: {
         include: {
-          user: { select: { firstName: true, lastName: true, id: true } },
-        },
-      },
-    },
+          user: { select: { firstName: true, lastName: true, id: true } }
+        }
+      }
+    }
   })
 
   return {
     facilities: response?.facilities,
     equipments: response?.equipments,
     requests,
-    userInfo: { ...event.locals.user },
+    userInfo: { ...event.locals.user }
   }
 }

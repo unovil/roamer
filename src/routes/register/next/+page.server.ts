@@ -3,14 +3,14 @@ import { fail, redirect } from "@sveltejs/kit"
 import db from "$lib/prisma"
 import { UserRole } from "@prisma/client"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (!event.locals.user) {
     redirect(302, "/login")
   }
 
   const user = await db.user.findUnique({
     select: { role: true, student: true, admin: true },
-    where: { id: event.locals.user.id },
+    where: { id: event.locals.user.id }
   })
 
   if (user?.admin || user?.student) {
@@ -33,7 +33,7 @@ export const actions = {
       return fail(400, {
         noSelectedRole: true,
         error: "Please select a role.",
-        data: { ...roleInfo },
+        data: { ...roleInfo }
       })
     }
 
@@ -41,23 +41,23 @@ export const actions = {
       return fail(400, {
         incorrectIdLength: true,
         error: "The ID format is incorrect. Enter 6 numeric characters.",
-        data: { ...roleInfo },
+        data: { ...roleInfo }
       })
     }
 
     const response = await db.school.findUnique({
       select: {
         name: true,
-        sections: true,
+        sections: true
       },
-      where: { depedId: schoolId },
+      where: { depedId: schoolId }
     })
 
     if (response == null || typeof response === "undefined") {
       return fail(400, {
         schoolNotFound: true,
         error: "The school ID was not found.",
-        data: { ...roleInfo },
+        data: { ...roleInfo }
       })
     }
 
@@ -65,14 +65,14 @@ export const actions = {
       return fail(400, {
         schoolIncomplete: true,
         error: `The school, ${response.name}, has no sections. Please contact the school administrator.`,
-        data: { ...roleInfo },
+        data: { ...roleInfo }
       })
     }
 
     const sessionId = cookies.get("auth_session")
     const sessionResponse = await db.session.findUnique({
       select: { user: true },
-      where: { id: sessionId },
+      where: { id: sessionId }
     })
 
     if (!sessionId || !sessionResponse) {
@@ -80,7 +80,7 @@ export const actions = {
         unauthorized: true,
         error:
           "An error has occurred with your user session. Try to log in again.",
-        data: { ...roleInfo },
+        data: { ...roleInfo }
       })
     }
 
@@ -89,9 +89,9 @@ export const actions = {
       data: {
         role: role === "student" ? UserRole.STUDENT : UserRole.ADMIN,
         school: {
-          connect: { depedId: schoolId },
-        },
-      },
+          connect: { depedId: schoolId }
+        }
+      }
     })
 
     if (role === "admin") {
@@ -99,13 +99,13 @@ export const actions = {
         data: {
           user: {
             connect: {
-              id: sessionResponse.user.id,
-            },
+              id: sessionResponse.user.id
+            }
           },
           departments: {
-            departments: [],
-          },
-        },
+            departments: []
+          }
+        }
       })
     }
 
@@ -113,8 +113,8 @@ export const actions = {
       response: {
         schoolName: response.name,
         role: role,
-        sections: response.sections,
-      },
+        sections: response.sections
+      }
     }
   },
 
@@ -126,7 +126,7 @@ export const actions = {
       return fail(400, {
         invalidLrn: true,
         error: "The LRN format is incorrect. Enter 12 numeric characters.",
-        data: { ...registrationInfo },
+        data: { ...registrationInfo }
       })
     }
 
@@ -134,14 +134,14 @@ export const actions = {
       return fail(400, {
         blankSection: true,
         error: "The section is blank. Please select a section.",
-        data: { ...registrationInfo },
+        data: { ...registrationInfo }
       })
     }
 
     const sessionId = cookies.get("auth_session")
     const sessionResponse = await db.session.findUnique({
       select: { user: true },
-      where: { id: sessionId },
+      where: { id: sessionId }
     })
 
     if (!sessionId || !sessionResponse) {
@@ -149,7 +149,7 @@ export const actions = {
         unauthorized: true,
         error:
           "An error has occurred with your user session. Try to log in again.",
-        data: { ...registrationInfo },
+        data: { ...registrationInfo }
       })
     }
 
@@ -159,14 +159,14 @@ export const actions = {
         student: {
           create: {
             lrn: lrn,
-            sectionId: Number(section),
-          },
-        },
-      },
+            sectionId: Number(section)
+          }
+        }
+      }
     })
   },
 
   redirectDashboard: async () => {
     redirect(302, "/dashboard")
-  },
+  }
 } satisfies Actions

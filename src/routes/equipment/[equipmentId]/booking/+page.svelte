@@ -149,7 +149,9 @@
   };
 </script>
 
-<p>You are now roaming for: <b>{data.equipment.name}</b></p>
+<p>
+  You are now roaming for: <b>{data.equipment.name}</b>
+</p>
 
 {#if form?.error}
   <p>{form?.error}</p>
@@ -265,19 +267,21 @@
     <tbody>
       {#each requestDates as requestDateRange (requestDateRange.id)}
         <tr>
-          <td
-            >{new Date(requestDateRange.start).toLocaleString()} to {new Date(
+          <td>
+            {new Date(requestDateRange.start).toLocaleString()} to {new Date(
               requestDateRange.end,
-            ).toLocaleString()}</td
-          >
-          <td
-            ><button
+            ).toLocaleString()}
+          </td>
+          <td>
+            <button
               type="button"
               on:click={() => {
                 datesRemove(requestDateRange.id);
-              }}>Remove</button
-            ></td
-          >
+              }}
+            >
+              Remove
+            </button>
+          </td>
           <td></td>
         </tr>
       {/each}
@@ -297,7 +301,8 @@
             on:change={() => {
               datesError = "";
             }}
-          /> (end)
+          />
+          (end)
         </td>
 
         <td><button type="button" on:click={datesAdd}>Add</button></td>
@@ -323,7 +328,8 @@
     name="requestDescription"
     bind:value={descriptionText}
     contenteditable
-  ></textarea> <br />
+  ></textarea>
+  <br />
 
   <br />
 
@@ -347,7 +353,11 @@
   <b>To have a successful application, the Roam should be approved by:</b>
   <ul>
     {#each data.admins as admin (admin.id)}
-      <li>{admin.firstName} {admin.lastName} <i>({admin.email})</i></li>
+      <li>
+        {admin.firstName}
+        {admin.lastName}
+        <i>({admin.email})</i>
+      </li>
     {/each}
   </ul>
 

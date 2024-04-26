@@ -6,8 +6,7 @@
   console.log(`form is ${form}`);
 
   const changePasswordVisibility = () => {
-    if (isHidden == true) isHidden = false;
-    else isHidden = true;
+    isHidden = -isHidden;
   };
   // used for conditional css, if needed.
   /* form?.invalidEmail
@@ -70,21 +69,25 @@
           type="button"
           on:click={changePasswordVisibility}
           class="absolute inset-y-0 right-0 px-3 py-2 bg-gray-200 text-gray-600 rounded-md"
-          >{isHidden ? "Show" : "Hide"}</button
         >
+          {isHidden ? "Show" : "Hide"}
+        </button>
       </div>
       <div class="flex items-center justify-start mb-2"></div>
       <button
         type="submit"
         class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
-        >Register</button
       >
+        Register
+      </button>
     </form>
     <div class="mt-5">
       Registered already? <a
         href="/login"
-        class="text-green-500 mt-1 hover:text-log-in-green">Sign in here.</a
+        class="text-green-500 mt-1 hover:text-log-in-green"
       >
+        Sign in here.
+      </a>
     </div>
   </div>
 </div>

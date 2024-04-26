@@ -8,7 +8,7 @@ import { writeFile } from "node:fs/promises"
 import path from "path"
 import { extname } from "node:path"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (!event.locals.user) {
     redirect(302, "/login")
   }
@@ -20,9 +20,9 @@ export const load: PageServerLoad = async event => {
       admin: true,
       firstName: true,
       lastName: true,
-      email: true,
+      email: true
     },
-    where: { id: event.locals.user.id },
+    where: { id: event.locals.user.id }
   })
 
   if (user?.student) {
@@ -38,8 +38,8 @@ export const load: PageServerLoad = async event => {
     where: { user: { schoolId: event.locals.user.schoolId } },
     select: {
       id: true,
-      user: { select: { firstName: true, lastName: true, email: true } },
-    },
+      user: { select: { firstName: true, lastName: true, email: true } }
+    }
   })
 
   // sort admins by admin.user.lastName and admin.user.firstName
@@ -74,68 +74,68 @@ export const actions = {
     if (!title || title == "") {
       return fail(400, {
         noTitle: true,
-        error: "Please enter an equipment name.",
+        error: "Please enter an equipment name."
       })
     }
 
     if (!description || description == "") {
       return fail(400, {
         noDescription: true,
-        error: "Please enter a description.",
+        error: "Please enter a description."
       })
     }
 
     if (!file.name || file.name === "undefined" || !file.size) {
       return fail(400, {
         noFile: true,
-        error: "Please select a file to upload.",
+        error: "Please select a file to upload."
       })
     }
 
     if (department == null || typeof department == "undefined") {
       return fail(400, {
         noDepartment: true,
-        error: "Please select a specific department.",
+        error: "Please select a specific department."
       })
     }
 
     let adminsArray = admins
       .slice(1, admins.length - 1)
       .split(",")
-      .map(id => parseInt(id))
+      .map((id) => parseInt(id))
 
     if (!admins || admins.length == 2 || adminsArray.length < 1) {
       return fail(400, {
         noAdmins: true,
-        error: "Please select at least one admin.",
+        error: "Please select at least one admin."
       })
     }
 
     const userAdminResponse = await db.admin.findUnique({
       where: { userId: locals.user?.id },
-      include: { user: { select: { schoolId: true } } },
+      include: { user: { select: { schoolId: true } } }
     })
 
     if (!userAdminResponse || !userAdminResponse.user.schoolId) {
       return fail(400, {
         unauthorized: true,
-        error: "You are not an administrator. Try refreshing the site.",
+        error: "You are not an administrator. Try refreshing the site."
       })
     }
 
     const chosenAdminsResponse = await db.admin.findMany({
       select: {
-        id: true,
+        id: true
       },
       where: {
-        id: { in: adminsArray },
-      },
+        id: { in: adminsArray }
+      }
     })
 
     if (chosenAdminsResponse.length != adminsArray.length) {
       return fail(400, {
         invalidAdmins: true,
-        error: "One or more of the selected admins are invalid.",
+        error: "One or more of the selected admins are invalid."
       })
     }
 
@@ -154,11 +154,11 @@ export const actions = {
           name: title,
           description: description,
           image: filePath,
-          admins: { connect: adminsArray.map(id => ({ id })) },
+          admins: { connect: adminsArray.map((id) => ({ id })) },
           blockedDates: [],
           schoolId: userAdminResponse.user.schoolId,
-          department,
-        },
+          department
+        }
       })
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
@@ -166,11 +166,11 @@ export const actions = {
 
         return fail(400, {
           someError: true,
-          error: "Something went wrong. Please try again.",
+          error: "Something went wrong. Please try again."
         })
       } else throw err
     }
 
     return redirect(302, "/admindashboard")
-  },
+  }
 } satisfies Actions

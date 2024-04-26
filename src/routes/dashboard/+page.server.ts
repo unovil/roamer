@@ -4,14 +4,14 @@ import type { Actions, PageServerLoad } from "./$types"
 import db from "$lib/prisma"
 import type { Section, Student, User } from "@prisma/client"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (!event.locals.user) {
     redirect(302, "/login")
   }
 
   const user = await db.user.findUnique({
     select: { role: true, student: true, admin: true },
-    where: { id: event.locals.user.id },
+    where: { id: event.locals.user.id }
   })
 
   if (user?.role == "ADMIN" && user?.admin) {
@@ -30,9 +30,9 @@ export const load: PageServerLoad = async event => {
     where: { id: user.student.sectionId },
     include: {
       students: {
-        include: { user: true },
-      },
-    },
+        include: { user: true }
+      }
+    }
   })
 
   if (section?.students) {
@@ -50,13 +50,13 @@ export const load: PageServerLoad = async event => {
     userInfo: { ...event.locals.user },
     sectionInfo: {
       section: section?.grade + " " + section?.name,
-      students: section?.students ?? [],
-    },
+      students: section?.students ?? []
+    }
   }
 }
 
 export const actions = {
-  logout: async event => {
+  logout: async (event) => {
     const sessionId = event.cookies.get("auth_session") ?? ""
     await lucia.invalidateSession(sessionId)
 
@@ -65,5 +65,5 @@ export const actions = {
     event.locals.session = null
 
     redirect(302, "/")
-  },
+  }
 } satisfies Actions

@@ -6,7 +6,7 @@ import { lucia } from "$lib/server/auth"
 import { Argon2id } from "oslo/password"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   if (event.locals.user) {
     redirect(302, "/dashboard")
   }
@@ -26,21 +26,21 @@ export const actions = {
     ) {
       return fail(400, {
         invalidEmail: true,
-        error: "Invalid email address.",
+        error: "Invalid email address."
       })
     }
 
     if (typeof firstName !== "string" || firstName.trim().length == 0) {
       return fail(400, {
         invalidFirstName: true,
-        error: "First name should not be empty.",
+        error: "First name should not be empty."
       })
     }
 
     if (typeof lastName !== "string" || lastName.trim().length == 0) {
       return fail(400, {
         invalidLastName: true,
-        error: "Last name should not be empty.",
+        error: "Last name should not be empty."
       })
     }
 
@@ -51,7 +51,7 @@ export const actions = {
     ) {
       return fail(400, {
         invalidPass: true,
-        error: "Password must be between 8 and 32 characters.",
+        error: "Password must be between 8 and 32 characters."
       })
     }
 
@@ -64,15 +64,15 @@ export const actions = {
           email: email.trim().toLowerCase() as string,
           firstName: firstName.trim() as string,
           lastName: lastName.trim() as string,
-          hashedPassword: hashedPassword as string,
-        },
+          hashedPassword: hashedPassword as string
+        }
       })
 
       const session = await lucia.createSession(response.id, {})
       const sessionCookie = lucia.createSessionCookie(session.id)
       cookies.set(sessionCookie.name, sessionCookie.value, {
         path: ".",
-        ...sessionCookie.attributes,
+        ...sessionCookie.attributes
       })
 
       console.log("User created:", response)
@@ -84,11 +84,11 @@ export const actions = {
         return fail(400, {
           duplicateUser: true,
           error:
-            "A user with this email address was already found. Try with a different email.",
+            "A user with this email address was already found. Try with a different email."
         })
       } else throw err
     }
 
     redirect(302, "/dashboard")
-  },
+  }
 } satisfies Actions

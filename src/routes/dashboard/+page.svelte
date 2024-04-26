@@ -14,9 +14,9 @@
   <span class="logo-name text-2xl font-trocchi text-white">Roamer</span>
   <aside>
     <form method="post">
-      <button type="submit" formaction="?/logout" class="mr-20 place-self-end"
-        >LOGOUT</button
-      >
+      <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
+        LOGOUT
+      </button>
     </form>
   </aside>
 </div>
@@ -28,7 +28,8 @@
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>!
+        Welcome, <strong>{data.userInfo.firstName}</strong>
+        !
       </h1>
       <h1 class="text-4xl font-semibold mt-3 m-4">
         Looking for something to roam about?
@@ -67,10 +68,10 @@
           </tr>
           {#each data?.sectionInfo?.students ?? [] as student (student.id)}
             <tr>
-              <td
-                >{student.user.firstName + " " + student.user.lastName}
+              <td>
+                {student.user.firstName + " " + student.user.lastName}
                 {#if student.user.id == data.userInfo.id}
-                  <span class="text-gray-600 italic"> (You)</span>
+                  <span class="text-gray-600 italic">(You)</span>
                 {/if}
               </td>
               <td>{student.lrn}</td>

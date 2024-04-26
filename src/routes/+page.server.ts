@@ -3,18 +3,18 @@ import { redirect, type Actions } from "@sveltejs/kit"
 import { lucia } from "$lib/server/auth"
 import db from "$lib/prisma"
 
-export const load: PageServerLoad = async event => {
+export const load: PageServerLoad = async (event) => {
   console.log(event.locals.user)
 
   return {
     username:
       event.locals?.user?.firstName + " " + event.locals?.user?.lastName,
-    isLoggedIn: event.locals.user ? true : false,
+    isLoggedIn: event.locals.user ? true : false
   }
 }
 
 export const actions = {
-  default: async event => {
+  default: async (event) => {
     const sessionId = event.cookies.get("auth_session") ?? ""
     await lucia.invalidateSession(sessionId)
 
@@ -23,5 +23,5 @@ export const actions = {
     event.locals.session = null
 
     redirect(302, "/")
-  },
+  }
 } satisfies Actions

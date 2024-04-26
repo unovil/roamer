@@ -23,11 +23,11 @@ for (let i = 0; i < repeats; i++) {
       role: role ? role : getWeightedUserRole(),
       email: faker.internet.email(),
       hashedPassword: await new Argon2id().hash("baba black sheep"),
-      schoolId: 2,
+      schoolId: 2
     },
     include: {
-      school: true,
-    },
+      school: true
+    }
   })
 
   if (userResponse.role == "STUDENT") {
@@ -35,15 +35,15 @@ for (let i = 0; i < repeats; i++) {
       data: {
         lrn: faker.string.numeric(12),
         userId: userResponse.id,
-        sectionId: faker.number.int({ min: 1, max: 8 }),
-      },
+        sectionId: faker.number.int({ min: 1, max: 8 })
+      }
     })
   } else if (userResponse.role == "ADMIN") {
     const adminResponse = await db.admin.create({
       data: {
         userId: userResponse.id,
-        departments: {} as Departments,
-      },
+        departments: {} as Departments
+      }
     })
   }
 }

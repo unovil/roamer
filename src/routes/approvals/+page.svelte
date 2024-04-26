@@ -47,8 +47,8 @@
       <tr>
         <td><img src={item.place.image} alt="" class="w-8 h-8" /></td>
         <td>{item.place.name}</td>
-        <td
-          >Requested for:
+        <td>
+          Requested for:
           <ul>
             {#each item.requestDates as requestDate}
               <li>

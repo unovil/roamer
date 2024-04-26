@@ -8,7 +8,7 @@ import {
   UserRole,
   type School,
   type Admin,
-  type Student,
+  type Student
 } from "@prisma/client"
 
 const adapter = new PrismaAdapter(db.session, db.user)
@@ -16,15 +16,15 @@ const adapter = new PrismaAdapter(db.session, db.user)
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      secure: !dev,
-    },
-  },
-  getUserAttributes: attributes => {
-    return {
-      // attributes has the type of DatabaseUserAttributes
-      ...attributes,
+      secure: !dev
     }
   },
+  getUserAttributes: (attributes) => {
+    return {
+      // attributes has the type of DatabaseUserAttributes
+      ...attributes
+    }
+  }
 })
 
 declare module "lucia" {

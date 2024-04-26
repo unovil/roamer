@@ -8,9 +8,9 @@
   <span class="logo-name text-2xl font-trocchi text-white">Roamer</span>
   <aside>
     <form method="post">
-      <button type="submit" formaction="?/logout" class="mr-20 place-self-end"
-        >LOGOUT</button
-      >
+      <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
+        LOGOUT
+      </button>
     </form>
   </aside>
 </div>
@@ -22,7 +22,8 @@
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <p class="text-7xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>!
+        Welcome, <strong>{data.userInfo.firstName}</strong>
+        !
       </p>
       <br />
       <p>List of facilities you have:</p>
@@ -37,30 +38,25 @@
           {#each data?.facilities as facility (facility.id)}
             <tr>
               <td>{facility.name}</td>
-              <td
-                >{facility.admins
+              <td>
+                {facility.admins
                   .map(
                     (admin) => `${admin.user.firstName} ${admin.user.lastName}`,
                   )
-                  .join(", ")}</td
-              >
+                  .join(", ")}
+              </td>
               <td>{facility.department}</td>
-              <td
-                ><img
-                  src={facility.image}
-                  class="h-32"
-                  alt={facility.name}
-                /></td
-              >
+              <td>
+                <img src={facility.image} class="h-32" alt={facility.name} />
+              </td>
             </tr>
           {/each}
         {/if}
         <tr class="bg-green-800">
           <td></td>
-          <td
-            ><a href="/facility/add">Add more facilities under your purview.</a
-            ></td
-          >
+          <td>
+            <a href="/facility/add">Add more facilities under your purview.</a>
+          </td>
           <td></td>
         </tr>
       </table>
@@ -77,30 +73,25 @@
           {#each data?.equipments as equipment (equipment.id)}
             <tr>
               <td>{equipment.name}</td>
-              <td
-                >{equipment.admins
+              <td>
+                {equipment.admins
                   .map(
                     (admin) => `${admin.user.firstName} ${admin.user.lastName}`,
                   )
-                  .join(", ")}</td
-              >
+                  .join(", ")}
+              </td>
               <td>{equipment.department}</td>
-              <td
-                ><img
-                  src={equipment.image}
-                  class="h-32"
-                  alt={equipment.name}
-                /></td
-              >
+              <td>
+                <img src={equipment.image} class="h-32" alt={equipment.name} />
+              </td>
             </tr>
           {/each}
         {/if}
         <tr class="bg-green-800">
           <td></td>
-          <td
-            ><a href="/equipment/add">Add more equipment under your purview.</a
-            ></td
-          >
+          <td>
+            <a href="/equipment/add">Add more equipment under your purview.</a>
+          </td>
           <td></td>
         </tr>
       </table>

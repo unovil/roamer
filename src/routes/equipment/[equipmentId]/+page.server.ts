@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({ params, locals, cookies }) => {
     cookies.set("Booking-Success", "", {
       httpOnly: true,
       path: "/",
-      maxAge: 0,
+      maxAge: 0
     })
 
   if (!locals.user) {
@@ -20,9 +20,9 @@ export const load: PageServerLoad = async ({ params, locals, cookies }) => {
       role: true,
       student: true,
       admin: true,
-      schoolId: true,
+      schoolId: true
     },
-    where: { id: locals.user.id },
+    where: { id: locals.user.id }
   })
 
   if (!user?.admin && !user?.student) {
@@ -37,11 +37,11 @@ export const load: PageServerLoad = async ({ params, locals, cookies }) => {
     include: {
       admins: {
         include: {
-          user: { select: { firstName: true, lastName: true, email: true } },
-        },
-      },
+          user: { select: { firstName: true, lastName: true, email: true } }
+        }
+      }
     },
-    where: { id: parseInt(params.equipmentId) },
+    where: { id: parseInt(params.equipmentId) }
   })
 
   if (equipment === null) {

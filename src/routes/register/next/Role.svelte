@@ -18,11 +18,8 @@
     <h2
       class="text-4xl font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
     >
-      Welcome to Roamer <img
-        src="/logo.png"
-        alt="Logo"
-        class="h-8 mr-2 ml-2"
-      />!
+      Welcome to Roamer <img src="/logo.png" alt="Logo" class="h-8 mr-2 ml-2" />
+      !
     </h2>
     <p class="text-xl font-medium mt-1">
       Before continuing, we just need you to answer these.
@@ -86,8 +83,9 @@
         <button
           type="submit"
           class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
-          >Check School</button
         >
+          Check School
+        </button>
       </form>
     {/if}
   </div>
