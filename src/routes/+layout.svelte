@@ -3,9 +3,6 @@
   import type { LayoutData } from "./$types";
   import { page } from "$app/stores";
   export let data: LayoutData;
-
-  let name = `${data.user?.firstName} ${data.user?.lastName}`;
-  let showLogout = false;
 </script>
 
 {#if !($page.url.pathname === "/" || data.isLoggedIn === false || data.needsRegisterFollowup === true)}
@@ -29,23 +26,23 @@
     <aside class="relative">
       <div
         role="link"
+        class="text-right"
         tabindex="0"
-        on:mouseenter={() => (showLogout = true)}
-        on:mouseleave={() => (showLogout = false)}
       >
-        <span class="mb-0">{name}</span>
-        {#if showLogout}
+        <span class="mb-0">{`${data.user?.firstName} ${data.user?.lastName}`}</span>
           <br>
           <form method="post">
+            <span class="text-red-900 font-bold">
             <button
               type="submit"
               formaction="/dashboard?/logout"
-              class="w-full mt-0 font-bold text-red-900 hover:underline cursor-pointer"
+              class="inline mt-0 hover:underline cursor-pointer"
             >
               Logout
             </button>
+            &gt;
+            </span>
           </form>
-        {/if}
       </div>
     </aside>
   </div>
