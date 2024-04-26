@@ -19,7 +19,7 @@
         Welcome, <strong>{data.userInfo.firstName}</strong>
         !
       </h1>
-      <h1 class="m-4 mt-3 text-4xl font-semibold">
+      <h1 class="m-4 mt-3 text-3xl font-semibold">
         Looking for something to roam about?
       </h1>
 
@@ -56,8 +56,10 @@
           />
         </div>
       </form>
-      <div>
-        <p>Section: {data?.sectionInfo?.section ?? "null"}</p>
+
+      <div class="flex justify-between mt-20">
+        <div class="border border-gray-300 p-4 rounded-md shadow w-1/2 mr-2">
+        <p class ="font-bold text-lg">Section: {data?.sectionInfo?.section ?? "null"}</p>
         <br />
         <table>
           <tr>
@@ -77,10 +79,12 @@
           {/each}
         </table>
       </div>
-      <div class="rectangle">
-        <br />
+    
+     <div class="border border-gray-300 p-4 rounded-md shadow w-1/2">
         Recent bookings:
       </div>
+
+    </div>
       <ul></ul>
     </main>
 
@@ -106,13 +110,5 @@
     display: flex; /* Ensure logo and logout button are in a row */
     align-items: center; /* Center items vertically */
     padding: 0 20px; /* Add padding to the sides */
-  }
-  .rectangle {
-    border: 1px solid #000; /* Black border */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 5px; /* Add rounded corners */
-    width: fit-content; /* Make the rectangle width fit its content */
-    margin: 0 auto; /* Center the rectangle horizontally */
-    float: left;
   }
 </style>

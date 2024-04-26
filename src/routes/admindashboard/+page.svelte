@@ -13,6 +13,8 @@
         Welcome, <strong>{data.userInfo.firstName}</strong>
         !
       </p>
+      <div class="flex justify-between mt-20">
+        <div class="border border-gray-300 p-4 rounded-md shadow w-1/2 mr-2">
       <br />
       <p>List of facilities you have:</p>
       <table>
@@ -49,6 +51,7 @@
         </tr>
       </table>
       <br />
+      <div class="border border-gray-300 p-4 rounded-md shadow w-1/2">
       <p>List of equipment you have:</p>
       <table>
         <tr>
@@ -57,6 +60,8 @@
           <th>Department</th>
           <th>Image</th>
         </tr>
+      </div>
+    </div>
         {#if data?.equipments && data?.equipments.length > 0}
           {#each data?.equipments as equipment (equipment.id)}
             <tr>
