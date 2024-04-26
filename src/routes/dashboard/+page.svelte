@@ -46,19 +46,29 @@
           if (query != "") goto(`/search?${query}`);
         }}
       >
-        <input
-          type="text"
-          bind:value={searchTerm}
-          placeholder="Search..."
-          class="mb-2 block w-3/5 rounded-md border border-gray-300 p-2 shadow"
-        />
-        <select name="searchCategory" bind:value={searchCategory}>
-          <option value="facility">Facility</option>
-          <option value="equipment">Equipment</option>
-        </select>
-        <input type="submit" value="Search" />
+        <div class="flex w-full justify-between">
+          <input
+            type="text"
+            bind:value={searchTerm}
+            placeholder="Search..."
+            class="mb-2 mr-2 flex-grow rounded-md border border-gray-300 p-2 shadow"
+          />
+          <select
+            name="searchCategory"
+            bind:value={searchCategory}
+            class="mb-2 mr-2 flex rounded-md border border-gray-300 p-2 shadow"
+          >
+            <option value="facility">Facility</option>
+            <option value="equipment">Equipment</option>
+          </select>
+          <input
+            type="submit"
+            value="Search"
+            class="mb-2 flex rounded-md border border-gray-300 bg-log-in-green p-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
+          />
+        </div>
       </form>
-      <div class="rectangle">
+      <div>
         <p>Section: {data?.sectionInfo?.section ?? "null"}</p>
         <br />
         <table>
@@ -108,13 +118,5 @@
     display: flex; /* Ensure logo and logout button are in a row */
     align-items: center; /* Center items vertically */
     padding: 0 20px; /* Add padding to the sides */
-  }
-  .rectangle {
-    border: 1px solid #000; /* Black border */
-    padding: 20px; /* Add padding for spacing */
-    border-radius: 5px; /* Add rounded corners */
-    width: fit-content; /* Make the rectangle width fit its content */
-    margin: 0 auto; /* Center the rectangle horizontally */
-    float: left;
   }
 </style>
