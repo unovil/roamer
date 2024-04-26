@@ -14,7 +14,7 @@
 
 <div class="flex h-screen">
   <div class="m-auto">
-    <h1 class="font-bold text-4xl">Hello World!</h1>
+    <h1 class="text-4xl font-bold">Hello World!</h1>
     <p>
       Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a>
       to read the documentation

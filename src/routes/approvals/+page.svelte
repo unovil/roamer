@@ -45,7 +45,7 @@
   <tbody>
     {#each items as item (item.requestId)}
       <tr>
-        <td><img src={item.place.image} alt="" class="w-8 h-8" /></td>
+        <td><img src={item.place.image} alt="" class="h-8 w-8" /></td>
         <td>{item.place.name}</td>
         <td>
           Requested for:

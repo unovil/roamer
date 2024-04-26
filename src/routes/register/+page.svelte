@@ -18,17 +18,17 @@
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div
-    class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif w-80"
+    class="font-sans-serif w-80 rounded-lg bg-white p-6 text-center shadow-md"
   >
     <h2
-      class="text-lg font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
+      class="font-semi-bold mb-6 flex scale-150 transform items-center justify-center font-trocchi text-lg text-log-in-green"
     >
-      <img src="/logo.png" alt="Logo" class="h-8 mr-2" />
+      <img src="/logo.png" alt="Logo" class="mr-2 h-8" />
       Roamer
     </h2>
 
     {#if form?.error}
-      <p class="text-red-600 overflow-auto break-words mb-2">{form.error}</p>
+      <p class="mb-2 overflow-auto break-words text-red-600">{form.error}</p>
     {/if}
 
     <form method="post" use:enhance>
@@ -36,7 +36,7 @@
         type="email"
         placeholder="Email address"
         name="email"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidEmail || form?.duplicateUser}
       />
 
@@ -44,7 +44,7 @@
         type="text"
         placeholder="First Name"
         name="firstName"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidFirstName}
       />
 
@@ -52,7 +52,7 @@
         type="text"
         placeholder="Last Name"
         name="lastName"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidLastName}
       />
 
@@ -61,22 +61,22 @@
           type={isHidden ? "password" : "text"}
           placeholder="Password"
           name="password"
-          class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+          class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
           class:border-red-500={form?.invalidPass}
           id="password"
         />
         <button
           type="button"
           on:click={changePasswordVisibility}
-          class="absolute inset-y-0 right-0 px-3 py-2 bg-gray-200 text-gray-600 rounded-md"
+          class="absolute inset-y-0 right-0 rounded-md bg-gray-200 px-3 py-2 text-gray-600"
         >
           {isHidden ? "Show" : "Hide"}
         </button>
       </div>
-      <div class="flex items-center justify-start mb-2"></div>
+      <div class="mb-2 flex items-center justify-start"></div>
       <button
         type="submit"
-        class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
+        class="rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
       >
         Register
       </button>
@@ -84,7 +84,7 @@
     <div class="mt-5">
       Registered already? <a
         href="/login"
-        class="text-green-500 mt-1 hover:text-log-in-green"
+        class="mt-1 text-green-500 hover:text-log-in-green"
       >
         Sign in here.
       </a>

@@ -4,8 +4,8 @@
 </script>
 
 <div class="banner">
-  <img src="/logo.png" alt="Logo" class="h-14 mr-3 ml-3 mt-3 mb-3" />
-  <span class="logo-name text-2xl font-trocchi text-white">Roamer</span>
+  <img src="/logo.png" alt="Logo" class="mb-3 ml-3 mr-3 mt-3 h-14" />
+  <span class="logo-name font-trocchi text-2xl text-white">Roamer</span>
   <aside>
     <form method="post">
       <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
@@ -16,7 +16,7 @@
 </div>
 
 <div
-  class="grid grid-cols-3 grid-rows-4 h-screen text-center bg-white"
+  class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
   style="grid-template-columns: 25% 50% 25%;"
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">

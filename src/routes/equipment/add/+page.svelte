@@ -130,7 +130,7 @@
               <input
                 type="text"
                 placeholder="Filter by name..."
-                class="font-normal text-left w-full"
+                class="w-full text-left font-normal"
                 bind:value={searchName}
                 on:input={checkWhetherSelectedAll}
               />
@@ -142,7 +142,7 @@
               <input
                 type="text"
                 placeholder="Filter by email..."
-                class="font-normal text-left w-full"
+                class="w-full text-left font-normal"
                 bind:value={searchEmail}
                 on:input={checkWhetherSelectedAll}
               />

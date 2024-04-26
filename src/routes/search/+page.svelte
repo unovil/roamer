@@ -44,7 +44,7 @@
   {#if typeof results !== "undefined" && results !== null}
     {#each results as result (result.id)}
       <tr>
-        <td><img src={result.image} alt={result.name} class="w-20 h-20" /></td>
+        <td><img src={result.image} alt={result.name} class="h-20 w-20" /></td>
         <td>
           <a
             href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}

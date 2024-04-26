@@ -10,8 +10,8 @@
 </script>
 
 <div class="banner">
-  <img src="/logo.png" alt="Logo" class="h-14 mr-3 ml-3 mt-3 mb-3" />
-  <span class="logo-name text-2xl font-trocchi text-white">Roamer</span>
+  <img src="/logo.png" alt="Logo" class="mb-3 ml-3 mr-3 mt-3 h-14" />
+  <span class="logo-name font-trocchi text-2xl text-white">Roamer</span>
   <aside>
     <form method="post">
       <button type="submit" formaction="?/logout" class="mr-20 place-self-end">
@@ -22,7 +22,7 @@
 </div>
 
 <div
-  class="grid grid-cols-3 grid-rows-4 h-screen text-center bg-white"
+  class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
   style="grid-template-columns: 25% 50% 25%;"
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
@@ -31,7 +31,7 @@
         Welcome, <strong>{data.userInfo.firstName}</strong>
         !
       </h1>
-      <h1 class="text-4xl font-semibold mt-3 m-4">
+      <h1 class="m-4 mt-3 text-4xl font-semibold">
         Looking for something to roam about?
       </h1>
 
@@ -50,7 +50,7 @@
           type="text"
           bind:value={searchTerm}
           placeholder="Search..."
-          class="block border border-gray-300 rounded-md w-3/5 p-2 mb-2 shadow"
+          class="mb-2 block w-3/5 rounded-md border border-gray-300 p-2 shadow"
         />
         <select name="searchCategory" bind:value={searchCategory}>
           <option value="facility">Facility</option>
@@ -71,7 +71,7 @@
               <td>
                 {student.user.firstName + " " + student.user.lastName}
                 {#if student.user.id == data.userInfo.id}
-                  <span class="text-gray-600 italic">(You)</span>
+                  <span class="italic text-gray-600">(You)</span>
                 {/if}
               </td>
               <td>{student.lrn}</td>

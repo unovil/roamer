@@ -13,7 +13,7 @@
 </script>
 
 <div
-  class="grid grid-cols-3 grid-rows-4 h-screen text-center"
+  class="grid h-screen grid-cols-3 grid-rows-4 text-center"
   style="grid-template-columns: 25% 50% 25%;"
 >
   <div
@@ -29,7 +29,7 @@
           type="text"
           name="lrn"
           placeholder="LRN"
-          class="block border border-gray-300 rounded-md w-full p-2 shadow"
+          class="block w-full rounded-md border border-gray-300 p-2 shadow"
         />
 
         <br />
@@ -39,12 +39,12 @@
         </label>
         <br />
         <div
-          class="relative border border-gray-400 rounded-md underflow-hidden"
+          class="underflow-hidden relative rounded-md border border-gray-400"
         >
           <select
             name="section"
             placeholder="Section"
-            class="block w-full px-4 py-2 appearance-none focus:outline"
+            class="block w-full appearance-none px-4 py-2 focus:outline"
           >
             <option value="" disabled selected>Section</option>
             {#each sections as section (section.id)}
@@ -58,8 +58,8 @@
         <br />
         <button
           type="submit"
-          class="text-black text-4xl
-     hover:text-green-500 transition duration-300 ease-in-out font-semibold"
+          class="text-4xl font-semibold
+     text-black transition duration-300 ease-in-out hover:text-green-500"
         >
           Complete registration
         </button>
@@ -68,8 +68,8 @@
       <form action="?/redirectDashboard" method="post" use:enhance>
         <button
           type="submit"
-          class="text-black text-lg
-     hover:text-green-500 transition duration-300 ease-in-out font-semibold"
+          class="text-lg font-semibold
+     text-black transition duration-300 ease-in-out hover:text-green-500"
         >
           Complete registration
         </button>

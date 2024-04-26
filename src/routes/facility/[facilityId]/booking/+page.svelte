@@ -191,7 +191,7 @@
               <input
                 type="text"
                 placeholder="Filter by name..."
-                class="font-normal text-left w-full"
+                class="w-full text-left font-normal"
                 bind:value={searchName}
                 on:input={checkWhetherSelectedAll}
               />
@@ -203,7 +203,7 @@
               <input
                 type="text"
                 placeholder="Filter by email..."
-                class="font-normal text-left w-full"
+                class="w-full text-left font-normal"
                 bind:value={searchEmail}
                 on:input={checkWhetherSelectedAll}
               />
@@ -215,7 +215,7 @@
               <input
                 type="text"
                 placeholder="Filter by section..."
-                class="font-normal text-left w-full"
+                class="w-full text-left font-normal"
                 bind:value={searchSection}
                 on:input={checkWhetherSelectedAll}
               />
@@ -318,7 +318,7 @@
   <p>
     <i
       class={descriptionText.length > 1500
-        ? "text-red-600 font-bold"
+        ? "font-bold text-red-600"
         : "text-gray-400"}
     >
       {descriptionText.length}/1500 characters

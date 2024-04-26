@@ -21,19 +21,19 @@
 </script>
 
 <div
-  class="grid grid-cols-3 grid-rows-4 h-screen text-center bg-red-100 overflow-hidden"
+  class="grid h-screen grid-cols-3 grid-rows-4 overflow-hidden bg-red-100 text-center"
   style="grid-template-columns: 25% 50% 25%;"
 >
   <div
     class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col items-center justify-center"
   >
-    <h1 class="text-9xl text-red-800 font-bold mb-2">{$page.status}</h1>
-    <p class="text-xl text-red-800 font-semibold mb-10">{statusMessage}</p>
+    <h1 class="mb-2 text-9xl font-bold text-red-800">{$page.status}</h1>
+    <p class="mb-10 text-xl font-semibold text-red-800">{statusMessage}</p>
   </div>
 
   <img
     src="/error_leo.png"
-    class="col-start-2 col-end-3 row-start-3 row-end-5 self-end object-contain m-auto"
+    class="col-start-2 col-end-3 row-start-3 row-end-5 m-auto self-end object-contain"
     alt=""
   />
 </div>
