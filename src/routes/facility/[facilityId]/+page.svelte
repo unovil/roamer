@@ -12,7 +12,7 @@
     : [];
 </script>
 
-<a href={`${$page.url}/booking`}>Book now</a>
+<a href={`${$page.url}/booking`}>Roam</a>
 <br />
 
 {#if data.isBookSuccess}

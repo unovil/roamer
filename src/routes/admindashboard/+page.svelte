@@ -5,7 +5,7 @@
 
 <div
   class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
-  style="grid-template-columns: 25% 50% 25%;"
+  style="grid-template-columns: 15% 70% 15%;"
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
@@ -15,10 +15,10 @@
       </p>
       <br />
 
-      <div class="mt-20 flex justify-between">
-        <div class="mr-10 w-4/5 rounded-md border border-gray-300 p-4 shadow">
-          <p>List of facilities you have:</p>
-          <table>
+      <div class="mt-20 flex flex-row justify-between">
+        <div class="w-full rounded-md border border-gray-300 p-4 shadow mb-4 mr-4">
+          <p>Facilities you manage:</p>
+          <table class="table-auto w-full">
             <tr>
               <th>Facility</th>
               <th>Owned by</th>
@@ -60,9 +60,9 @@
           </table>
         </div>
         <br />
-        <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
-          <p>List of equipment you have:</p>
-          <table>
+        <div class="w-full rounded-md border border-gray-300 p-4 shadow">
+          <p>Equipments you manage:</p>
+          <table class="table-auto w-full">
             <tr>
               <th>Equipment</th>
               <th>Owned by</th>
