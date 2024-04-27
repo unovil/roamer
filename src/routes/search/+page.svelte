@@ -65,45 +65,39 @@
   </div>
   <br />
 
-  <div class="flex h-screen items-center justify-center">
-    {#if typeof results !== "undefined" && results !== null && results.length > 0}
-      <div
-        class="mt-4 h-full w-4/5 rounded-md border border-gray-300 p-4 shadow"
-      >
-      <table class="w-full table-auto">
-          {#if typeof results !== "undefined" && results !== null}
-            {#each results as result (result.id)}
-              <tr>
-                <td>
-                  <img src={result.image} alt={result.name} class="h-20 w-20" />
-                </td>
-                <td>
-                  <a
-                    href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
-                  >
-                    <div>
-                      <h2 class="font-bold">{result.name}</h2>
-                      <p>
-                        {result.admins
-                          .map((admin) => {
-                            return (
-                              admin.user.firstName + " " + admin.user.lastName
-                            );
-                          })
-                          .join(", ")}
-                      </p>
-                    </div>
-                  </a>
-                </td>
-              </tr>
-            {:else}
-              <tr>
-                <td colspan="2" class="font-bold">No results found</td>
-              </tr>
-            {/each}
-          {/if}
-        </table>
-      </div>
-    {/if}
+  <div class ="rounded-md border border-gray-300 p-4 shadow mt-4 w-4/5">
+    <table class="table-auto w-full ">
+        {#if typeof results !== "undefined" && results !== null}
+          {#each results as result (result.id)}
+            <tr>
+              <td>
+                <img src={result.image} alt={result.name} class="h-20 w-20" />
+              </td>
+              <td>
+                <a
+                  href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+                >
+                  <div>
+                    <h2 class="font-bold">{result.name}</h2>
+                    <p>
+                      {result.admins
+                        .map((admin) => {
+                          return (
+                            admin.user.firstName + " " + admin.user.lastName
+                          );
+                        })
+                        .join(", ")}
+                    </p>
+                  </div>
+                </a>
+              </td>
+            </tr>
+          {:else}
+            <tr>
+              <td colspan="2" class="font-bold">No results found</td>
+            </tr>
+          {/each}
+        {/if}
+      </table>
+    </div>
   </div>
-</div>
