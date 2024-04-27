@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import type { ItemType } from "./types";
+  import type { ItemType } from "./helperFunctions";
 
   export let items: ItemType[];
   export let data: PageData;

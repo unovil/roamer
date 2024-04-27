@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   import ApprovalsAdmin from "./ApprovalsAdmin.svelte";
   import ApprovalsStudent from "./ApprovalsStudent.svelte";
-  import type { ItemType } from "./types";
+  import type { ItemType } from "./helperFunctions";
   export let data: PageData;
 
   const items: ItemType[] = data.requests
@@ -22,6 +22,7 @@
             name: `${admin.user.firstName} ${admin.user.lastName}`,
             id: admin.id,
             status: status?.requestStatus || "WAITING",
+            reason: status?.reason || ""
           };
         }),
         students: request.students.map((student) => {
