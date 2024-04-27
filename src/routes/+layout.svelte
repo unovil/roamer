@@ -14,7 +14,7 @@
         <img src="/logo.png" alt="Logo" class="mr-3 h-14" />
         <span class="logo-name font-trocchi text-2xl text-white">Roamer</span>
       </div>
-      <div class="space-x-20 text-white font-trocchi text-xl font-medium">
+      <div class="space-x-20 text-xl font-bold text-white">
         {#if data.isStudent === true}
           <a href="/dashboard">Dashboard</a>
           <a href="/approvals">Approvals</a>
@@ -25,13 +25,13 @@
         {/if}
       </div>
       <aside class="relative">
-        <div role="link" class="text-right font-medium text-white font-trocchi" tabindex="0">
+        <div role="link" class="text-right font-medium text-white" tabindex="0">
           <span class="mb-0">
             {`${data.user?.firstName} ${data.user?.lastName}`}
           </span>
           <br />
           <form method="post">
-            <span class="font-bold  text-red-900">
+            <span class="font-bold text-red-900">
               <button
                 type="submit"
                 formaction="/dashboard?/logout"

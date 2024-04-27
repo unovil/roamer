@@ -57,34 +57,35 @@
         </div>
       </form>
 
-      <div class="flex justify-between mt-20">
-        <div class="border border-gray-300 p-4 rounded-md shadow w-1/2 mr-2">
-        <p class ="font-bold text-lg">Section: {data?.sectionInfo?.section ?? "null"}</p>
-        <br />
-        <table>
-          <tr>
-            <th>Student</th>
-            <th>LRN</th>
-          </tr>
-          {#each data?.sectionInfo?.students ?? [] as student (student.id)}
+      <div class="mt-20 flex justify-between">
+        <div class="mr-10 w-1/2 rounded-md border border-gray-300 p-4 shadow">
+          <p class="text-lg font-bold">
+            Section: {data?.sectionInfo?.section ?? "null"}
+          </p>
+          <br />
+          <table>
             <tr>
-              <td>
-                {student.user.firstName + " " + student.user.lastName}
-                {#if student.user.id == data.userInfo.id}
-                  <span class="italic text-gray-600">(You)</span>
-                {/if}
-              </td>
-              <td>{student.lrn}</td>
+              <th>Student</th>
+              <th>LRN</th>
             </tr>
-          {/each}
-        </table>
-      </div>
-    
-     <div class="border border-gray-300 p-4 rounded-md shadow w-1/2">
-        Recent bookings:
-      </div>
+            {#each data?.sectionInfo?.students ?? [] as student (student.id)}
+              <tr>
+                <td>
+                  {student.user.firstName + " " + student.user.lastName}
+                  {#if student.user.id == data.userInfo.id}
+                    <span class="italic text-gray-600">(You)</span>
+                  {/if}
+                </td>
+                <td>{student.lrn}</td>
+              </tr>
+            {/each}
+          </table>
+        </div>
 
-    </div>
+        <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
+          <p class="text-lg font-bold">Recent bookings:</p>
+        </div>
+      </div>
       <ul></ul>
     </main>
 
