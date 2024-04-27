@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import type { ItemType } from "./types";
+  import { overallStatusChecker, statusChecker, type ItemType } from "./helperFunctions";
+  import { Modal, Button } from "flowbite-svelte";
+  let defaultModal = false;
+  let selectedItem: ItemType;
 
   export let items: ItemType[];
   export let data: PageData;
@@ -15,55 +18,28 @@
   >
     <p class="mb-5 mt-0 text-7xl font-bold">Approvals</p>
     <div class="mt-4 h-full w-4/5 rounded-md border border-gray-300 p-4 shadow">
-      <table class="w-full table-auto">
+      <table class="w-full">
         <thead></thead>
-        <tbody>
+        <tbody class="space-y-5 divide-y divide-gray-200">
+          <!-- TODO: FAULTY STYLE -->
           {#each items as item (item.requestId)}
             <tr>
-              <td><img src={item.place.image} alt="" class="h-8 w-8" /></td>
-              <td class="font-medium">{item.place.name}</td>
-              <td>
-                <p class="font-bold">Requested for:</p>
-                <ul>
-                  {#each item.requestDates as requestDate}
-                    <li>
-                      {new Date(requestDate.start).toLocaleString()} -
-                      {new Date(requestDate.end).toLocaleString()}
-                    </li>
-                  {:else}
-                    <i>No dates given.</i>
-                  {/each}
-                </ul>
+              <td><img src={item.place.image} alt="" class="h-12 w-12" /></td>
+              <td class="font-medium">
+                {item.place.name}
+                <br />
+                {item.students.length} students
               </td>
               <td>
-                {#each item.students as student (student.id)}
-                  <p class="font-medium">{student.name} ({student.section})</p>
-                {/each}
+                <p class={overallStatusChecker(item).class}>{overallStatusChecker(item).text}</p>
               </td>
               <td>
-                {#each item.adminsStatus as admin (admin.id)}
-                  <p class="font-semibold">
-                    {admin.name}
-                    {admin.id === data.user.admin?.id ? "(YOU)" : ""} - {admin.status}
-                  </p>
-                {/each}
-              </td>
-              <td>
-                {#if item.description === "" || item.description.length === 0}
-                  <i>No description given.</i>
-                {:else}
-                  <p>{item.description}</p>
-                {/if}
-              </td>
-              <td>
-                <p class="font-bold">Overall status:</p>
-                {#if item.adminsStatus.every((status) => status.status === "REJECTED")}
-                  <p class="font-medium text-red-600">DENIED</p>
-                {:else if item.adminsStatus.every((status) => status.status === "APPROVED")}
-                  <p class="font-medium text-green-600">APPROVED</p>
-                {:else}
-                  <p class="font-medium text-yellow-600">WAITING</p>
-                {/if}
+                <button on:click={() => {
+                  defaultModal = true;
+                  selectedItem = item;
+                  }}>
+                  See reviews {">"}
+                </button>
               </td>
             </tr>
           {/each}
@@ -72,3 +48,53 @@
     </div>
   </div>
 </div>
+
+<Modal title="Request Review" bind:open={defaultModal} autoclose outsideclose>
+  <div class="flex items-center">
+    <img src={selectedItem.place.image} alt="" class="h-16 mr-4">
+    <div>
+      <h1 class="text-xl">{selectedItem.place.name} <i>({selectedItem.placeType})</i></h1>
+      <p class="text-gray-500 {overallStatusChecker(selectedItem).class}">Overall status: {overallStatusChecker(selectedItem).text}</p>
+    </div>
+  </div>
+
+  <details class="text-black">
+    <summary>Request Dates</summary>
+    {#each selectedItem.requestDates as requestDate}
+      <li>
+        {new Date(requestDate.start).toLocaleString()} -
+        {new Date(requestDate.end).toLocaleString()}
+      </li>
+    {/each}
+  </details>
+
+  {#each selectedItem.adminsStatus as status}
+    <p class="text-black">{status.name} - <span class={statusChecker(status).class}>{statusChecker(status).text}</span></p>
+    <textarea 
+      readonly 
+      class="bg-gray-200 text-gray-700 p-2 rounded w-full h-32 resize-none" 
+      value={statusChecker(status).reason}/>
+  {/each}
+
+  <p class="text-black">Further information:</p>
+  <details class="text-black">
+    <summary>Request Description</summary>
+    <p>{selectedItem.description}</p>
+  </details>
+  <details class="text-black">
+    <summary>Linked Students</summary>
+    <table class="w-full">
+      <thead></thead>
+      <tbody>
+        {#each selectedItem.students as student}
+          <tr>
+            <td>{student.name}</td>
+            <td>{student.section}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+    
+  </details>
+
+</Modal>
