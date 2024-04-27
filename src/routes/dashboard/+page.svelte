@@ -10,9 +10,9 @@
 </script>
 
 <div
-  class="grid h-screen grid-cols-3 grid-rows-4 text-center"
+  class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
   style="grid-template-columns: 25% 50% 25%;"
-  >
+>
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
