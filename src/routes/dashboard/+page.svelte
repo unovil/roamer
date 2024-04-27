@@ -12,7 +12,7 @@
 <div
   class="grid h-screen grid-cols-3 grid-rows-4 text-center"
   style="grid-template-columns: 25% 50% 25%;"
-  >
+>
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
@@ -92,24 +92,3 @@
     <br />
   </div>
 </div>
-
-<style>
-  body {
-    background-color: #ffffff;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-  }
-
-  .banner {
-    position: fixed; /* Change to fixed position */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 79px;
-    background-color: #059669;
-    z-index: 1; /* Ensure banner is above other content */
-    display: flex; /* Ensure logo and logout button are in a row */
-    align-items: center; /* Center items vertically */
-    padding: 0 20px; /* Add padding to the sides */
-  }
-</style>

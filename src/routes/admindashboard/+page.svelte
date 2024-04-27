@@ -16,9 +16,11 @@
       <br />
 
       <div class="mt-20 flex flex-row justify-between">
-        <div class="w-full rounded-md border border-gray-300 p-4 shadow mb-4 mr-4">
+        <div
+          class="mb-4 mr-4 w-full rounded-md border border-gray-300 p-4 shadow"
+        >
           <p>Facilities you manage:</p>
-          <table class="table-auto w-full">
+          <table class="w-full table-auto">
             <tr>
               <th>Facility</th>
               <th>Owned by</th>
@@ -62,7 +64,7 @@
         <br />
         <div class="w-full rounded-md border border-gray-300 p-4 shadow">
           <p>Equipments you manage:</p>
-          <table class="table-auto w-full">
+          <table class="w-full table-auto">
             <tr>
               <th>Equipment</th>
               <th>Owned by</th>
