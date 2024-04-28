@@ -3,15 +3,11 @@
   export let data: PageData;
 </script>
 
-<div
-  class="grid h-screen grid-cols-3 grid-rows-4 bg-white text-center"
-  style="grid-template-columns: 15% 70% 15%;"
->
+<div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <p class="text-7xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>
-        !
+        Welcome, <strong>{data.userInfo.firstName}!</strong>
       </p>
       <br />
 

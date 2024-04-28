@@ -1,12 +1,10 @@
 <script lang="ts">
-  import {
-    overallStatusChecker,
-    statusChecker,
-    type ItemType,
-  } from "./helperFunctions";
-  import { Modal } from "flowbite-svelte";
+  import { overallStatusChecker, type ItemType } from "./helperFunctions";
+  import { Modal, Button } from "flowbite-svelte";
   export let defaultModal: boolean;
   export let selectedItem: ItemType;
+  export let addReview: boolean;
+  export let approvalStatus: "Approval" | "Denial" | undefined;
 </script>
 
 <Modal title="Add Review" bind:open={defaultModal} autoclose outsideclose>
@@ -20,50 +18,70 @@
       <p class="text-gray-500 {overallStatusChecker(selectedItem).class}">
         Overall status: {overallStatusChecker(selectedItem).text}
       </p>
+      <button
+        class="text-black hover:underline"
+        type="button"
+        on:click={() => {
+          addReview = false;
+          defaultModal = true;
+        }}
+      >
+        See reviews
+      </button>
+      <span class="text-black">{">"}</span>
     </div>
   </div>
-
-  <details class="text-black">
-    <summary>Request Dates</summary>
+  <h2 class="text-lg font-bold text-black">Request Dates</h2>
+  <ol class="text-black">
     {#each selectedItem.requestDates as requestDate}
       <li>
         {new Date(requestDate.start).toLocaleString()} -
         {new Date(requestDate.end).toLocaleString()}
       </li>
     {/each}
-  </details>
+  </ol>
 
-  {#each selectedItem.adminsStatus as status}
-    <p class="text-black">
-      {status.name} -
-      <span class={statusChecker(status)?.class}>
-        {statusChecker(status)?.text}
-      </span>
-    </p>
-    <textarea
-      readonly
-      class="h-32 w-full resize-none rounded bg-gray-200 p-2 text-gray-700"
-      value={statusChecker(status)?.reason}
-    />
-  {/each}
+  <h2 class="text-lg font-bold text-black">Description</h2>
+  <p class="text-black">
+    {selectedItem.description}
+  </p>
 
-  <p class="text-black">Further information:</p>
-  <details class="text-black">
-    <summary>Request Description</summary>
-    <p>{selectedItem.description}</p>
-  </details>
-  <details class="text-black">
-    <summary>Linked Students</summary>
-    <table class="w-full">
-      <thead></thead>
-      <tbody>
-        {#each selectedItem.students as student}
-          <tr>
-            <td>{student.name}</td>
-            <td>{student.section}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </details>
+  <h2 class="text-lg font-bold text-black">Linked Students</h2>
+  <table class="w-full text-black">
+    <thead></thead>
+    <tbody>
+      {#each selectedItem.students as student}
+        <tr>
+          <td>{student.name}</td>
+          <td>{student.section}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+
+  <h2 class="text-lg font-bold text-black">Your Review</h2>
+  <textarea
+    class="h-32 w-full resize-none overflow-auto rounded text-black"
+    placeholder="Type your review here. Make sure to properly (but briefly) explain why you want to approve or deny this request."
+  />
+
+  <svelte:fragment slot="footer">
+    <span class="text-bold w-full text-black">Drafting stage</span>
+    <Button
+      color="green"
+      on:click={() => {
+        approvalStatus = "Approval";
+      }}
+    >
+      Approve
+    </Button>
+    <Button
+      color="red"
+      on:click={() => {
+        approvalStatus = "Denial";
+      }}
+    >
+      Deny
+    </Button>
+  </svelte:fragment>
 </Modal>

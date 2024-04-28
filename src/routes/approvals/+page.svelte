@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import ModalAdd from "./ModalAdd.svelte";
-  import ModalReview from "./ModalReview.svelte";
+  import ModalReadonly from "./ModalReadonly.svelte";
+  import ModalReviewAdd from "./ModalReviewAdd.svelte";
   import {
     overallStatusChecker,
     statusChecker,
@@ -12,6 +13,7 @@
   let defaultModal = false;
   let selectedItem: ItemType;
   let addReview = false;
+  let approvalStatus: "Approval" | "Denial" | undefined;
 
   const items: ItemType[] = data.requests
     .filter((request) => request.facility || request.equipment)
@@ -141,7 +143,21 @@
 </div>
 
 {#if addReview}
-  <ModalAdd bind:defaultModal {selectedItem} />
+  {#if approvalStatus}
+    <ModalReviewAdd
+      bind:defaultModal
+      {selectedItem}
+      bind:addReview
+      bind:approvalStatus
+    />
+  {:else}
+    <ModalAdd
+      bind:defaultModal
+      {selectedItem}
+      bind:addReview
+      bind:approvalStatus
+    />
+  {/if}
 {:else}
-  <ModalReview bind:defaultModal {selectedItem} />
+  <ModalReadonly bind:defaultModal {selectedItem} bind:addReview {data} />
 {/if}

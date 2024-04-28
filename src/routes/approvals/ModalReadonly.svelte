@@ -1,11 +1,14 @@
 <script lang="ts">
+  import type { PageData } from "./$types";
   import {
     overallStatusChecker,
     statusChecker,
     type ItemType,
   } from "./helperFunctions";
   import { Modal } from "flowbite-svelte";
+  export let data: PageData;
   export let defaultModal: boolean;
+  export let addReview: boolean;
   export let selectedItem: ItemType;
 </script>
 
@@ -20,6 +23,19 @@
       <p class="text-gray-500 {overallStatusChecker(selectedItem).class}">
         Overall status: {overallStatusChecker(selectedItem).text}
       </p>
+      {#if selectedItem.adminsStatus.find((status) => status.id === data.user.admin?.id)?.status === "WAITING"}
+        <button
+          class="text-black hover:underline"
+          type="button"
+          on:click={() => {
+            addReview = true;
+            defaultModal = true;
+          }}
+        >
+          Add a review
+        </button>
+        <span class="text-black">{">"}</span>
+      {/if}
     </div>
   </div>
 
