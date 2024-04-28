@@ -34,7 +34,11 @@ export const overallStatusChecker = (item: ItemType) => {
   return { class: "font-medium text-yellow-600", text: "WAITING" }
 }
 
-export const statusChecker = (adminStatus: ItemType["adminsStatus"][0]) => {
+export const statusChecker = (
+  adminStatus: ItemType["adminsStatus"][0] | undefined
+) => {
+  if (!adminStatus) return
+
   let reason: string = adminStatus.reason
   if (!adminStatus.reason || reason === "") {
     reason = "[No reason was given.]"
