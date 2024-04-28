@@ -12,7 +12,7 @@
   export let selectedItem: ItemType;
 </script>
 
-<Modal title="Request Review" bind:open={defaultModal} autoclose outsideclose>
+<Modal title="Request Review" bind:open={defaultModal} autoclose>
   <div class="flex items-center">
     <img src={selectedItem.place.image} alt="" class="mr-4 h-16" />
     <div>

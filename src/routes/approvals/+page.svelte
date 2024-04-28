@@ -14,6 +14,7 @@
   let selectedItem: ItemType;
   let addReview = false;
   let approvalStatus: "Approval" | "Denial" | undefined;
+  let reviewText: string = "";
 
   const items: ItemType[] = data.requests
     .filter((request) => request.facility || request.equipment)
@@ -55,21 +56,21 @@
           );
           let pText: string;
           switch (status?.text) {
-            case "REJECTED":
-              pText = "You denied this request.";
+            case "DENIED":
+              pText = "You denied this roam.";
               break;
             case "APPROVED":
-              pText = "You approved this request.";
+              pText = "You approved this roam.";
               break;
             case "WAITING":
-              pText = "You haven't reviewed this request yet.";
+              pText = "You haven't reviewed this roam yet.";
               break;
             default:
               pText = "";
               break;
           }
           return {
-            id: item.place.id,
+            id: item.requestId,
             text: pText,
             status: status?.text,
             class: status?.class,
@@ -98,11 +99,11 @@
                 <br />
                 <span
                   class={selfAdminStatus?.find(
-                    (status) => item.place.id === status.id,
+                    (status) => item.requestId === status.id,
                   )?.class}
                 >
                   {selfAdminStatus?.find(
-                    (status) => item.place.id === status.id,
+                    (status) => item.requestId === status.id,
                   )?.text}
                 </span>
               {/if}
@@ -113,7 +114,7 @@
               </p>
             </td>
             <td>
-              {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.place.id === status.id)?.status === "WAITING"}
+              {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
                 <button
                   on:click={() => {
                     defaultModal = true;
@@ -147,12 +148,14 @@
     <ModalReviewAdd
       bind:defaultModal
       {selectedItem}
-      bind:addReview
       bind:approvalStatus
+      bind:reviewText
+      {data}
     />
   {:else}
     <ModalAdd
       bind:defaultModal
+      bind:reviewText
       {selectedItem}
       bind:addReview
       bind:approvalStatus

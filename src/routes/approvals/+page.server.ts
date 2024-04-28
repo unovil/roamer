@@ -67,13 +67,14 @@ export const actions = {
   approve: async ({ request }) => {
     const formData = Object.fromEntries(await request.formData())
     //{ itemId: '8', type: 'facility', adminId: '24' }
-    const { type, adminId, requestId } = formData as {
+    const { type, adminId, requestId, reasonText } = formData as {
       type: "facility" | "equipment"
       adminId: string
       requestId: string
+      reasonText: string
     }
 
-    if (!type || !adminId || !requestId) {
+    if (!type || !adminId || !requestId || !reasonText) {
       throw error(400, "Invalid request, missing fields")
     }
 
@@ -110,6 +111,7 @@ export const actions = {
       throw error(400, "Invalid request, no admin found")
     }
     adminStatus.requestStatus = "APPROVED"
+    adminStatus.reason = reasonText
 
     await db.request.update({
       where: { id: parsedRequestId },
@@ -160,13 +162,14 @@ export const actions = {
   deny: async ({ request }) => {
     const formData = Object.fromEntries(await request.formData())
     //{ itemId: '8', type: 'facility', adminId: '24' }
-    const { type, adminId, requestId } = formData as {
+    const { type, adminId, requestId, reasonText } = formData as {
       type: "facility" | "equipment"
       adminId: string
       requestId: string
+      reasonText: string
     }
 
-    if (!type || !adminId || !requestId) {
+    if (!type || !adminId || !requestId || !reasonText) {
       throw error(400, "Invalid request")
     }
 
@@ -203,6 +206,7 @@ export const actions = {
       throw error(400, "Invalid request")
     }
     adminStatus.requestStatus = "REJECTED"
+    adminStatus.reason = reasonText
 
     await db.request.update({
       where: { id: parsedRequestId },
