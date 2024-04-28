@@ -8,7 +8,11 @@ export const load: PageServerLoad = async (event) => {
   }
 
   const user = await db.user.findUnique({
-    select: { role: true, student: true, admin: true },
+    select: {
+      role: true,
+      student: true,
+      admin: true
+    },
     where: { id: event.locals.user.id }
   })
 
