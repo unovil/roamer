@@ -12,32 +12,19 @@
     : [];
 </script>
 
-<a href={`${$page.url}/booking`}>Book now</a>
-<br />
-
 {#if data.isBookSuccess}
   <p>Booking success!</p>
 {/if}
 
 <br />
 
-Name
-<h1>{data.equipment.name}</h1>
+<div class="mx-auto max-w-screen-lg">
+  <div class="flex justify-between">
+    <img class="h-1/4 w-1/4" src={`/${data.equipment.image}`} alt="" />
+    <div class="custom-margin justify-items-start">
+      <h1>{data.equipment.name}</h1>
 <br />
-
-Blocked Dates
-{#each blockedDates as date}
-  <p>
-    {new Date(date.start).toLocaleString()} - {new Date(
-      date.end,
-    ).toLocaleString()}
-  </p>
-{/each}
-<br />
-<br />
-
-Admins
-{#each admins as admin (admin.id)}
+      {#each admins as admin (admin.id)}
   <p>
     {admin.user.firstName + " " + admin.user.lastName}
     <i>({admin.user.email})</i>
@@ -45,13 +32,40 @@ Admins
 {/each}
 <br />
 
-Department
 <p>{data.equipment.department}</p>
 <br />
+    </div>
 
-Description
-<p>{data.equipment.description}</p>
-<br />
+    <div class="text-right">
+      <a
+        href={`${$page.url}/booking`}
+        class="inline-block rounded bg-log-in-green px-4 py-2 font-bold text-white hover:bg-green-500"
+      >
+        Roam
+      </a>
+    </div>
+  </div>
 
-Image
-<img src={`/${data.equipment.image}`} alt="" />
+  <div class="mt-4 max-h-screen rounded border border-gray-300 p-4">
+    <table class="w-full table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 font-bold text-xl">Blocked Dates</th>
+          <th class="px-4 py-2 font-bold text-xl">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each blockedDates as date}
+          <tr>
+            <td class="border px-4 py-2">
+              {new Date(date.start).toLocaleString()} - {new Date(
+      date.end,
+    ).toLocaleString()}
+            </td>
+            <td class="border px-4 py-2">{data.equipment.description}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { overallStatusChecker, statusChecker, type ItemType } from "./helperFunctions";
+  import {
+    overallStatusChecker,
+    statusChecker,
+    type ItemType,
+  } from "./helperFunctions";
   import { Modal, Button } from "flowbite-svelte";
   let defaultModal = false;
   let selectedItem: ItemType;
@@ -31,13 +35,17 @@
                 {item.students.length} students
               </td>
               <td>
-                <p class={overallStatusChecker(item).class}>{overallStatusChecker(item).text}</p>
+                <p class={overallStatusChecker(item).class}>
+                  {overallStatusChecker(item).text}
+                </p>
               </td>
               <td>
-                <button on:click={() => {
-                  defaultModal = true;
-                  selectedItem = item;
-                  }}>
+                <button
+                  on:click={() => {
+                    defaultModal = true;
+                    selectedItem = item;
+                  }}
+                >
                   See reviews {">"}
                 </button>
               </td>
@@ -51,10 +59,15 @@
 
 <Modal title="Request Review" bind:open={defaultModal} autoclose outsideclose>
   <div class="flex items-center">
-    <img src={selectedItem.place.image} alt="" class="h-16 mr-4">
+    <img src={selectedItem.place.image} alt="" class="mr-4 h-16" />
     <div>
-      <h1 class="text-xl">{selectedItem.place.name} <i>({selectedItem.placeType})</i></h1>
-      <p class="text-gray-500 {overallStatusChecker(selectedItem).class}">Overall status: {overallStatusChecker(selectedItem).text}</p>
+      <h1 class="text-xl">
+        {selectedItem.place.name}
+        <i>({selectedItem.placeType})</i>
+      </h1>
+      <p class="text-gray-500 {overallStatusChecker(selectedItem).class}">
+        Overall status: {overallStatusChecker(selectedItem).text}
+      </p>
     </div>
   </div>
 
@@ -69,11 +82,17 @@
   </details>
 
   {#each selectedItem.adminsStatus as status}
-    <p class="text-black">{status.name} - <span class={statusChecker(status).class}>{statusChecker(status).text}</span></p>
-    <textarea 
-      readonly 
-      class="bg-gray-200 text-gray-700 p-2 rounded w-full h-32 resize-none" 
-      value={statusChecker(status).reason}/>
+    <p class="text-black">
+      {status.name} -
+      <span class={statusChecker(status).class}>
+        {statusChecker(status).text}
+      </span>
+    </p>
+    <textarea
+      readonly
+      class="h-32 w-full resize-none rounded bg-gray-200 p-2 text-gray-700"
+      value={statusChecker(status).reason}
+    />
   {/each}
 
   <p class="text-black">Further information:</p>
@@ -94,7 +113,5 @@
         {/each}
       </tbody>
     </table>
-    
   </details>
-
 </Modal>

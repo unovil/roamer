@@ -10,7 +10,7 @@ export type ItemType = {
   adminsStatus: {
     name: string
     id: number
-    status: PrismaJson.RequestStatus,
+    status: PrismaJson.RequestStatus
     reason: string
   }[]
   students: {
@@ -24,14 +24,14 @@ export type ItemType = {
 
 export const overallStatusChecker = (item: ItemType) => {
   if (item.adminsStatus.every((status) => status.status === "REJECTED")) {
-    return {class: "font-medium text-red-600", text: "DENIED"}
+    return { class: "font-medium text-red-600", text: "DENIED" }
   }
 
   if (item.adminsStatus.every((status) => status.status === "APPROVED")) {
-    return {class: "font-medium text-green-600", text: "APPROVED"}
+    return { class: "font-medium text-green-600", text: "APPROVED" }
   }
-  
-  return {class: "font-medium text-yellow-600", text: "WAITING"}
+
+  return { class: "font-medium text-yellow-600", text: "WAITING" }
 }
 
 export const statusChecker = (adminStatus: ItemType["adminsStatus"][0]) => {
@@ -41,13 +41,13 @@ export const statusChecker = (adminStatus: ItemType["adminsStatus"][0]) => {
   }
 
   if (adminStatus.status === "REJECTED") {
-    return {class: "font-medium text-red-600", text: "DENIED", reason}
+    return { class: "font-medium text-red-600", text: "DENIED", reason }
   }
 
   if (adminStatus.status === "APPROVED") {
-    return {class: "font-medium text-green-600", text: "APPROVED", reason}
+    return { class: "font-medium text-green-600", text: "APPROVED", reason }
   }
 
-  reason = "Reason to be given."  
-  return {class: "font-medium text-yellow-600", text: "WAITING", reason}
+  reason = "Reason to be given."
+  return { class: "font-medium text-yellow-600", text: "WAITING", reason }
 }

@@ -22,7 +22,7 @@
             name: `${admin.user.firstName} ${admin.user.lastName}`,
             id: admin.id,
             status: status?.requestStatus || "WAITING",
-            reason: status?.reason || ""
+            reason: status?.reason || "",
           };
         }),
         students: request.students.map((student) => {
