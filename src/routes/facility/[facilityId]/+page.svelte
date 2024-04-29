@@ -12,42 +12,40 @@
     : [];
 </script>
 
-<div
-  class="grid h-screen grid-cols-3 grid-rows-8 bg-white text-center"
-  style="grid-template-columns: 15% 70% 15%;"
->
-  <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col  items-center">
-    <div class="flex items-start">
-      <div
-  class="grid grid-cols-2 grid-rows-1 bg-white text-center"
-  style="grid-template-columns: 20% 20% 60%;"
->
-      <img class="w-20 h-20 ml-0" src={`/${data.facility.image}`} alt="" />
-
-      <div class ="mx-1">
+<div class="mx-auto max-w-screen-lg">
+  <div class="flex justify-between">
+    <div class="flex">
+      <img class="h-1/4 w-1/4 mr-10" src={`/${data.facility.image}`} alt="" />
+      <div class="justify-items-start mr-30">
         <h1>{data.facility.name}</h1>
-        
-        <p class = "font-semibold">Admin: {#each admins as admin (admin.id)}
+        <br />
+        {#each admins as admin (admin.id)}
           <p>
             {admin.user.firstName + " " + admin.user.lastName}
             <i>({admin.user.email})</i>
           </p>
-        {/each}</p>
-        
-        <p class = "font-semibold">Department: {data.facility.department}</p>
-
-        
+        {/each}
+        DEPARTMENT:
+        <p>{data.facility.department}</p>
+        <br />
       </div>
-      <a href={`${$page.url}/booking`} class="ml-auto mt-5 bg-log-in-green  text-white shadow transition duration-300 ease-in-out hover:bg-green-500 font-bold py-2 px-4 rounded">Roam</a>
     </div>
-</div>
-    <br />
-    {#if data.isBookSuccess}
-    <p class ="ml-96">Booking success!</p>
-  {/if}
-    <div class=" shadow p-4 border border-gray-300 rounded grid grid-cols-2 gap-4 mt-4 w-4/5 h-full">
-      <div>
-        <h2 class = "font-bold text-xl text-log-in-green">Blocked Dates</h2>
+
+    <div class="text-right">
+      <a href={`${$page.url}/booking`} class="inline-block bg-log-in-green hover:bg-green-500 text-white font-bold py-2 px-4 rounded">Roam</a>
+    </div>
+  </div>
+
+
+  <div class="mt-4 max-h-screen rounded border border-gray-300 p-4">
+    <table class="w-full table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 text-xl font-bold">Blocked Dates</th>
+          <th class="px-4 py-2 text-xl font-bold">Description</th>
+        </tr>
+      </thead>
+      <tbody>
         {#each blockedDates as date}
           <tr>
             <td class="border px-4 py-2">
@@ -58,12 +56,7 @@
             <td class="border px-4 py-2">{data.facility.description}</td>
           </tr>
         {/each}
-      </div>
-
-      <div>
-        <h2 class = "font-bold text-xl text-log-in-green">Description</h2>
-        <p>{data.facility.description}</p>
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </div>

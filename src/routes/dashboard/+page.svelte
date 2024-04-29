@@ -3,13 +3,14 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
-
+  import { Search, Button } from 'flowbite-svelte';
+  
   export let data: PageData;
   let searchTerm: string | null = null;
   let searchCategory: string;
 </script>
 
-<div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
+<div class="flex h-full w-full flex-col items-center  bg-gradient-to-r from-green-100 via-green-200 to-green-300 p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-7xl font-semibold">
@@ -36,7 +37,7 @@
             type="text"
             bind:value={searchTerm}
             placeholder="Search..."
-            class="mb-2 mr-2 flex-grow rounded-md border border-gray-300 p-2 shadow"
+            class="mb-2 mr-2 flex-grow w-full rounded-md border border-gray-300 p-2 shadow"
           />
           <select
             name="searchCategory"
