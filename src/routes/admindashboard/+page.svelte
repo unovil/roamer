@@ -5,7 +5,7 @@
 </script>
 
 <div
-  class="flex h-full w-full flex-col items-center bg-white bg-gradient-to-r from-green-100 via-green-200 to-green-300 p-4 text-center"
+  class="flex h-full w-full flex-col items-center p-4 text-center"
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex h-full flex-col">
     <main>
@@ -45,7 +45,7 @@
               </td>
               <td class="w-1/4">{facility.department}</td>
               <td>
-                <img src={facility.image} class="h-32" alt={facility.name} />
+                <img src={facility.image} class="h-32 " alt={facility.name} />
               </td>
             </tr>
           {/each}

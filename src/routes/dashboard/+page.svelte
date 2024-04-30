@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
-  import { Search, Button } from "flowbite-svelte";
+  import { Table } from 'flowbite-svelte';
 
   export let data: PageData;
   let searchTerm: string | null = null;
@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="flex h-full w-full flex-col items-center bg-gradient-to-r from-green-100 via-green-200 to-green-300 p-4 text-center"
+  class="flex h-full w-full flex-col items-center  p-4 text-center"
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
@@ -56,6 +56,8 @@
           />
         </div>
       </form>
+    </main>
+  </div>
 
       <div class="mt-20 flex justify-between">
         <div class="mr-10 w-1/2 rounded-md border border-gray-300 p-4 shadow">
@@ -87,8 +89,4 @@
         </div>
       </div>
       <ul></ul>
-    </main>
-
-    <br />
-  </div>
 </div>

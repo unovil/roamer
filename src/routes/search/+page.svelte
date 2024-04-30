@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
-
+  import { Spinner, Heading} from 'flowbite-svelte';
   export let data: PageData;
   let searchTerm = data.searchTerm;
   let searchCategory = data.searchCat;
@@ -51,14 +51,14 @@
 
 {#if searchTerm}
   <div
-    class="mx-auto mt-10 h-full w-3/5 justify-items-center rounded-lg border-2 border-gray-300 p-4"
+    class="mx-auto mt-10 h-screen w-3/5 justify-items-center rounded-lg border-2 border-gray-300 p-4"
   >
     <table>
       {#if typeof results !== "undefined" && results !== null}
         {#each results as result (result.id)}
           <tr>
             <td>
-              <img src={result.image} alt={result.name} class="h-20 w-20" />
+              <img src={result.image} alt={result.name} class="h-20 w-80" />
             </td>
             <td>
               <a
@@ -78,9 +78,10 @@
             </td>
           </tr>
         {:else}
-          <div class="flex justify-items-center h-full">
-            <span class="font-bold">No results found</span>
-          </div>
+        <div class="items-center">
+          <Heading tag="h1" class="mb-4 text-3xl text-center" >No results found.</Heading>
+          <Spinner color="green" size={10}/>
+        </div>
         {/each}
       {/if}
     </table>
