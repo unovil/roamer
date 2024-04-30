@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import type { ActionData, PageData } from "./$types";
+  import { Button, Table } from 'flowbite-svelte';
 
   export let data: PageData;
   export let form: ActionData;
@@ -110,7 +111,8 @@
     }
 
     if (new Date(startDate) >= new Date(endDate)) {
-      datesError = "Start date must be before end date.";
+      datesError = "Start date must be before end date."
+     ;
       return;
     }
 
@@ -149,14 +151,20 @@
   };
 </script>
 
-<p>
-  You are now roaming for: <b>{data.facility.name}</b>
-</p>
-
+<div class="flex flex-col mx-auto max-w-screen-lg">
+  
+  <div class="flex flex-col items-start sticky top-20 bottom-10 bg-white dark:bg-black z-10">
+  <p class = "text-4xl font-bold mb-3 mt-6"> Roaming for:</p>
+  <div class="flex items-center">
+    <img class="mr-5 h-52 w-52" src={`/${data.facility.image}`} alt="" />
+    <p class = "text-3xl"><b>{data.facility.name}</b></p>
+  </div>
+</div>
 {#if form?.error}
-  <p>{form?.error}</p>
+  <p  class = "text-red-600 font-semibold">{form?.error}</p>
 {/if}
 <br />
+
 
 <form
   method="post"
@@ -169,53 +177,57 @@
     };
   }}
 >
-  <p>1. Roam for who?</p>
+<Table class ="h-full">
+  <caption class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">
+    1. Roam for who?
+    </caption>
 
-  <div class="max-h-[250px] overflow-auto">
+  <div class="max-h-[300px] overflow-auto">
     <table>
       <thead>
         <tr class="sticky top-0 bg-white">
-          <th class="text-left">
-            <div>Select</div>
-            <div>
+          <th class="text-center">
+            <div class = "mr-1 text-lg text-black">Select</div>
+            <div class ="ml-0">
               <input
                 type="checkbox"
+                class="ml-4 text-green-500"
                 bind:checked={selectAll}
                 on:change={toggleAll}
               />
             </div>
           </th>
-          <th class="text-left">
-            <div>Name</div>
+          <th class="text-center">
+            <div class = "text-lg text-black">Name</div>
             <div>
               <input
                 type="text"
                 placeholder="Filter by name..."
-                class="w-full text-left font-normal"
+                class="font-normal text-left w-full rounded-md"
                 bind:value={searchName}
                 on:input={checkWhetherSelectedAll}
               />
             </div>
           </th>
-          <th class="text-left">
-            <div>Email</div>
+          <th class="text-center">
+            <div class = "text-lg text-black">Email</div>
             <div>
               <input
                 type="text"
                 placeholder="Filter by email..."
-                class="w-full text-left font-normal"
+                class="font-normal text-left w-full rounded-md"
                 bind:value={searchEmail}
                 on:input={checkWhetherSelectedAll}
               />
             </div>
           </th>
-          <th class="text-left">
-            <div>Section</div>
+          <th class="text-center">
+            <div class = "text-lg text-black">Section</div>
             <div>
               <input
                 type="text"
                 placeholder="Filter by section..."
-                class="w-full text-left font-normal"
+                class="font-normal text-left w-full rounded-md"
                 bind:value={searchSection}
                 on:input={checkWhetherSelectedAll}
               />
@@ -229,84 +241,62 @@
             <td>
               <input
                 type="checkbox"
+                class = "ml-4 text-green-500"
                 checked={checkedStudentIds.has(student.id)}
                 disabled={student.id === data.userStudentId}
                 on:change={() =>
                   (checkedStudentIds = toggleCheck(
                     student.id,
-                    checkedStudentIds,
+                    checkedStudentIds
                   ))}
               />
             </td>
-            <td>{student.lastName}, {student.firstName}</td>
-            <td>{student.email}</td>
-            <td>{student.grade} - {student.section}</td>
+            <td class = "text-black text-base">{student.lastName}, {student.firstName}</td>
+            <td class = "text-black text-base">{student.email}</td>
+            <td class = "text-black text-base">{student.grade} - {student.section}</td>
           </tr>
         {/each}
       </tbody>
     </table>
   </div>
-
+</Table>
   <br />
 
-  <p>2. Roam for what dates?</p>
-  <p>Note that these dates are not available:</p>
+  <p class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">2. Roam for what dates?</p>
+  <div class = "justify-center">
+  <p class = "font-bold flex text-lg">BLOCKED DATES:</p>
   <ul>
     {#each data.facility.blockedDates as date}
-      <li>
-        {new Date(date.start).toLocaleString()} to {new Date(
-          date.end,
+      <li class ="font-medium">
+        {new Date(date.start).toLocaleString()} - {new Date(
+          date.end
         ).toLocaleString()}
       </li>
     {/each}
   </ul>
+</div>
   <br />
 
   <table>
-    <thead></thead>
+    <thead class = "font-bold flex text-lg"> REQUESTING FOR THE FOLLOWING: </thead>
     <tbody>
       {#each requestDates as requestDateRange (requestDateRange.id)}
-        <tr>
-          <td>
-            {new Date(requestDateRange.start).toLocaleString()} to {new Date(
-              requestDateRange.end,
-            ).toLocaleString()}
-          </td>
-          <td>
-            <button
-              type="button"
-              on:click={() => {
-                datesRemove(requestDateRange.id);
-              }}
-            >
-              Remove
-            </button>
-          </td>
-          <td></td>
-        </tr>
+      <tr>
+        <td class = "font-semibold mb-4 mt-4">{new Date(requestDateRange.start).toLocaleString()} to {new Date(requestDateRange.end).toLocaleString()}</td>
+        <td>
+          <Button color="red" class = "mr-2"pill on:click={()=>{datesRemove(requestDateRange.id)}}> Remove</Button></td>
+        <td></td>
+      </tr>
       {/each}
       <tr>
         <td>
-          <input
-            type="datetime-local"
-            bind:value={startDate}
-            on:change={() => {
-              datesError = "";
-            }}
-          />
-          (start) to
-          <input
-            type="datetime-local"
-            bind:value={endDate}
-            on:change={() => {
-              datesError = "";
-            }}
-          />
-          (end)
+          <input type="datetime-local" class ="rounded-md" bind:value={startDate} on:change={()=>{datesError = ""}} /> to
+          <input type="datetime-local" class ="rounded-md" bind:value={endDate} on:change={()=>{datesError = ""}}/> 
         </td>
 
-        <td><button type="button" on:click={datesAdd}>Add</button></td>
-        <td>{datesError}</td>
+        <td> 
+        <Button color="green" class = "mr-2 ml-2"pill on:click={datesAdd}> Add</Button></td>
+        <td class ="text-red-600 font-semibold">{datesError}</td>
       </tr>
     </tbody>
   </table>
@@ -314,26 +304,26 @@
 
   <br />
 
-  <p>3. Why do you need this facility?</p>
+  <p class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">3. Describe the roam</p>
   <p>
     <i
       class={descriptionText.length > 1500
-        ? "font-bold text-red-600"
+        ? "text-red-600 font-bold"
         : "text-gray-400"}
-    >
-      {descriptionText.length}/1500 characters
+            >
+      <p class = "flex justify-end">{descriptionText.length}/1500 characters</p>
     </i>
   </p>
   <textarea
     name="requestDescription"
+    class = "h-80 w-full"
     bind:value={descriptionText}
     contenteditable
-  ></textarea>
-  <br />
+  ></textarea> <br />
 
   <br />
 
-  <p>3. Final Information</p>
+  <p class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">4. Final Information</p>
   <b>
     You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size >
     1
@@ -353,15 +343,13 @@
   <b>To have a successful application, the Roam should be approved by:</b>
   <ul>
     {#each data.admins as admin (admin.id)}
-      <li>
-        {admin.firstName}
-        {admin.lastName}
-        <i>({admin.email})</i>
-      </li>
+      <li>{admin.firstName} {admin.lastName} <i>({admin.email})</i></li>
     {/each}
   </ul>
 
   <br />
 
-  <button type="submit">Submit Roam</button>
+  <Button color="green" pill type="submit" size ="lg">Submit Roam</Button>
 </form>
+</div>
+

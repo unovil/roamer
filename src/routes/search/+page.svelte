@@ -58,7 +58,7 @@
         {#each results as result (result.id)}
           <tr>
             <td>
-              <img src={result.image} alt={result.name} class="h-20 w-80" />
+              <img src={result.image} alt={result.name} class="h-auto w-auto object-contain" />
             </td>
             <td>
               <a
