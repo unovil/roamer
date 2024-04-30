@@ -80,66 +80,68 @@
 </script>
 
 <div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
-  <p class="mb-5 mt-0 text-7xl font-bold">Approvals</p>
+  <p class="mb-5 mt-0 text-6xl font-bold">Approvals</p>
   <div
-    class="mt-4 flex w-4/5 flex-col items-center rounded-md border border-gray-300 p-4 shadow"
+    class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md border border-gray-300 p-4 shadow"
   >
-    <table class="w-full">
-      <thead></thead>
-      <tbody class="space-y-5 divide-y divide-gray-200">
-        <!-- TODO: FAULTY STYLE -->
-        {#each items as item (item.requestId)}
-          <tr>
-            <td><img src={item.place.image} alt="" class="h-12 w-12" /></td>
-            <td class="font-medium">
-              {item.place.name}
-              <br />
-              {item.students.length} students
-              {#if data.isValidAdmin}
+    <div class="h-sc w-full rounded-lg border-2 border-gray-300 p-4">
+      <table class="w-full">
+        <thead></thead>
+        <tbody class="space-y-5 divide-y divide-gray-200">
+          <!-- TODO: FAULTY STYLE -->
+          {#each items as item (item.requestId)}
+            <tr>
+              <td><img src={item.place.image} alt="" class="h-12 w-12" /></td>
+              <td class="font-medium">
+                {item.place.name}
                 <br />
-                <span
-                  class={selfAdminStatus?.find(
-                    (status) => item.requestId === status.id,
-                  )?.class}
-                >
-                  {selfAdminStatus?.find(
-                    (status) => item.requestId === status.id,
-                  )?.text}
-                </span>
-              {/if}
-            </td>
-            <td>
-              <p class={overallStatusChecker(item).class}>
-                {overallStatusChecker(item).text}
-              </p>
-            </td>
-            <td>
-              {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
-                <button
-                  on:click={() => {
-                    defaultModal = true;
-                    selectedItem = item;
-                    addReview = true;
-                  }}
-                >
-                  Add a review {">"}
-                </button>
-              {:else}
-                <button
-                  on:click={() => {
-                    defaultModal = true;
-                    selectedItem = item;
-                    addReview = false;
-                  }}
-                >
-                  See reviews {">"}
-                </button>
-              {/if}
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+                {item.students.length} students
+                {#if data.isValidAdmin}
+                  <br />
+                  <span
+                    class={selfAdminStatus?.find(
+                      (status) => item.requestId === status.id,
+                    )?.class}
+                  >
+                    {selfAdminStatus?.find(
+                      (status) => item.requestId === status.id,
+                    )?.text}
+                  </span>
+                {/if}
+              </td>
+              <td>
+                <p class={overallStatusChecker(item).class}>
+                  {overallStatusChecker(item).text}
+                </p>
+              </td>
+              <td>
+                {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
+                  <button
+                    on:click={() => {
+                      defaultModal = true;
+                      selectedItem = item;
+                      addReview = true;
+                    }}
+                  >
+                    Add a review {">"}
+                  </button>
+                {:else}
+                  <button
+                    on:click={() => {
+                      defaultModal = true;
+                      selectedItem = item;
+                      addReview = false;
+                    }}
+                  >
+                    See reviews {">"}
+                  </button>
+                {/if}
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -15,7 +15,7 @@
 >
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
-      <h1 class="text-7xl font-semibold">
+      <h1 class="text-6xl font-semibold">
         Welcome, <strong>{data.userInfo.firstName}</strong>
         !
       </h1>
