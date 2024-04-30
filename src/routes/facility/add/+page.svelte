@@ -5,6 +5,7 @@
   import type { ActionData } from "./$types";
   import type { PageData } from "./$types";
   import { Department } from "@prisma/client";
+  import { Heading, Table, Button } from 'flowbite-svelte';
 
   export let form: ActionData;
   export let data: PageData;
@@ -88,11 +89,17 @@
   };
 </script>
 
-{#if form?.error}
-  <p>{form.error}</p>
-{/if}
 
-<h1>Add a facility.</h1>
+
+<div class="flex flex-col mx-auto max-w-screen-lg">
+ 
+
+  <Heading tag="h1" customSize="text-5xl font-extrabold" class = "flex justify-center sticky top-5">
+    Add a facility
+  </Heading>
+  {#if form?.error}
+  <p class = "text-red-600 font-semibold flex justify-center text-base">{form.error}</p>
+{/if}
 
 <form
   method="post"
@@ -105,18 +112,18 @@
   }}
   enctype="multipart/form-data"
 >
-  <h3>Add a title.</h3>
-  <input type="text" name="title" placeholder="Facility Name" />
+  <h3 class="p-3 text-3xl font-bold text-left text-gray-900 dark:text-white">Add a title.</h3>
+  <input type="text" name="title" placeholder="Facility Name" class = "rounded-md w-full shadow"/>
   <br />
-
-  <h3>Add administrators.</h3>
-  <div class="max-h-[250px] overflow-auto">
-    <table>
-      <thead>
-        <tr class="sticky top-0 bg-white">
-          <th class="text-left">
-            <div>Select</div>
-            <div>
+  <Table class ="h-full shadow-md">
+    <caption class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">Add administrators.</caption>
+    <div class="max-h-[300px] overflow-auto">
+      <table>
+        <thead>
+          <tr class="sticky top-0 bg-white">
+            <th class="text-center">
+              <div class = "mr-1 text-lg text-black">Select</div>
+              <div class ="ml-0">
               <input
                 type="checkbox"
                 bind:checked={selectAll}
@@ -124,25 +131,25 @@
               />
             </div>
           </th>
-          <th class="text-left">
-            <div>Administrator</div>
+          <th class="text-center">
+            <div class = "text-lg text-black">Name</div>
             <div>
               <input
                 type="text"
                 placeholder="Filter by name..."
-                class="w-full text-left font-normal"
+                class="font-normal text-left w-full rounded-md"
                 bind:value={searchName}
                 on:input={checkWhetherSelectedAll}
               />
             </div>
           </th>
-          <th class="text-left">
-            <div>Email</div>
+          <th class="text-center">
+            <div class = "text-lg text-black">Email</div>
             <div>
               <input
                 type="text"
                 placeholder="Filter by email..."
-                class="w-full text-left font-normal"
+                class="font-normal text-left w-full rounded-md"
                 bind:value={searchEmail}
                 on:input={checkWhetherSelectedAll}
               />
@@ -156,38 +163,43 @@
             <td>
               <input
                 type="checkbox"
+                class = "ml-4 text-green-500"
                 checked={checkedAdminIds.has(admin.id)}
                 disabled={admin.id === data.adminInfo.id}
                 on:change={() =>
                   (checkedAdminIds = toggleCheck(admin.id, checkedAdminIds))}
               />
             </td>
-            <td>{admin.user.lastName}, {admin.user.firstName}</td>
-            <td>{admin.user.email}</td>
+            <td class = "text-black text-base">{admin.user.lastName}, {admin.user.firstName}</td>
+            <td class = "text-black text-base">{admin.user.email}</td>
           </tr>
         {/each}
       </tbody>
     </table>
   </div>
+  </Table>
   <br />
 
-  <h3>Add a description.</h3>
-  <textarea name="description" cols="30" rows="10" placeholder="Description" />
+  <h3 class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">Add a description.</h3>
+  <textarea name="description" cols="30" rows="10" placeholder="Description"  class = "h-80 w-full rounded-md border-gray-400 shadow" />
   <br />
 
-  <h3>Attach images.</h3>
+  <h3 class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">Attach images.</h3>
+  <div class = "flex justify-center">
   <input
     type="file"
     name="file"
+    class = "rounded-md w-full shadow"
     accept=".jpg, .jpeg, .png, .webp"
     on:change={onFileChange}
   />
   {#if previewUrl}
     <img src={previewUrl} alt="Preview" class="h-24" />
   {/if}
+</div>
 
-  <h3>Add a department.</h3>
-  <select name="department">
+  <h3 class="p-5 text-3xl font-bold text-left text-gray-900 dark:text-white">Add a department.</h3>
+  <select name="department" class = "rounded-md w-full border-gray-600 shadow-md">
     <option value="" selected disabled>Department</option>
     {#each Object.values(Department) as department}
       <option>{department}</option>
@@ -195,5 +207,8 @@
   </select>
 
   <br />
-  <button type="submit">Add a faculty</button>
+  <div class = "flex justify-center">
+  <Button color="green" pill type="submit" size ="xl" class = "mt-20">Add a facility</Button>
+  </div>
 </form>
+</div>

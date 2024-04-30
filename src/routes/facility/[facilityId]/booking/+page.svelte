@@ -155,10 +155,9 @@
   
   <div class="flex flex-col items-start sticky top-20 bottom-10 bg-white dark:bg-black z-10">
   <p class = "text-4xl font-bold mb-3 mt-6"> Roaming for:</p>
-  <div class="flex items-center">
-    <img class="mr-5 h-52 w-52" src={`/${data.facility.image}`} alt="" />
+  
+    <img class="mr-5 h-52" src={`/${data.facility.image}`} alt="" />
     <p class = "text-3xl"><b>{data.facility.name}</b></p>
-  </div>
 </div>
 {#if form?.error}
   <p  class = "text-red-600 font-semibold">{form?.error}</p>
