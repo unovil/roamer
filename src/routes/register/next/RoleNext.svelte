@@ -14,12 +14,14 @@
 
 {#if roleSelected == "student"}
   <form action="?/roleNext" method="post" use:enhance>
-    <label for="lrn">What is your LRN?</label> <br />
+    <label for="lrn">What is your LRN?</label>
+    <br />
     <input type="text" name="lrn" placeholder="LRN" />
 
     <br />
 
-    <label for="section">What section are you a part of?</label> <br />
+    <label for="section">What section are you a part of?</label>
+    <br />
     <select name="section" placeholder="Section">
       <option value="" disabled selected>Select a section</option>
       {#each sections as section (section.id)}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/stornpx prisma generatees";
   import type { PageData } from "./$types";
 
   export let data: PageData;
@@ -15,8 +15,8 @@
 <div class="mx-auto max-w-screen-lg">
   <div class="flex justify-between">
     <div class="flex">
-      <img class="h-1/4 w-1/4 mr-10" src={`/${data.facility.image}`} alt="" />
-      <div class="justify-items-start mr-30">
+      <img class="mr-10 h-1/4 w-1/4" src={`/${data.facility.image}`} alt="" />
+      <div class="mr-30 justify-items-start">
         <h1>{data.facility.name}</h1>
         <br />
         {#each admins as admin (admin.id)}
@@ -32,10 +32,14 @@
     </div>
 
     <div class="text-right">
-      <a href={`${$page.url}/booking`} class="inline-block bg-log-in-green hover:bg-green-500 text-white font-bold py-2 px-4 rounded">Roam</a>
+      <a
+        href={`${$page.url}/booking`}
+        class="inline-block rounded bg-log-in-green px-4 py-2 font-bold text-white hover:bg-green-500"
+      >
+        Roam
+      </a>
     </div>
   </div>
-
 
   <div class="mt-4 max-h-screen rounded border border-gray-300 p-4">
     <table class="w-full table-auto">
