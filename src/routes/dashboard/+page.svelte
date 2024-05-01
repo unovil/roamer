@@ -4,6 +4,7 @@
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Button } from "flowbite-svelte";
+  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
   export let data: PageData;
   let searchTerm: string | null = null;
@@ -15,7 +16,7 @@
 </svelte:head>
 
 <div class="flex h-full w-full flex-col items-center p-4 text-center">
-  <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
+
     <main>
       <h1 class="text-6xl font-semibold">
         Welcome, <strong>{data.userInfo.firstName}</strong>!
@@ -59,60 +60,66 @@
       </form>
     </main>
   </div>
-
-  <div class="mt-20 flex justify-between">
-    <div class="mr-10 w-1/2 rounded-md border border-gray-300 p-4 shadow">
-      <p class="text-lg font-bold">
-        Section: {data?.sectionInfo?.section ?? "null"}
-      </p>
-      <br />
-      <table>
-        <tr>
-          <th>Student</th>
-          <th>LRN</th>
-        </tr>
+  <div class = "mx-32">
+  <div class="mt-20 flex justify-between mx-5">
+    <div class="mr-2 w-3/4 h-screen rounded-md border border-gray-300 p-4 shadow">
+      <Table hoverable={true}>
+        <caption
+          class=" mb-5 text-center text-3xl font-bold text-green-900 dark:text-green-300"
+        >Section: {data?.sectionInfo?.section ?? "null"}</caption>
+      
+      <TableHead>
+        <TableHeadCell class = "text-base">Student</TableHeadCell>
+    <TableHeadCell class = "text-base">LRN</TableHeadCell>
+      </TableHead>
+       
+      <TableBody>
+        
         {#each data?.sectionInfo?.students ?? [] as student (student.id)}
-          <tr>
+        <TableBodyRow class = "text-black font-medium">
             <td>
               {student.user.firstName + " " + student.user.lastName}
               {#if student.user.id == data.userInfo.id}
                 <span class="italic text-gray-600">(You)</span>
               {/if}
-            </td>
+            </td >
             <td>{student.lrn}</td>
-          </tr>
+          </TableBodyRow>
         {/each}
-      </table>
+      </TableBody>
+      </Table>
     </div>
 
-    <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
-      <p class="text-lg font-bold">Recent bookings:</p>
-      <table>
+    <div class="ml-2 w-3/4 h-screen rounded-md border border-gray-300 p-4 shadow">
+      <caption
+          class=" mb-5 text-center text-3xl font-bold text-green-900 dark:text-green-300 flex justify-center"
+        >Recent Bookings: </caption>
+      <Table hoverable={true} Tableclass="space-y-10">
         {#if data?.mappedRequests && data?.mappedRequests.length > 0}
           {#each data?.mappedRequests as request}
-            <tr>
-              <td class="w-1/2 text-left"
-                ><div>
-                  {request.item?.name} <br />
-                  <span class={request.status.class}>{request.status.name}</span
-                  >
-                </div></td
-              >
-              <td>
+          <TableBodyRow>
+            <td class="pr-1 w-1/4">
                 <img
                   src={request.item?.image}
-                  class="h-32"
+                  class="h-24"
                   alt={request.item?.name}
                 />
               </td>
-            </tr>
+              
+              <td>
+                  <p class = "font-semibold text-black">{request.item?.name}</p>
+                  <span class={request.status.class}>{request.status.name}</span
+                  >
+                </td>
+              </TableBodyRow>
           {/each}
         {/if}
-      </table>
-      <Button color="green" pill class="mt-5">
-        <a href="/approvals">See your approvals ></a>
-      </Button>
+      </Table>
+      <div class="flex justify-center items-center">
+        <Button color="green" pill class="mt-5">
+          <a href="/approvals">See other roams ></a>
+        </Button>
+      </div>
     </div>
-  </div>
-  <ul></ul>
+</div>
 </div>
