@@ -3,6 +3,7 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
+  import { Button } from "flowbite-svelte";
 
   export let data: PageData;
   let searchTerm: string | null = null;
@@ -86,6 +87,31 @@
 
     <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
       <p class="text-lg font-bold">Recent bookings:</p>
+      <table>
+        {#if data?.mappedRequests && data?.mappedRequests.length > 0}
+          {#each data?.mappedRequests as request}
+            <tr>
+              <td class="w-1/2 text-left"
+                ><div>
+                  {request.item?.name} <br />
+                  <span class={request.status.class}>{request.status.name}</span
+                  >
+                </div></td
+              >
+              <td>
+                <img
+                  src={request.item?.image}
+                  class="h-32"
+                  alt={request.item?.name}
+                />
+              </td>
+            </tr>
+          {/each}
+        {/if}
+      </table>
+      <Button color="green" pill class="mt-5">
+        <a href="/approvals">See your approvals ></a>
+      </Button>
     </div>
   </div>
   <ul></ul>

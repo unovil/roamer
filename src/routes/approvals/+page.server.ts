@@ -40,6 +40,7 @@ export const load: PageServerLoad = async (event) => {
       requestStatus: true,
       requestDates: true,
       description: true,
+      dateCreated: true,
       facility: {
         select: { name: true, id: true, blockedDates: true, image: true }
       },

@@ -26,9 +26,9 @@
           : (request.equipment as NonNullable<typeof request.equipment>),
         requestId: request.id,
         adminsStatus: request.admins.map((admin) => {
-          const status = request.requestStatus.find(
-            (s) => s.adminId === admin.id,
-          );
+          const status = request.requestStatus
+            ? request.requestStatus.find((s) => s.adminId === admin.id)
+            : undefined;
           return {
             name: `${admin.user.firstName} ${admin.user.lastName}`,
             id: admin.id,
@@ -45,6 +45,7 @@
         }),
         requestDates: request.requestDates,
         description: request.description,
+        dateCreated: request.dateCreated,
       };
     });
 

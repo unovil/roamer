@@ -113,6 +113,7 @@ model Request {
   equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
   students      Student[]     @relation(name: "StudentToRequest")
   admins        Admin[]       @relation(name: "AdminToRequest")
+  dateCreated   DateTime      @default(now())
 
   facilityId  Int?
   equipmentId Int?
