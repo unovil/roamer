@@ -160,13 +160,13 @@
   >
     <p class="mb-3 mt-6 text-4xl font-bold">Roaming for:</p>
     <div class="flex items-center">
-      <img class="mr-5 h-52" src={`/${data.equipment.image}`} alt="" />
+      <img class="mr-5 h-24" src={`/${data.equipment.image}`} alt="" />
       <p class="text-3xl"><b>{data.equipment.name}</b></p>
     </div>
   </div>
 
   {#if form?.error}
-    <p>{form?.error}</p>
+    <p class="font-semibold text-red-600">{form?.error}</p>
   {/if}
   <br />
 
