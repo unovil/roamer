@@ -4,6 +4,9 @@
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Spinner, Heading } from "flowbite-svelte";
+  import { ArrowRightOutline } from "flowbite-svelte-icons";
+  import { Table, TableBodyRow } from "flowbite-svelte";
+
   export let data: PageData;
   let searchTerm = data.searchTerm;
   let searchCategory = data.searchCat;
@@ -49,28 +52,28 @@
 
 <br />
 
-{#if searchTerm}
-  <div
-    class="flex h-full w-full flex-col items-center bg-white p-4 text-center"
-  >
-    <table>
-      {#if typeof results !== "undefined" && results !== null}
-        {#each results as result (result.id)}
-          <tr>
-            <td>
-              <img
-                src={result.image}
-                alt={result.name}
-                class="h-32 w-32 object-contain"
-              />
-            </td>
-            <td>
-              <a
-                href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
-              >
+{#if data.searchCat === "equipment" || data.searchCat === "facility"}
+  {#if searchTerm}
+    <div
+      class="mx-auto flex h-screen w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow"
+    >
+      {#if typeof results !== "undefined" && results !== null && results.length > 0}
+        <Table>
+          {#each results as result (result.id)}
+            <TableBodyRow>
+              <td>
+                <img
+                  src={result.image}
+                  alt={result.name}
+                  class="h-48 w-48 object-contain"
+                />
+              </td>
+              <td>
                 <div class="ml-8">
-                  <h2 class="font-bold">{result.name}</h2>
-                  <p>
+                  <h2 class="text-lg font-bold text-green-700">
+                    {result.name}
+                  </h2>
+                  <p class="font-medium text-black">
                     {result.admins
                       .map((admin) => {
                         return admin.user.firstName + " " + admin.user.lastName;
@@ -78,18 +81,25 @@
                       .join(", ")}
                   </p>
                 </div>
-              </a>
-            </td>
-          </tr>
-        {:else}
-          <div class="items-center">
-            <Heading tag="h1" class="mb-4 text-3xl text-center">
-              No results found.
-            </Heading>
-            <Spinner color="green" size={10} />
-          </div>
-        {/each}
+              </td>
+              <td class="w-20">
+                <button>
+                  <a
+                    href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+                  >
+                    <ArrowRightOutline class="ms-2 h-16 w-16" />
+                  </a>
+                </button>
+              </td>
+            </TableBodyRow>
+          {/each}
+        </Table>
+      {:else}
+        <div class="text-center">
+          <Heading tag="h1" class="mb-4 text-3xl">No results found.</Heading>
+          <Spinner color="green" size={10} />
+        </div>
       {/if}
-    </table>
-  </div>
+    </div>
+  {/if}
 {/if}

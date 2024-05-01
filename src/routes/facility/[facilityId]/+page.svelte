@@ -36,8 +36,9 @@
     </div>
 
     <div class="text-right">
+      <!-- svelte-ignore missing-declaration -->
       <a
-        href={`${$page.url}/booking`}
+        href="/booking"
         class="inline-block rounded bg-log-in-green px-4 py-2 font-bold text-white hover:bg-green-500"
       >
         Roam

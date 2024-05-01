@@ -8,7 +8,7 @@
     statusChecker,
     type ItemType,
   } from "./helperFunctions";
-  import { Table, TableBodyRow } from 'flowbite-svelte';
+  import { Table, TableBodyRow } from "flowbite-svelte";
 
   export let data: PageData;
 
@@ -95,12 +95,14 @@
         <tbody class="space-y-10 divide-y divide-gray-200">
           <!-- TODO: FAULTY STYLE -->
           {#each items as item (item.requestId)}
-          <TableBodyRow class="h-20">
-            <td class="pr-1 w-20"><img src={item.place.image} alt="" class="h-16 w-16" /></td>
-            <td class="font-medium text-lg text-black">
+            <TableBodyRow class="h-20">
+              <td class="w-20 pr-1"
+                ><img src={item.place.image} alt="" class="h-16 w-16" /></td
+              >
+              <td class="text-lg font-medium text-black">
                 {item.place.name}
                 <br />
-                <p class = "text-green-700">{item.students.length} students </p>
+                <p class="text-green-700">{item.students.length} students</p>
                 {#if data.isValidAdmin}
                   <br />
                   <span
@@ -114,7 +116,7 @@
                   </span>
                 {/if}
               </td>
-              <td class = "font-semibold text-lg">
+              <td class="text-lg font-semibold">
                 <p class={overallStatusChecker(item).class}>
                   {overallStatusChecker(item).text}
                 </p>
@@ -122,19 +124,18 @@
               <td>
                 {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
                   <button
-                  class = "hover:bg-log-in-green font-semibold text-black text-lg" 
+                    class="text-lg font-semibold text-black hover:bg-log-in-green"
                     on:click={() => {
                       defaultModal = true;
                       selectedItem = item;
                       addReview = true;
                     }}
-                  
                   >
                     Add a review {">"}
                   </button>
                 {:else}
                   <button
-                  class = "hover:text-log-in-green font-semibold text-black text-lg" 
+                    class="text-lg font-semibold text-black hover:text-log-in-green"
                     on:click={() => {
                       defaultModal = true;
                       selectedItem = item;
