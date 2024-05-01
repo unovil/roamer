@@ -3,17 +3,24 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
+<<<<<<< HEAD
+  import { Table } from "flowbite-svelte";
+=======
   import { Button } from "flowbite-svelte";
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 
   export let data: PageData;
   let searchTerm: string | null = null;
   let searchCategory: string;
 </script>
 
+<<<<<<< HEAD
+=======
 <svelte:head>
   <title>Roamer | Dashboard</title>
 </svelte:head>
 
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 <div class="flex h-full w-full flex-col items-center p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
@@ -87,6 +94,8 @@
 
     <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
       <p class="text-lg font-bold">Recent bookings:</p>
+<<<<<<< HEAD
+=======
       <table>
         {#if data?.mappedRequests && data?.mappedRequests.length > 0}
           {#each data?.mappedRequests as request}
@@ -112,6 +121,7 @@
       <Button color="green" pill class="mt-5">
         <a href="/approvals">See your approvals ></a>
       </Button>
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
     </div>
   </div>
   <ul></ul>

@@ -51,8 +51,8 @@
     </div>
   </div>
 
-  <div class="mt-4 max-h-screen rounded border border-gray-300 p-4">
-    <table class="w-full table-auto">
+  <div class="max-h -screen mt-4 rounded border border-gray-300 p-4">
+    <table class="h-screen w-full table-auto">
       <thead>
         <tr>
           <th class="px-4 py-2 text-xl font-bold">Blocked Dates</th>

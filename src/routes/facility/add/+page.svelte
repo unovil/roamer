@@ -89,10 +89,13 @@
   };
 </script>
 
+<<<<<<< HEAD
+=======
 <svelte:head>
   <title>Roamer | Facility (Addition)</title>
 </svelte:head>
 
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 <div class="mx-auto flex max-w-screen-lg flex-col">
   <Heading
     tag="h1"
