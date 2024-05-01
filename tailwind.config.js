@@ -3,6 +3,7 @@ export default {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
     "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
+    "./node_modules/flowbite-svelte-icons/**/*.{html,js,svelte,ts}",
   ],
   theme: {
     extend: {
@@ -11,16 +12,17 @@ export default {
         "top-bar-green": "#059669",
 
         primary: {
-          50: "#FFF5F2",
-          100: "#FFF1EE",
-          200: "#FFE4DE",
-          300: "#FFD5CC",
-          400: "#FFBCAD",
-          500: "#FE795D",
-          600: "#EF562F",
-          700: "#EB4F27",
-          800: "#CC4522",
-          900: "#A5371B",
+          50: "#f3faf4",
+          100: "#e3f5e5",
+          200: "#c9e9cd",
+          300: "#9ed7a7",
+          400: "#6cbc79",
+          500: "#41904e",
+          600: "#378244",
+          700: "#2e6737",
+          800: "#28532f",
+          900: "#234429",
+          950: "#0f2414",
         },
       },
       fontFamily: {
