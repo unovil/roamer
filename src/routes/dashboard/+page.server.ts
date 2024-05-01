@@ -46,12 +46,46 @@ export const load: PageServerLoad = async (event) => {
     })
   }
 
+  const recentRequests = await db.request.findMany({
+    where: { students: { some: { id: user.student.id } } },
+    include: {
+      facility: true,
+      equipment: true
+    },
+    orderBy: [{ dateCreated: "desc" }, { id: "desc" }],
+    take: 3
+  })
+
+  const mappedRequests = recentRequests.map((request) => {
+    let status = { name: "WAITING", class: "font-medium text-yellow-600" }
+    if (
+      request.requestStatus.every(
+        (status) => status.requestStatus === "APPROVED"
+      )
+    ) {
+      status = { name: "APPROVED", class: "font-medium text-green-600" }
+    } else if (
+      request.requestStatus.some(
+        (status) => status.requestStatus === "REJECTED"
+      )
+    ) {
+      status = { name: "DENIED", class: "font-medium text-red-600" }
+    }
+
+    return {
+      ...request,
+      item: request.facility ? request.facility : request.equipment,
+      status
+    }
+  })
+
   return {
     userInfo: { ...event.locals.user },
     sectionInfo: {
       section: section?.grade + " " + section?.name,
       students: section?.students ?? []
-    }
+    },
+    mappedRequests
   }
 }
 

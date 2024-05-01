@@ -19,6 +19,7 @@ export type ItemType = {
     id: number
   }[]
   requestDates: PrismaJson.RangeDates
+  dateCreated: Date
   description: string
 }
 

@@ -12,6 +12,10 @@
   console.log(`loggedIn status is: ${loggedIn}`);
 </script>
 
+<svelte:head>
+  <title>Roamer</title>
+</svelte:head>
+
 <div class="flex h-screen">
   <div class="m-auto">
     <h1 class="text-4xl font-bold">

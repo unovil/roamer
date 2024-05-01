@@ -26,9 +26,9 @@
           : (request.equipment as NonNullable<typeof request.equipment>),
         requestId: request.id,
         adminsStatus: request.admins.map((admin) => {
-          const status = request.requestStatus.find(
-            (s) => s.adminId === admin.id,
-          );
+          const status = request.requestStatus
+            ? request.requestStatus.find((s) => s.adminId === admin.id)
+            : undefined;
           return {
             name: `${admin.user.firstName} ${admin.user.lastName}`,
             id: admin.id,
@@ -45,6 +45,7 @@
         }),
         requestDates: request.requestDates,
         description: request.description,
+        dateCreated: request.dateCreated,
       };
     });
 
@@ -79,11 +80,13 @@
       : null;
 </script>
 
+<svelte:head>
+  <title>Roamer | Approvals</title>
+</svelte:head>
+
 <div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
   <p class="mb-5 mt-0 text-6xl font-bold">Approvals</p>
-  <div
-    class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md border border-gray-300 p-4 shadow"
-  >
+  <div class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md p-4">
     <div class="h-sc w-full rounded-lg border-2 border-gray-300 p-4">
       <table class="w-full">
         <thead></thead>

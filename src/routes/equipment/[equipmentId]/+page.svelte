@@ -12,6 +12,10 @@
     : [];
 </script>
 
+<svelte:head>
+  <title>Roamer | Equipment | {data.equipment.name}</title>
+</svelte:head>
+
 {#if data.isBookSuccess}
   <p>Booking success!</p>
 {/if}

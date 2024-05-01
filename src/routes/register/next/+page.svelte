@@ -34,6 +34,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Roamer | Register</title>
+</svelte:head>
+
 {#if !roleSuccess}
   <Role {form} error={form?.error} />
 {:else}

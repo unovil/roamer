@@ -150,6 +150,13 @@
   };
 </script>
 
+<<<<<<< HEAD
+=======
+<svelte:head>
+  <title>Roamer | Equipment | {data.equipment.name} (Booking)</title>
+</svelte:head>
+
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 <div class="mx-auto flex max-w-screen-lg flex-col">
   <div
     class="sticky bottom-10 top-20 z-10 flex flex-col items-start bg-white dark:bg-black"

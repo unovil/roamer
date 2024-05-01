@@ -3,19 +3,29 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
+<<<<<<< HEAD
   import { Table } from "flowbite-svelte";
+=======
+  import { Button } from "flowbite-svelte";
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 
   export let data: PageData;
   let searchTerm: string | null = null;
   let searchCategory: string;
 </script>
 
+<<<<<<< HEAD
+=======
+<svelte:head>
+  <title>Roamer | Dashboard</title>
+</svelte:head>
+
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 <div class="flex h-full w-full flex-col items-center p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-6xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>
-        !
+        Welcome, <strong>{data.userInfo.firstName}</strong>!
       </h1>
       <h1 class="m-4 mt-3 text-3xl font-semibold">
         Looking for something to roam about?
@@ -84,6 +94,34 @@
 
     <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
       <p class="text-lg font-bold">Recent bookings:</p>
+<<<<<<< HEAD
+=======
+      <table>
+        {#if data?.mappedRequests && data?.mappedRequests.length > 0}
+          {#each data?.mappedRequests as request}
+            <tr>
+              <td class="w-1/2 text-left"
+                ><div>
+                  {request.item?.name} <br />
+                  <span class={request.status.class}>{request.status.name}</span
+                  >
+                </div></td
+              >
+              <td>
+                <img
+                  src={request.item?.image}
+                  class="h-32"
+                  alt={request.item?.name}
+                />
+              </td>
+            </tr>
+          {/each}
+        {/if}
+      </table>
+      <Button color="green" pill class="mt-5">
+        <a href="/approvals">See your approvals ></a>
+      </Button>
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
     </div>
   </div>
   <ul></ul>

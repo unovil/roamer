@@ -4,11 +4,18 @@
   export let data: PageData;
 </script>
 
+<<<<<<< HEAD
+=======
+<svelte:head>
+  <title>Roamer | Dashboard</title>
+</svelte:head>
+
+>>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
 <div class="flex h-full w-full flex-col items-center p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex h-full flex-col">
     <main>
       <p class="mb-20 text-6xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}!</strong>
+        Welcome, <strong>{data.userInfo.firstName}</strong>!
       </p>
     </main>
   </div>
