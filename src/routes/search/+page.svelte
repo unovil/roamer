@@ -53,7 +53,6 @@
   <div
     class="flex h-full w-full flex-col items-center bg-white p-4 text-center"
   >
-<<<<<<< HEAD
     <table>
       {#if typeof results !== "undefined" && results !== null}
         {#each results as result (result.id)}
@@ -92,51 +91,5 @@
         {/each}
       {/if}
     </table>
-=======
-    <div class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md p-4">
-      <div class="h-sc w-full rounded-lg border-2 border-gray-300 p-4">
-        <table class="w-full">
-          {#if typeof results !== "undefined" && results !== null}
-            {#each results as result (result.id)}
-              <tr>
-                <td>
-                  <img
-                    src={result.image}
-                    alt={result.name}
-                    class="h-32 w-32 object-contain"
-                  />
-                </td>
-                <td>
-                  <a
-                    href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
-                  >
-                    <div class="ml-8">
-                      <h2 class="font-bold">{result.name}</h2>
-                      <p>
-                        {result.admins
-                          .map((admin) => {
-                            return (
-                              admin.user.firstName + " " + admin.user.lastName
-                            );
-                          })
-                          .join(", ")}
-                      </p>
-                    </div>
-                  </a>
-                </td>
-              </tr>
-            {:else}
-              <div class="items-center">
-                <Heading tag="h1" class="mb-4 text-3xl text-center">
-                  No results found.
-                </Heading>
-                <Spinner color="green" size={10} />
-              </div>
-            {/each}
-          {/if}
-        </table>
-      </div>
-    </div>
->>>>>>> 3dd55228f6ff2f88456ecd4791e4ad39e50c1735
   </div>
 {/if}
