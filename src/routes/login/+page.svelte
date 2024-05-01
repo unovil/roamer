@@ -17,6 +17,10 @@
   form?.incorrectPass */
 </script>
 
+<svelte:head>
+  <title>Roamer | Login</title>
+</svelte:head>
+
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div
     class="font-sans-serif w-80 rounded-lg bg-white p-6 text-center shadow-md"

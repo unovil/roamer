@@ -12,6 +12,10 @@
     : [];
 </script>
 
+<svelte:head>
+  <title>Roamer | Facility | {data.facility.name}</title>
+</svelte:head>
+
 <div class="mx-auto max-w-screen-lg">
   <div class="flex justify-between">
     <div class="flex">

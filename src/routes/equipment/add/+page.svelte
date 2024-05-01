@@ -89,6 +89,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Roamer | Equipment (Addition)</title>
+</svelte:head>
+
 <div class="mx-auto flex max-w-screen-lg flex-col">
   <Heading
     tag="h1"

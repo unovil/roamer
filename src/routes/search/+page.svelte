@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-  <title>Roamer - Search</title>
+  <title>Roamer | Search{searchTerm ? ` - "${searchTerm}"` : ""}</title>
 </svelte:head>
 
 <div class="mb-10 mt-20 flex items-start justify-center text-6xl font-bold">

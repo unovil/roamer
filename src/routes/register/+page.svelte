@@ -6,7 +6,7 @@
   console.log(`form is ${form}`);
 
   const changePasswordVisibility = () => {
-    isHidden = -isHidden;
+    isHidden = Boolean(-isHidden);
   };
   // used for conditional css, if needed.
   /* form?.invalidEmail
@@ -15,6 +15,10 @@
     form?.invalidPass
     form?.duplicateUser */
 </script>
+
+<svelte:head>
+  <title>Roamer | Register</title>
+</svelte:head>
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div

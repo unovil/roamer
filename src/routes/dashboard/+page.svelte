@@ -3,19 +3,21 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
-  import { Table } from "flowbite-svelte";
 
   export let data: PageData;
   let searchTerm: string | null = null;
   let searchCategory: string;
 </script>
 
+<svelte:head>
+  <title>Roamer | Dashboard</title>
+</svelte:head>
+
 <div class="flex h-full w-full flex-col items-center p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-6xl font-semibold">
-        Welcome, <strong>{data.userInfo.firstName}</strong>
-        !
+        Welcome, <strong>{data.userInfo.firstName}</strong>!
       </h1>
       <h1 class="m-4 mt-3 text-3xl font-semibold">
         Looking for something to roam about?

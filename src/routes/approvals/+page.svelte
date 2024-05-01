@@ -79,6 +79,10 @@
       : null;
 </script>
 
+<svelte:head>
+  <title>Roamer | Approvals</title>
+</svelte:head>
+
 <div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
   <p class="mb-5 mt-0 text-6xl font-bold">Approvals</p>
   <div class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md p-4">
