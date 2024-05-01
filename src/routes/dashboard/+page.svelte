@@ -4,7 +4,7 @@
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Button } from "flowbite-svelte";
-  import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+  import { Table, TableBody, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
 
   export let data: PageData;
   let searchTerm: string | null = null;

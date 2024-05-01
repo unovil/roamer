@@ -8,6 +8,8 @@
     statusChecker,
     type ItemType,
   } from "./helperFunctions";
+  import { Table, TableBodyRow } from 'flowbite-svelte';
+
   export let data: PageData;
 
   let defaultModal = false;
@@ -86,19 +88,19 @@
 
 <div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
   <p class="mb-5 mt-0 text-6xl font-bold">Approvals</p>
-  <div class="mt-4 flex h-screen w-4/5 flex-col items-center rounded-md p-4">
+  <div class="mt-4 flex h-screen w-3/4 flex-col items-center rounded-md p-4">
     <div class="h-sc w-full rounded-lg border-2 border-gray-300 p-4">
-      <table class="w-full">
+      <Table class="w-full">
         <thead></thead>
-        <tbody class="space-y-5 divide-y divide-gray-200">
+        <tbody class="space-y-10 divide-y divide-gray-200">
           <!-- TODO: FAULTY STYLE -->
           {#each items as item (item.requestId)}
-            <tr>
-              <td><img src={item.place.image} alt="" class="h-12 w-12" /></td>
-              <td class="font-medium">
+          <TableBodyRow class="h-20">
+            <td class="pr-1 w-20"><img src={item.place.image} alt="" class="h-16 w-16" /></td>
+            <td class="font-medium text-lg text-black">
                 {item.place.name}
                 <br />
-                {item.students.length} students
+                <p class = "text-green-700">{item.students.length} students </p>
                 {#if data.isValidAdmin}
                   <br />
                   <span
@@ -112,7 +114,7 @@
                   </span>
                 {/if}
               </td>
-              <td>
+              <td class = "font-semibold text-lg">
                 <p class={overallStatusChecker(item).class}>
                   {overallStatusChecker(item).text}
                 </p>
@@ -120,16 +122,19 @@
               <td>
                 {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
                   <button
+                  class = "hover:bg-log-in-green font-semibold text-black text-lg" 
                     on:click={() => {
                       defaultModal = true;
                       selectedItem = item;
                       addReview = true;
                     }}
+                  
                   >
                     Add a review {">"}
                   </button>
                 {:else}
                   <button
+                  class = "hover:text-log-in-green font-semibold text-black text-lg" 
                     on:click={() => {
                       defaultModal = true;
                       selectedItem = item;
@@ -140,10 +145,10 @@
                   </button>
                 {/if}
               </td>
-            </tr>
+            </TableBodyRow>
           {/each}
         </tbody>
-      </table>
+      </Table>
     </div>
   </div>
 </div>
