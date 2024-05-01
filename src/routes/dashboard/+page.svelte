@@ -3,16 +3,14 @@
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
-  import { Table } from 'flowbite-svelte';
+  import { Table } from "flowbite-svelte";
 
   export let data: PageData;
   let searchTerm: string | null = null;
   let searchCategory: string;
 </script>
 
-<div
-  class="flex h-full w-full flex-col items-center  p-4 text-center"
->
+<div class="flex h-full w-full flex-col items-center p-4 text-center">
   <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col">
     <main>
       <h1 class="text-6xl font-semibold">
@@ -59,34 +57,34 @@
     </main>
   </div>
 
-      <div class="mt-20 flex justify-between">
-        <div class="mr-10 w-1/2 rounded-md border border-gray-300 p-4 shadow">
-          <p class="text-lg font-bold">
-            Section: {data?.sectionInfo?.section ?? "null"}
-          </p>
-          <br />
-          <table>
-            <tr>
-              <th>Student</th>
-              <th>LRN</th>
-            </tr>
-            {#each data?.sectionInfo?.students ?? [] as student (student.id)}
-              <tr>
-                <td>
-                  {student.user.firstName + " " + student.user.lastName}
-                  {#if student.user.id == data.userInfo.id}
-                    <span class="italic text-gray-600">(You)</span>
-                  {/if}
-                </td>
-                <td>{student.lrn}</td>
-              </tr>
-            {/each}
-          </table>
-        </div>
+  <div class="mt-20 flex justify-between">
+    <div class="mr-10 w-1/2 rounded-md border border-gray-300 p-4 shadow">
+      <p class="text-lg font-bold">
+        Section: {data?.sectionInfo?.section ?? "null"}
+      </p>
+      <br />
+      <table>
+        <tr>
+          <th>Student</th>
+          <th>LRN</th>
+        </tr>
+        {#each data?.sectionInfo?.students ?? [] as student (student.id)}
+          <tr>
+            <td>
+              {student.user.firstName + " " + student.user.lastName}
+              {#if student.user.id == data.userInfo.id}
+                <span class="italic text-gray-600">(You)</span>
+              {/if}
+            </td>
+            <td>{student.lrn}</td>
+          </tr>
+        {/each}
+      </table>
+    </div>
 
-        <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
-          <p class="text-lg font-bold">Recent bookings:</p>
-        </div>
-      </div>
-      <ul></ul>
+    <div class="w-1/2 rounded-md border border-gray-300 p-4 shadow">
+      <p class="text-lg font-bold">Recent bookings:</p>
+    </div>
+  </div>
+  <ul></ul>
 </div>
