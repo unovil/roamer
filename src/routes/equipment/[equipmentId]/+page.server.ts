@@ -52,5 +52,5 @@ export const load: PageServerLoad = async ({ params, locals, cookies }) => {
     throw error(401, "Unauthorized")
   }
 
-  return { equipment, isBookSuccess }
+  return { equipment, isBookSuccess, user }
 }

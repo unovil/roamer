@@ -102,7 +102,9 @@
               <td class="text-lg font-medium text-black">
                 {item.place.name}
                 <br />
-                <p class="text-green-700">{item.students.length} students</p>
+                <span class="text-green-700"
+                  >{item.students.length} students</span
+                >
                 {#if data.isValidAdmin}
                   <br />
                   <span
@@ -124,7 +126,7 @@
               <td>
                 {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
                   <button
-                    class="text-lg font-semibold text-black hover:bg-log-in-green"
+                    class="text-lg font-semibold text-black hover:text-log-in-green"
                     on:click={() => {
                       defaultModal = true;
                       selectedItem = item;
