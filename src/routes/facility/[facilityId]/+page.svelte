@@ -23,34 +23,28 @@
   </p>
 {/if}
 
-<div class="mx-96 my-6 max-w-screen-lg">
+<div class="mx-64 my-10 max-w-screen-lg">
   <div class="relative">
     <div class="flex items-center">
-      <img src={`/${data.facility.image}`} alt="" class="mr-5 h-48 w-48" />
+      <img src={`/${data.facility.image}`} alt="" class="mr-5 h-48 w-48 rounded-lg"/>
       <div>
-        <p class="text-lg font-bold text-log-in-green">NAME:</p>
-        <h1>{data.facility.name}</h1>
-        <br />
-
-        <p class="text-lg font-bold text-log-in-green">ADMINS:</p>
+        <h1 class="text-4xl font-bold text-log-in-green">{data.facility.name}</h1>
         {#each admins as admin (admin.id)}
-          <p>
+          <p class = "text-lg font-semibold">
             {admin.user.firstName + " " + admin.user.lastName}
             <i>({admin.user.email})</i>
           </p>
         {/each}
-        <br />
 
-        <p class="text-lg font-bold text-log-in-green">DEPARTMENT:</p>
-        <p>{data.facility.department}</p>
+        <p class = "text-lg font-semibold">{data.facility.department}</p>
       </div>
       <br />
 
-      <div class="absolute right-10 top-0">
+      <div class="absolute right-10">
         <Button
           color="green"
           pill
-          size="lg"
+          size="xl"
           href={`${$page.url}/booking`}
           disabled={data.user.admin ? true : false}
         >
@@ -66,10 +60,11 @@
   </div>
 
   <div class="mt-12 rounded-md border border-gray-300 p-4">
-    <table class="h-screen w-3/4">
+    <table class="h-auto w-3/4">
       <tr>
         <td class="align-top">
-          <h1 class="text-2xl font-bold text-log-in-green">Blocked Dates:</h1>
+          <h1 class="text-3xl font-bold text-log-in-green">Blocked Dates</h1>
+          <hr class="my-2 w-full" />
           {#each blockedDates as date}
             <p>
               {new Date(date.start).toLocaleString()} - {new Date(
@@ -79,7 +74,8 @@
           {/each}
         </td>
         <td class="align-top">
-          <h1 class="text-2xl font-bold text-log-in-green">Description:</h1>
+          <h1 class="text-3xl font-bold text-log-in-green">Description</h1>
+          <hr class="my-2 w-full" />
           <p>{data.facility.description}</p>
         </td>
       </tr>

@@ -27,7 +27,7 @@
   <title>Roamer | Search{searchTerm ? ` - "${searchTerm}"` : ""}</title>
 </svelte:head>
 
-<div class="mb-10 mt-20 flex items-start justify-center text-6xl font-bold">
+<div class="mb-10 mt-10 flex items-start justify-center text-3xl font-bold">
   <h1>Roaming for something?</h1>
 </div>
 
@@ -38,7 +38,7 @@
     bind:value={searchTerm}
     autofocus
     placeholder="Search..."
-    class="w-2/5 rounded-md"
+    class="w-3/6 h-10 rounded-md"
   />
   <select
     name="searchCategory"
@@ -55,7 +55,7 @@
 {#if data.searchCat === "equipment" || data.searchCat === "facility"}
   {#if searchTerm}
     <div
-      class="mx-auto flex h-screen w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow"
+      class="mx-auto flex h-auto w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow"
     >
       {#if typeof results !== "undefined" && results !== null && results.length > 0}
         <Table>
