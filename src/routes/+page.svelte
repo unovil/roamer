@@ -2,8 +2,8 @@
   import { page } from "$app/stores";
     import { onMount } from "svelte";
   import type { PageData } from "./$types";
-  import { Heading, Button } from "flowbite-svelte";
-  import { Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup } from 'flowbite-svelte';
+  import { Heading } from "flowbite-svelte";
+  import { Footer } from 'flowbite-svelte';
 
   export let data: PageData;
 
@@ -39,7 +39,7 @@
 
 <div class="flex flex-col min-h-screen">
   <div class="flex-grow">
-    <div class="absolute inset-0" style="background-image: url({images[currentImageIndex]}); background-size: cover; filter: brightness(50%);">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url({images[currentImageIndex]}); filter: brightness(50%);">
       <div class="fixed inset-x-0 bottom-0 flex justify-center items-center">
         <Footer>
           <p class = "text-white text-sm font-medium"> Want to know more about us? <a href = '/about' class = "ml-1"> Click here.</a></p>
@@ -48,11 +48,12 @@
       </div>
     </div>
     
-    <div class="relative mt-44 m-4 w-1/4 mx-auto rounded-md p-6 border-gray-700 shadow-gray-500 bg-white bg-opacity-70">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="relative mt-38 mb-38 m-4 max-w-sm mx-auto rounded-md p-6 border-gray-700 shadow-gray-500 bg-white bg-opacity-70">
       <div class="flex flex-col items-center">
         <div class="flex items-center">
           <h1 class="font-trocchi text-4xl font-bold">Roamer</h1>
-          <img src="/logo.png" alt="" class="ml-2 mr-3 h-8" />
+          <img src="/logo.png" alt="" class="ml-2 mr-3 h-12" />
         </div>
         <div class="flex items-center">
           <h1 class="mr-3 text-lg font-bold">by</h1>
@@ -63,7 +64,7 @@
         {#if loggedIn}
           <Heading
             tag="h1"
-            class="mb-4 flex justify-center"
+            class="mb-3 flex justify-center"
             customSize="text-2xl font-medium "
           >
             Hey there,
@@ -71,24 +72,25 @@
           >
           <br />
           <div class="flex flex-col">
-            <Button color="green" href="/dashboard" size="lg">Dashboard</Button>
-            <Button color="green" href="/search" size="lg" class="mt-4"
-              >Search</Button
-            >
-            <Button color="green" href="/approvals" size="lg" class="mt-4"
-              >Approvals</Button
-            >
+            <button class = "mt-3 rounded-md bg-log-in-green px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"> <a href = '/dashboard'> Dashboard</a> </button>
+            <button class = "mt-3 rounded-md bg-log-in-green px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"> <a href = '/search'> Search</a> </button>
+            <button class = "mt-3 rounded-md bg-log-in-green px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"> <a href = '/approvals'> Approvals</a> </button>
+            <form method="post">
+              <button type="submit" class = "mt-3 rounded-md bg-red-800 px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-red-500 w-80">Sign Out</button>
+            </form>
+            
           </div>
         {:else if !loggedIn}
           <div class="flex flex-col">
-            <Button color="green" href="/login" size="lg">Sign In</Button>
+            <button class = "mt-3 rounded-md bg-log-in-green px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"> <a href = '/login'> Sign In</a> </button>
             <p class="mb-3 mt-5 flex justify-center text-lg font-semibold">
               Don't have an account yet?
             </p>
-            <Button color="green" href="/register" size="lg">Register</Button>
+            <button class = "mt-3 rounded-md bg-log-in-green px-28 py-3 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"> <a href = '/register'> Register</a> </button>
           </div>
         {/if}
       </div>
     </div>
   </div>
+</div>
 </div>
