@@ -16,7 +16,7 @@
 <div class="flex items-center justify-center h-screen scroll-smooth w-screen bg-gradient-to-l from-green-200 via-green-300 to-green-400">
   
     {#if roleSelected == "STUDENT"}
-    <div class="p-6 bg-white shadow-lg rounded-lg w-2/5 h-3/5 mx-auto">
+    <div class="p-6 bg-white shadow-lg rounded-lg w-2/5 h-3/5 mx-auto bg-opacity-70">
       {#if error}
     <p class = "flex justify-center text-red-600 font-medium">{error}</p>
   {/if}
@@ -37,12 +37,12 @@
       </select>
 
       <br />
-      <button type="submit" class="mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Complete registration > </button>
+      <a href = '/dashboard' class="mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Complete registration > </a>
     </form>
   </div>
     {:else if roleSelected == "ADMIN"}
     <form action="?/redirectDashboard" method="post" use:enhance class="flex items-center justify-center h-80">
-      <button type="submit" class=" text-3xl font-bold mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Continue to dashboard ></button>
+      <a href = '/admindashboard'class=" text-3xl font-bold mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Continue to dashboard ></a>
     </form>
   {/if}
 </div>
