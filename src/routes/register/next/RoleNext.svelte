@@ -13,7 +13,7 @@
   }[];
 </script>
 
-<div class="flex items-center justify-center h-screen scroll-smooth">
+<div class="flex items-center justify-center h-screen scroll-smooth w-screen bg-gradient-to-l from-green-200 via-green-300 to-green-400">
   
     {#if roleSelected == "STUDENT"}
     <div class="p-6 bg-white shadow-lg rounded-lg w-2/5 h-3/5 mx-auto">
@@ -37,12 +37,12 @@
       </select>
 
       <br />
-      <button type="submit" class ="mt-10 text-xl font-semibold text-log-in-green hover:text-green-500">Complete registration > </button>
+      <button type="submit" class="mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Complete registration > </button>
     </form>
   </div>
     {:else if roleSelected == "ADMIN"}
     <form action="?/redirectDashboard" method="post" use:enhance class="flex items-center justify-center h-80">
-      <button type="submit" class ="mt-10 text-3xl font-semibold text-log-in-green hover:text-green-500">Continue to dashboard ></button>
+      <button type="submit" class=" text-3xl font-bold mt-5 rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500">Continue to dashboard ></button>
     </form>
   {/if}
 </div>
