@@ -38,7 +38,7 @@
     bind:value={searchTerm}
     autofocus
     placeholder="Search..."
-    class="w-3/6 h-10 rounded-md"
+    class="h-10 w-3/6 rounded-md"
   />
   <select
     name="searchCategory"

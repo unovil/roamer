@@ -26,17 +26,23 @@
 <div class="mx-64 my-10 max-w-screen-lg">
   <div class="relative">
     <div class="flex items-center">
-      <img src={`/${data.facility.image}`} alt="" class="mr-5 h-48 w-48 rounded-lg"/>
+      <img
+        src={`/${data.facility.image}`}
+        alt=""
+        class="mr-5 h-48 w-48 rounded-lg"
+      />
       <div>
-        <h1 class="text-4xl font-bold text-log-in-green">{data.facility.name}</h1>
+        <h1 class="text-4xl font-bold text-log-in-green">
+          {data.facility.name}
+        </h1>
         {#each admins as admin (admin.id)}
-          <p class = "text-lg font-semibold">
+          <p class="text-lg font-semibold">
             {admin.user.firstName + " " + admin.user.lastName}
             <i>({admin.user.email})</i>
           </p>
         {/each}
 
-        <p class = "text-lg font-semibold">{data.facility.department}</p>
+        <p class="text-lg font-semibold">{data.facility.department}</p>
       </div>
       <br />
 
