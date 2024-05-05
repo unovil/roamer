@@ -158,10 +158,13 @@
   <div
     class="sticky bottom-10 top-20 z-10 flex flex-col items-start bg-white dark:bg-black"
   >
-    <p class="mb-3 mt-6 text-4xl font-bold">Roaming for:</p>
-
-    <img class="mr-5 h-24" src={`/${data.facility.image}`} alt="" />
-    <p class="text-3xl"><b>{data.facility.name}</b></p>
+    <p class="mb-3 mt-6 text-4xl font-bold text-log-in-green">Roaming for:</p>
+    <div class="sticky bottom-10 top-20 z-10 flex flex-row items-center bg-white dark:bg-black">
+      <img class="mr-5 h-24 w-24 rounded-lg" src={`/${data.facility.image}`} alt="" /> 
+      <div>
+      <p class="text-3xl"><b>{data.facility.name}</b></p>
+      </div>
+    </div>
   </div>
   {#if form?.error}
     <p class="font-semibold text-red-600">{form?.error}</p>

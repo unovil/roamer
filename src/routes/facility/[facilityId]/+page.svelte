@@ -17,12 +17,6 @@
   <title>Roamer | Facility | {data.facility.name}</title>
 </svelte:head>
 
-{#if data.isBookSuccess}
-  <p class="flex justify-center text-3xl font-semibold text-green-500">
-    Booking success!
-  </p>
-{/if}
-
 <div class="mx-64 my-10 max-w-screen-lg">
   <div class="relative">
     <div class="flex items-center">
@@ -64,6 +58,12 @@
       </div>
     </div>
   </div>
+
+  {#if data.isBookSuccess}
+  <p class="flex justify-center text-3xl font-bold text-green-500">
+    Booking success!
+  </p>
+{/if}
 
   <div class="mt-12 rounded-md border border-gray-300 p-4">
     <table class="h-auto w-3/4">
