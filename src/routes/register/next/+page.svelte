@@ -47,11 +47,9 @@
 
 {#if roleSuccess}
   <br />
-  {#if form?.error}
-    {form?.error}
-  {/if}
   <RoleNext
     roleSelected={roleSelected ?? "student"}
     sections={sections ?? []}
+    error={form?.error}
   />
 {/if}

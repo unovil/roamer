@@ -3,6 +3,7 @@
   import type { ActionData } from "./$types";
 
   let form: ActionData;
+  export let error: string | undefined;
   export let roleSelected: string;
   export let sections: {
     id: number;
@@ -12,7 +13,11 @@
   }[];
 </script>
 
-{#if roleSelected == "student"}
+{#if error}
+  <p>{error}</p>
+{/if}
+
+{#if roleSelected == "STUDENT"}
   <form action="?/roleNext" method="post" use:enhance>
     <label for="lrn">What is your LRN?</label>
     <br />
@@ -32,7 +37,7 @@
     <br />
     <button type="submit">Submit registration.</button>
   </form>
-{:else if roleSelected == "admin"}
+{:else if roleSelected == "ADMIN"}
   <form action="?/redirectDashboard" method="post" use:enhance>
     <button type="submit">Continue to dashboard.</button>
   </form>
