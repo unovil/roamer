@@ -53,7 +53,7 @@
         {:else if !loggedIn}
           <div class="flex flex-col">
             <Button color="green" href="/login" size="lg">Sign In</Button>
-            <p class="mb-3 mt-10 flex justify-center text-lg font-semibold">
+            <p class="mb-3 mt-5 flex justify-center text-lg font-semibold">
               Don't have an account yet?
             </p>
             <Button color="green" href="/register" size="lg">Register</Button>

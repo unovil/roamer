@@ -60,10 +60,10 @@
   </div>
 
   {#if data.isBookSuccess}
-  <p class="flex justify-center text-3xl font-bold text-green-500">
-    Booking success!
-  </p>
-{/if}
+    <p class="flex justify-center text-3xl font-bold text-green-500">
+      Booking success!
+    </p>
+  {/if}
 
   <div class="mt-12 rounded-md border border-gray-300 p-4">
     <table class="h-auto w-3/4">
