@@ -13,32 +13,36 @@
   }[];
 </script>
 
-{#if error}
-  <p>{error}</p>
-{/if}
+<div class="flex items-center justify-center h-screen scroll-smooth">
+  
+    {#if roleSelected == "STUDENT"}
+    <div class="p-6 bg-white shadow-lg rounded-lg w-2/5 h-3/5 mx-auto">
+      {#if error}
+    <p class = "flex justify-center text-red-600 font-medium">{error}</p>
+  {/if}
+      <form action="?/roleNext" method="post" use:enhance class="flex flex-col items-center">
+        <label for="lrn" class="font-bold text-4xl text-log-in-green mt-5">What is your LRN?</label>
+        <br />
+        <input type="text" name="lrn" placeholder="LRN" class = "w-96 rounded-md border shadow-gray-600"/>
 
-{#if roleSelected == "STUDENT"}
-  <form action="?/roleNext" method="post" use:enhance>
-    <label for="lrn">What is your LRN?</label>
-    <br />
-    <input type="text" name="lrn" placeholder="LRN" />
+        <br />
 
-    <br />
+      <label for="section" class="font-bold text-4xl text-log-in-green">What section are you a part of?</label>
+      <br />
+      <select name="section" placeholder="Section" class = "w-96 rounded-md border shadow-gray-600">
+        <option value="" disabled selected>Select a section</option>
+        {#each sections as section (section.id)}
+          <option value={section.id}>{section.grade} - {section.name}</option>
+        {/each}
+      </select>
 
-    <label for="section">What section are you a part of?</label>
-    <br />
-    <select name="section" placeholder="Section">
-      <option value="" disabled selected>Select a section</option>
-      {#each sections as section (section.id)}
-        <option value={section.id}>{section.grade} - {section.name}</option>
-      {/each}
-    </select>
-
-    <br />
-    <button type="submit">Submit registration.</button>
-  </form>
-{:else if roleSelected == "ADMIN"}
-  <form action="?/redirectDashboard" method="post" use:enhance>
-    <button type="submit">Continue to dashboard.</button>
-  </form>
-{/if}
+      <br />
+      <button type="submit" class ="mt-10 text-xl font-semibold text-log-in-green hover:text-green-500">Complete registration > </button>
+    </form>
+  </div>
+    {:else if roleSelected == "ADMIN"}
+    <form action="?/redirectDashboard" method="post" use:enhance class="flex items-center justify-center h-80">
+      <button type="submit" class ="mt-10 text-3xl font-semibold text-log-in-green hover:text-green-500">Continue to dashboard ></button>
+    </form>
+  {/if}
+</div>
