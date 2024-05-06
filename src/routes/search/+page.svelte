@@ -94,7 +94,7 @@
                 </td>
               </a>
               <td class="w-34">
-                <button class = "text-xl text-black font-bold ml-40">
+                <button class="ml-40 text-xl font-bold text-black">
                   <a
                     href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
                   >

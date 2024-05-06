@@ -111,12 +111,12 @@
                 >Sign In</a
               >
 
-              <p class="mb-3 mt-5 flex justify-center text-lg font-semibold">
+              <p class="mt-5 flex justify-center text-lg font-semibold">
                 Don't have an account yet?
               </p>
               <a
                 href="/register"
-                class="mt-3 rounded-md bg-log-in-green px-28 py-3 text-center text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
+                class="mt-1 rounded-md bg-log-in-green px-28 py-3 text-center text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
                 >Register</a
               >
             </div>
