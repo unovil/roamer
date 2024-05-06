@@ -125,7 +125,7 @@
     <input
       type="text"
       name="title"
-      placeholder="Facility Name"
+      placeholder="Equipment Name"
       class="w-full rounded-md shadow"
     />
     <br />

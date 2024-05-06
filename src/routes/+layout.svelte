@@ -53,8 +53,6 @@
           />
         </NavLi>
         <Dropdown class="z-20 w-44">
-          <DropdownItem href="/profile">Profile</DropdownItem>
-          <DropdownDivider />
           <DropdownItem href="/about">About Roamer</DropdownItem>
           <DropdownDivider />
           <form method="post">
