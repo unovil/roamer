@@ -118,9 +118,9 @@
     }}
     enctype="multipart/form-data"
   >
-    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a title.
-    </h3>
+  <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+    Add a title
+  </h3>
     <input
       type="text"
       name="title"
@@ -128,12 +128,11 @@
       class="w-full rounded-md shadow"
     />
     <br />
+    <br />
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add administrators
+    </h3>
     <Table class="h-full shadow-md">
-      <caption
-        class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
-      >
-        Add administrators.
-      </caption>
       <div class="max-h-[300px] overflow-auto">
         <table>
           <thead>
@@ -202,8 +201,9 @@
     </Table>
     <br />
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a description.
+    <br />
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add a description
     </h3>
     <textarea
       name="description"
@@ -214,8 +214,9 @@
     />
     <br />
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Attach images.
+    <br />
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Attach image
     </h3>
     <div class="flex justify-center">
       <input
@@ -230,8 +231,9 @@
       {/if}
     </div>
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a department.
+    <br />
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add a department
     </h3>
     <select
       name="department"

@@ -54,7 +54,7 @@
 {#if data.searchCat === "equipment" || data.searchCat === "facility"}
   {#if searchTerm}
     <div
-      class="mx-auto flex h-auto w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow-md"
+      class="mx-auto flex h-auto w-3/4 justify-start rounded-md border border-gray-300 p-4 shadow-md"
     >
       {#if typeof results !== "undefined" && results !== null && results.length > 0}
         <Table>
@@ -69,9 +69,10 @@
               </td>
               <a
                 href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+                class="flex justify-start"
               >
                 <td>
-                  <div class="ml-8">
+                  <div class="ml-6 mr-96">
                     <h2 class="text-lg font-bold text-green-700">
                       {result.name}
                     </h2>
@@ -93,10 +94,11 @@
                   </div>
                 </td>
               </a>
-              <td class="w-34">
-                <button class="ml-40 text-xl font-bold text-black">
+              <td class="w-80">
+                <button class="ml-40 mr-60 text-xl font-bold text-black">
                   <a
                     href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+                    class="flex justify-start"
                   >
                     >
                   </a>
@@ -106,7 +108,7 @@
           {/each}
         </Table>
       {:else}
-        <div class="text-center">
+        <div class="mx-auto flex h-full flex-col items-center justify-center">
           <Heading tag="h1" class="mb-4 text-3xl">No results found.</Heading>
           <Spinner color="green" size={10} />
         </div>

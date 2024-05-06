@@ -94,19 +94,17 @@
 </svelte:head>
 
 <div class="mx-auto flex max-w-screen-lg flex-col">
-  <Heading
-    tag="h1"
-    customSize="text-5xl font-extrabold"
-    class="sticky top-5 flex justify-center"
+  
+  <div
+    class="sticky bottom-10 top-0 z-10 flex flex-col items-center bg-white dark:bg-black"
   >
-    Add an equipment
-  </Heading>
-
-  {#if form?.error}
-    <p class="flex justify-center text-base font-semibold text-red-600">
-      {form.error}
-    </p>
-  {/if}
+    <Heading tag="h1" class="mb-4 text-5xl flex items-center justify-center">Add an equipment</Heading>
+    {#if form?.error}
+      <p class="text-base font-semibold text-red-600">
+        {form.error}
+      </p>
+    {/if}
+  </div>
 
   <form
     method="post"
@@ -120,7 +118,7 @@
     enctype="multipart/form-data"
   >
     <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a title.
+      Add a title
     </h3>
     <input
       type="text"
@@ -129,13 +127,10 @@
       class="w-full rounded-md shadow"
     />
     <br />
-
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add administrators
+    </h3>
     <Table class="h-full shadow-md">
-      <caption
-        class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
-      >
-        Add administrators.
-      </caption>
       <div class="max-h-[300px] overflow-auto">
         <table>
           <thead>
@@ -204,8 +199,8 @@
     </Table>
     <br />
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a description.
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add description
     </h3>
     <textarea
       name="description"
@@ -216,8 +211,8 @@
     />
     <br />
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Attach images.
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+     Attach an image
     </h3>
     <div class="flex justify-center">
       <input
@@ -232,8 +227,8 @@
       {/if}
     </div>
 
-    <h3 class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
-      Add a department.
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add department
     </h3>
     <select
       name="department"
