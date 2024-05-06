@@ -69,14 +69,18 @@
       </form>
     </div>
   {:else if roleSelected == "ADMIN"}
+  <div
+  class="flex justify-center place-items-center mx-auto h-30 w-30 rounded-lg bg-white bg-opacity-80 p-6 shadow-lg sm:w-4/5 md:w-1/2 lg:w-2/5 xl:w-1/3"
+>
     <form action="?/roleNextAdmin" method="post">
+      <p class="mt-2 mb-2 text-center text-lg font-semibold">You're a part of: <strong>{school}</strong></p>
       <button
         type="submit"
         class="rounded-md bg-log-in-green px-4 py-2 text-base font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
       >
-        <p class="text-center">You're a part of: <strong>{school}</strong></p>
         Continue to dashboard >
       </button>
     </form>
+    </div>
   {/if}
 </div>
