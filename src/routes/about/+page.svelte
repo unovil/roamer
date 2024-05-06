@@ -64,12 +64,6 @@
 </svelte:head>
 
 <div
-  class="flex min-h-screen items-center justify-center bg-primary-900 text-white"
->
-  <h1 class="font-trocchi text-6xl font-bold">About Us.</h1>
-</div>
-
-<div
   class="grid grid-cols-5 bg-primary-900 pb-32 pt-32"
   style="grid-template-columns: 10% 38% 4% 38% 10%;"
 >
