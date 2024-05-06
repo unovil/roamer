@@ -4,7 +4,6 @@
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Spinner, Heading } from "flowbite-svelte";
-  import { ArrowRightOutline } from "flowbite-svelte-icons";
   import { Table, TableBodyRow } from "flowbite-svelte";
 
   export let data: PageData;
@@ -94,12 +93,12 @@
                   </div>
                 </td>
               </a>
-              <td class="w-20">
-                <button>
+              <td class="w-34">
+                <button class = "text-xl text-black font-bold ml-40">
                   <a
                     href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
                   >
-                    <ArrowRightOutline class="ms-2 h-16 w-16" />
+                    >
                   </a>
                 </button>
               </td>
