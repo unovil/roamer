@@ -4,7 +4,6 @@
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Spinner, Heading } from "flowbite-svelte";
-  import { ArrowRightOutline } from "flowbite-svelte-icons";
   import { Table, TableBodyRow } from "flowbite-svelte";
 
   export let data: PageData;
@@ -55,13 +54,13 @@
 {#if data.searchCat === "equipment" || data.searchCat === "facility"}
   {#if searchTerm}
   <div
-  class="mx-auto flex h-auto w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow-md"
+  class="mx-auto flex h-auto w-2/3 justify-start rounded-md border border-gray-300 p-4 shadow-md"
 >
   {#if typeof results !== "undefined" && results !== null && results.length > 0}
     <Table>
       {#each results as result (result.id)}
         <TableBodyRow>
-          <td class="relative h-16 w-16 text-right">
+          <td class="relative text-right">
             <img
               src={result.image}
               alt={result.name}
@@ -77,27 +76,27 @@
                       {result.name}
                     </h2>
                     <p class="font-medium text-black">
-                      {result.admins
-                        .slice(0, 5)
-                        .map((admin) => {
-                          return (
-                            admin.user.firstName + " " + admin.user.lastName
-                          );
-                        })
-                        .join(", ")}
-                      {#if result.admins.length > 5}
-                        <span class="italic">and {result.admins.length - 5} more admins</span>
-                      {/if}
-                    </p>
+  {result.admins
+    .slice(0, 5)
+    .map((admin) => {
+      return (
+        admin.user.firstName + " " + admin.user.lastName
+      );
+    })
+    .join(", ")}
+  {#if result.admins.length > 5}
+    <span class="italic">and {result.admins.length - 5} more admins</span>
+  {/if}
+</p>
                   </div>
                 </td>
               </a>
-              <td class="w-20">
-                <button>
+              <td class="w-34">
+                <button class = "text-xl text-black font-bold ml-40">
                   <a
                     href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
                   >
-                    <ArrowRightOutline class="ms-2 h-16 w-16" />
+                    >
                   </a>
                 </button>
               </td>
