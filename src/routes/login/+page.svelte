@@ -6,8 +6,7 @@
   console.log(`form is ${form}`);
 
   const changePasswordVisibility = () => {
-    if (isHidden == true) isHidden = false;
-    else isHidden = true;
+    isHidden = !isHidden;
   };
 
   // conditional css, if needed

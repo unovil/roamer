@@ -48,6 +48,7 @@
 {#if roleSuccess}
   <RoleNext
     roleSelected={roleSelected ?? "student"}
+    school={schoolName}
     sections={sections ?? []}
     error={form?.error}
   />

@@ -6,7 +6,7 @@
   console.log(`form is ${form}`);
 
   const changePasswordVisibility = () => {
-    isHidden = Boolean(-isHidden);
+    isHidden = !isHidden;
   };
   // used for conditional css, if needed.
   /* form?.invalidEmail
@@ -67,7 +67,6 @@
           name="password"
           class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
           class:border-red-500={form?.invalidPass}
-          id="password"
         />
         <button
           type="button"

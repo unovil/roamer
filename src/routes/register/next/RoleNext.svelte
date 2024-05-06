@@ -5,6 +5,7 @@
   let form: ActionData;
   export let error: string | undefined;
   export let roleSelected: string;
+  export let school: string;
   export let sections: {
     id: number;
     grade: number;
@@ -23,6 +24,7 @@
       {#if error}
         <p class="flex justify-center font-medium text-red-600">{error}</p>
       {/if}
+      <p class="text-center">You're a part of: <strong>{school}</strong></p>
       <form
         action="?/roleNext"
         method="post"
@@ -70,6 +72,7 @@
       href="/admindashboard"
       class="mt-5 rounded-md bg-log-in-green px-4 py-2 text-3xl font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
     >
+      <p class="text-center">You're a part of: <strong>{school}</strong></p>
       Continue to dashboard >
     </a>
   {/if}
