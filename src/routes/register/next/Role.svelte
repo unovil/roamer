@@ -8,21 +8,22 @@
 </script>
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
-  <div class="font-sans-serif w-full sm:w-3/4 md:w-2/5 rounded-lg bg-white p-6 text-center shadow-md">
+  <div
+    class="font-sans-serif w-full rounded-lg bg-white p-6 text-center shadow-md sm:w-3/4 md:w-2/5"
+  >
     <h2
-      class="font-bold mb-2 flex scale-150 transform items-center justify-center text-2xl text-log-in-green"
+      class="mb-2 flex scale-150 transform items-center justify-center text-2xl font-bold text-log-in-green"
     >
-      Welcome to <p class = "ml-2 font-trocchi"> Roamer</p><img src="/logo.png" alt="Logo" class="ml-2 mr-2 h-8" />
+      Welcome to <p class="ml-2 font-trocchi">Roamer</p>
+      <img src="/logo.png" alt="Logo" class="ml-2 mr-2 h-8" />
       !
     </h2>
-    <p class="mt-1 mb-3 flex justify-center text-md font-medium">
+    <p class="text-md mb-3 mt-1 flex justify-center font-medium">
       Before continuing, we just need you to answer these.
     </p>
 
     {#if error}
-      <p
-        class="flex justify-center whitespace-normal font-bold text-red-600"
-      >
+      <p class="flex justify-center whitespace-normal font-bold text-red-600">
         {error}
       </p>
     {/if}
@@ -82,10 +83,10 @@
           type="text"
           name="schoolId"
           placeholder="School ID"
-          class="w-full flex justify-center items-center rounded-md border border-gray-300 p-2 shadow"
+          class="flex w-full items-center justify-center rounded-md border border-gray-300 p-2 shadow"
         />
         <br />
-        <div class="flex justify-center mt-5">
+        <div class="mt-5 flex justify-center">
           <button
             type="submit"
             class="rounded-md bg-log-in-green px-4 py-2 font-semibold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"

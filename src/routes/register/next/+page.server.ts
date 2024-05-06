@@ -182,6 +182,39 @@ export const actions = {
     }
   },
 
+  roleNextAdmin: async ({ cookies }) => {
+    const sessionId = cookies.get("auth_session")
+    const sessionResponse = await db.session.findUnique({
+      select: { user: true },
+      where: { id: sessionId }
+    })
+
+    if (!sessionId || !sessionResponse) {
+      return fail(401, {
+        unauthorized: true,
+        error:
+          "An error has occurred with your user session. Try to log in again."
+      })
+    }
+
+    await db.user.update({
+      where: { id: sessionResponse.user.id },
+      data: {
+        admin: {
+          create: {
+            facilities: {},
+            departments: { departments: null },
+            requests: {},
+            equipments: {}
+          }
+        },
+        role: UserRole.ADMIN
+      }
+    })
+
+    redirect(302, "/dashboard")
+  },
+
   redirectDashboard: async () => {
     redirect(302, "/dashboard")
   }

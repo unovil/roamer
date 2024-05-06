@@ -16,20 +16,22 @@
 
 <div class="flex h-screen items-center justify-center bg-gray-100">
   {#if roleSelected == "STUDENT"}
-  <div
-  class="mx-auto h-96 w-full sm:w-4/5 md:w-1/2 lg:w-2/5 xl:w-1/3 rounded-lg bg-white bg-opacity-80 p-6 shadow-lg"
->
+    <div
+      class="mx-auto h-96 w-full rounded-lg bg-white bg-opacity-80 p-6 shadow-lg sm:w-4/5 md:w-1/2 lg:w-2/5 xl:w-1/3"
+    >
       {#if error}
         <p class="flex justify-center font-medium text-red-600">{error}</p>
       {/if}
-      <p class="text-center font-semibold text-lg mt-2">You're a part of: <strong>{school}</strong></p>
+      <p class="mt-2 text-center text-lg font-semibold">
+        You're a part of: <strong>{school}</strong>
+      </p>
       <form
         action="?/roleNext"
         method="post"
         use:enhance
         class="flex flex-col items-center"
       >
-        <label for="lrn" class="mt-5  mb-2 text-xl font-bold text-log-in-green"
+        <label for="lrn" class="mb-2 mt-5 text-xl font-bold text-log-in-green"
           >What is your LRN?</label
         >
         <input
@@ -63,15 +65,18 @@
           >
             Continue to dashboard >
           </button>
+        </div>
       </form>
     </div>
   {:else if roleSelected == "ADMIN"}
-    <a
-      href="/admindashboard"
-      class="mt-5 rounded-md bg-log-in-green px-4 py-2 text-3xl font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
-    >
-      <p class="text-center">You're a part of: <strong>{school}</strong></p>
-      Continue to dashboard >
-    </a>
+    <form action="?/roleNextAdmin" method="post">
+      <button
+        type="submit"
+        class="rounded-md bg-log-in-green px-4 py-2 text-base font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
+      >
+        <p class="text-center">You're a part of: <strong>{school}</strong></p>
+        Continue to dashboard >
+      </button>
+    </form>
   {/if}
 </div>
