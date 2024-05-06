@@ -54,34 +54,44 @@
 
 {#if data.searchCat === "equipment" || data.searchCat === "facility"}
   {#if searchTerm}
-    <div
-      class="mx-auto flex h-auto w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow"
-    >
-      {#if typeof results !== "undefined" && results !== null && results.length > 0}
-        <Table>
-          {#each results as result (result.id)}
-            <TableBodyRow>
-              <td>
-                <img
-                  src={result.image}
-                  alt={result.name}
-                  class="h-48 w-48 object-contain"
-                />
-              </td>
-              <td>
-                <div class="ml-8">
-                  <h2 class="text-lg font-bold text-green-700">
-                    {result.name}
-                  </h2>
-                  <p class="font-medium text-black">
-                    {result.admins
-                      .map((admin) => {
-                        return admin.user.firstName + " " + admin.user.lastName;
-                      })
-                      .join(", ")}
-                  </p>
-                </div>
-              </td>
+  <div
+  class="mx-auto flex h-auto w-3/4 justify-center rounded-md border border-gray-300 p-4 shadow-md"
+>
+  {#if typeof results !== "undefined" && results !== null && results.length > 0}
+    <Table>
+      {#each results as result (result.id)}
+        <TableBodyRow>
+          <td class="relative h-16 w-16 text-right">
+            <img
+              src={result.image}
+              alt={result.name}
+              class="left-0 top-0 h-16 w-16 rounded-md object-cover"
+            />
+          </td>
+              <a
+                href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+              >
+                <td>
+                  <div class="ml-8">
+                    <h2 class="text-lg font-bold text-green-700">
+                      {result.name}
+                    </h2>
+                    <p class="font-medium text-black">
+                      {result.admins
+                        .slice(0, 5)
+                        .map((admin) => {
+                          return (
+                            admin.user.firstName + " " + admin.user.lastName
+                          );
+                        })
+                        .join(", ")}
+                      {#if result.admins.length > 5}
+                        <span class="italic">and {result.admins.length - 5} more admins</span>
+                      {/if}
+                    </p>
+                  </div>
+                </td>
+              </a>
               <td class="w-20">
                 <button>
                   <a
