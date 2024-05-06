@@ -11,3 +11,7 @@
     src: url("/fonts/Trocchi-Regular.ttf");
   }
 }
+
+img {
+  object-fit: contain;
+}

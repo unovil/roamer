@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import Page from "../+page.svelte";
   import type { ActionData } from "./$types";
   export let form: ActionData;
   export let error: string | undefined;
@@ -8,8 +7,10 @@
   let role: "ADMIN" | "STUDENT" | null = null;
 </script>
 
-<div class="flex h-screen items-center justify-center w-screen bg-gradient-to-l from-green-200 via-green-300 to-green-400">
-  <div class="rounded-lg bg-white p-24 shadow-lg bg-opacity-90">
+<div
+  class="flex h-screen w-screen items-center justify-center bg-gradient-to-l from-green-200 via-green-300 to-green-400"
+>
+  <div class="rounded-lg bg-white bg-opacity-90 p-24 shadow-lg">
     <h2
       class="font-semi-bold mb-6 flex scale-150 transform items-center justify-center font-trocchi text-4xl text-log-in-green"
     >

@@ -2,6 +2,7 @@ import type { Actions, PageServerLoad } from "./$types"
 import { fail, redirect } from "@sveltejs/kit"
 import db from "$lib/prisma"
 import { UserRole } from "@prisma/client"
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 
 export const load: PageServerLoad = async (event) => {
   if (!event.locals.user) {
@@ -153,17 +154,32 @@ export const actions = {
       })
     }
 
-    await db.user.update({
-      where: { id: sessionResponse.user.id },
-      data: {
-        student: {
-          create: {
-            lrn: lrn,
-            sectionId: Number(section)
-          }
+    try {
+      await db.user.update({
+        where: { id: sessionResponse.user.id },
+        data: {
+          student: {
+            create: {
+              lrn: lrn,
+              sectionId: Number(section)
+            }
+          },
+          role: UserRole.STUDENT
         }
-      }
-    })
+      })
+
+      redirect(302, "/dashboard")
+    } catch (err) {
+      if (
+        err instanceof PrismaClientKnownRequestError &&
+        err.code === "P2002" // unique constraint
+      ) {
+        return fail(400, {
+          duplicateUser: true,
+          error: "A user with this LRN was already found."
+        })
+      } else throw err
+    }
   },
 
   redirectDashboard: async () => {

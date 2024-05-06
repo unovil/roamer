@@ -98,8 +98,6 @@
           />
         </NavLi>
         <Dropdown class="z-20 w-44">
-          <DropdownItem href="/profile">Profile</DropdownItem>
-          <DropdownDivider />
           <form method="post">
             <DropdownItem>
               <button type="submit" formaction="/dashboard?/logout">

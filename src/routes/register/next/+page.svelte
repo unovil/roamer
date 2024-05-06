@@ -41,12 +41,11 @@
 {#if !roleSuccess}
   <Role {form} error={form?.error} />
 {:else}
-  <p>Role picked: {roleSelected}</p>
-  <p>School found: {schoolName}</p>
+  <!-- <p>Role picked: {roleSelected}</p>
+  <p>School found: {schoolName}</p> -->
 {/if}
 
 {#if roleSuccess}
-  <br />
   <RoleNext
     roleSelected={roleSelected ?? "student"}
     sections={sections ?? []}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card, Button } from "flowbite-svelte";
+  import { Card, Button, Footer } from "flowbite-svelte";
 
   const teamCards = [
     {
@@ -62,6 +62,12 @@
 <svelte:head>
   <title>Roamer | About</title>
 </svelte:head>
+
+<div
+  class="flex min-h-screen items-center justify-center bg-primary-900 text-white"
+>
+  <h1 class="font-trocchi text-6xl font-bold">About Us.</h1>
+</div>
 
 <div
   class="grid grid-cols-5 bg-primary-900 pb-32 pt-32"
@@ -191,3 +197,9 @@
     {/each}
   </div>
 </div>
+
+<Footer>
+  <p class="flex justify-center bg-green-950 text-sm font-medium text-white">
+    Ⓒ 2024 Roamer. All Rights Reserved.
+  </p>
+</Footer>
