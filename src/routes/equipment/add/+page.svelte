@@ -94,17 +94,18 @@
 </svelte:head>
 
 <div class="mx-auto flex max-w-screen-lg flex-col">
-  
-  <div
-    class="sticky bottom-10 top-0 z-10 flex flex-col items-center bg-white dark:bg-black"
+  <Heading
+    tag="h1"
+    customSize="text-5xl font-extrabold"
+    class="mb-8 mt-8 flex justify-center"
   >
-    <Heading tag="h1" class="mb-4 text-5xl flex items-center justify-center">Add an equipment</Heading>
-    {#if form?.error}
-      <p class="text-base font-semibold text-red-600">
-        {form.error}
-      </p>
-    {/if}
-  </div>
+    Add an equipment
+  </Heading>
+  {#if form?.error}
+    <p class="flex justify-center text-base font-semibold text-red-600">
+      {form.error}
+    </p>
+  {/if}
 
   <form
     method="post"
@@ -212,7 +213,7 @@
     <br />
 
     <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
-     Attach an image
+      Attach an image
     </h3>
     <div class="flex justify-center">
       <input
@@ -241,10 +242,8 @@
     </select>
 
     <br />
-    <div class="flex justify-center">
-      <Button color="green" pill type="submit" size="xl" class="mt-20">
-        Add an equipment
-      </Button>
+    <div class="mb-20 mt-20 flex justify-center">
+      <Button color="green" pill type="submit" size="xl">Add a facility</Button>
     </div>
   </form>
 </div>

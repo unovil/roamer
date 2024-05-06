@@ -97,7 +97,7 @@
   <Heading
     tag="h1"
     customSize="text-5xl font-extrabold"
-    class="sticky top-5 flex justify-center"
+    class="mb-8 mt-8 flex justify-center"
   >
     Add a facility
   </Heading>
@@ -118,9 +118,9 @@
     }}
     enctype="multipart/form-data"
   >
-  <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
-    Add a title
-  </h3>
+    <h3 class="p-3 text-left text-3xl font-bold text-gray-900 dark:text-white">
+      Add a title
+    </h3>
     <input
       type="text"
       name="title"
@@ -210,7 +210,7 @@
       cols="30"
       rows="10"
       placeholder="Description"
-      class="h-80 w-full rounded-md border-gray-400 shadow"
+      class="h-80 w-full resize-none rounded-md border-gray-400 shadow"
     />
     <br />
 
@@ -246,10 +246,8 @@
     </select>
 
     <br />
-    <div class="flex justify-center">
-      <Button color="green" pill type="submit" size="xl" class="mt-20">
-        Add a facility
-      </Button>
+    <div class="mb-20 mt-20 flex justify-center">
+      <Button color="green" pill type="submit" size="xl">Add a facility</Button>
     </div>
   </form>
 </div>
