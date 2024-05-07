@@ -76,12 +76,14 @@
         <p class="mb-2 mt-2 text-center text-lg font-semibold">
           You're a part of: <strong>{school}</strong>
         </p>
-        <button
-          type="submit"
-          class="rounded-md bg-log-in-green px-4 py-2 text-base font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
-        >
-          Continue to dashboard >
-        </button>
+        <div class="flex items-center justify-center">
+          <button
+            type="submit"
+            class="flex items-center justify-center rounded-md bg-log-in-green px-4 py-2 text-base font-bold text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
+          >
+            Continue to dashboard >
+          </button>
+        </div>
       </form>
     </div>
   {/if}
