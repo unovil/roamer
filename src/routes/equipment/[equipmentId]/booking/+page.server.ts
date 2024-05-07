@@ -116,8 +116,20 @@ export const actions = {
 
     const requestDatesArray: DateStringRange[] = JSON.parse(requestDates)
 
+    if (requestDescription.length === 0) {
+      return fail(400, {
+        noDescription: true,
+        error: "Please input a description."
+      })
+    } else if (requestDescription.length > 1500) {
+      return fail(400, {
+        descriptionTooLong: true,
+        error: "Description is too long."
+      })
+    }
+
     if (
-      !requestDatesArray ||
+      requestDatesArray.length === 0 ||
       requestDatesArray.some(
         (dateRange) =>
           Number.isNaN(new Date(dateRange.start)) ||
@@ -138,6 +150,13 @@ export const actions = {
         id: parseInt(dateRange.id)
       }
     })
+
+    if (requestDatesRanges.length === 0) {
+      return fail(400, {
+        noDates: true,
+        error: "No dates was inputted."
+      })
+    }
 
     requestDatesRanges.forEach((bookingDates) => {
       if (
