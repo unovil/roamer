@@ -51,8 +51,8 @@
             type="button"
             class="h-10 w-40 items-center justify-center rounded-md border border-gray-400 {role ==
             'ADMIN'
-              ? 'bg-green-700'
-              : 'hover:bg-green-500'} mb-1"
+              ? 'bg-green-500'
+              : 'hover:bg-green-700'} mb-1"
             on:click={() => {
               role = "ADMIN";
             }}
@@ -64,8 +64,8 @@
             type="button"
             class="ml-6 h-10 w-40 items-center justify-center rounded-md border border-gray-400 {role ==
             'STUDENT'
-              ? 'bg-green-700'
-              : 'hover:bg-green-500'}"
+              ? 'bg-green-500'
+              : 'hover:bg-green-700'}"
             on:click={() => {
               role = "STUDENT";
             }}

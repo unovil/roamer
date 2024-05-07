@@ -84,7 +84,7 @@ model Facility {
   name        String
   description String     @db.Text
   image       String
-  department  Department @default(MISC)
+  department  Department @default(MISCELLANEOUS)
   requests    Request[]  @relation(name: "FacilityToRequest")
 
   /// [RangeDates]
@@ -99,7 +99,7 @@ model Equipment {
   admins      Admin[]    @relation(name: "EquipmentToAdmin")
   description String     @db.TinyText
   image       String
-  department  Department @default(MISC)
+  department  Department @default(MISCELLANEOUS)
   requests    Request[]  @relation(name: "EquipmentToRequest")
 
   /// [RangeDates]
@@ -131,9 +131,9 @@ enum UserRole {
 }
 
 enum Department {
-  SCIENCE
-  MATH
+  GENERALPURPOSE
   MAPEH
-  MISC
-  LANGUAGE
+  SCIENCE
+  MULTIMEDIA
+  MISCELLANEOUS
 }

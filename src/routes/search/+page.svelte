@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
+  import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
   import { searchQuery } from "$lib/components/search";
   import { Spinner, Heading } from "flowbite-svelte";
-  import { Table, TableBodyRow } from "flowbite-svelte";
 
   export let data: PageData;
   let searchTerm = data.searchTerm;
@@ -12,7 +12,7 @@
   $: results = data.results;
 
   let timeoutId: NodeJS.Timeout;
-  $: {
+  $: if (browser) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       const { query, term } = searchQuery(searchTerm, searchCategory, $page);
@@ -57,22 +57,23 @@
       class="mx-auto flex h-auto w-3/4 justify-start rounded-md border border-gray-300 p-4 shadow-md"
     >
       {#if typeof results !== "undefined" && results !== null && results.length > 0}
-        <Table>
+        <table class="w-full">
           {#each results as result (result.id)}
-            <TableBodyRow>
-              <td class="relative h-16 w-16 text-right">
-                <img
-                  src={result.image}
-                  alt={result.name}
-                  class="left-0 top-0 h-16 w-16 rounded-md object-cover"
-                />
-              </td>
-              <a
-                href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
-                class="flex justify-start"
-              >
-                <td>
-                  <div class="ml-6 mr-96">
+            <tr
+              class="flex w-full items-center justify-between border-b hover:bg-green-100"
+            >
+              <div class="flex items-center">
+                <td class="relative ml-3 mr-8 w-16 py-4">
+                  <img
+                    src={result.image}
+                    alt={result.name}
+                    class="left-0 top-0 h-16 w-16 rounded-md object-cover"
+                  />
+                </td>
+                <a
+                  href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
+                >
+                  <td class="pl-4">
                     <h2 class="text-lg font-bold text-green-700">
                       {result.name}
                     </h2>
@@ -91,22 +92,22 @@
                         >
                       {/if}
                     </p>
-                  </div>
-                </td>
-              </a>
-              <td class="w-80">
-                <button class="ml-40 mr-60 text-xl font-bold text-black">
+                  </td>
+                </a>
+              </div>
+              <td>
+                <button class="text-xl font-bold text-black">
                   <a
                     href={`${data.searchCat === "equipment" ? "/equipment/" : "/facility/"}${result.id}`}
-                    class="flex justify-start"
+                    class=""
                   >
                     >
                   </a>
                 </button>
               </td>
-            </TableBodyRow>
+            </tr>
           {/each}
-        </Table>
+        </table>
       {:else}
         <div class="mx-auto flex h-full flex-col items-center justify-center">
           <Heading tag="h1" class="mb-4 text-3xl">No results found.</Heading>

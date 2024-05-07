@@ -56,11 +56,13 @@
           <DropdownItem href="/about">About Roamer</DropdownItem>
           <DropdownDivider />
           <form method="post">
-            <DropdownItem>
-              <button type="submit" formaction="/dashboard?/logout">
-                Sign out
-              </button>
-            </DropdownItem>
+            <button
+              type="submit"
+              formaction="/dashboard?/logout"
+              class="w-full"
+            >
+              <DropdownItem>Sign out</DropdownItem>
+            </button>
           </form>
         </Dropdown>
       </NavUl>

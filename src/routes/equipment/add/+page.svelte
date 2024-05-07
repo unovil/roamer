@@ -236,9 +236,11 @@
       class="w-full rounded-md border-gray-600 shadow-md"
     >
       <option value="" selected disabled>Department</option>
-      {#each Object.values(Department) as department}
-        <option>{department}</option>
-      {/each}
+      <option>GENERALPURPOSE</option>
+      <option>MAPEH</option>
+      <option>SCIENCE</option>
+      <option>MULTIMEDIA</option>
+      <option>MISCELLANEOUS</option>
     </select>
 
     <br />

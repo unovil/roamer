@@ -156,11 +156,11 @@
 
 <div class="mx-auto flex max-w-screen-lg flex-col">
   <div
-    class="sticky bottom-10 top-20 z-10 flex flex-col items-start bg-white dark:bg-black"
+    class="bottom-10 top-20 z-10 flex flex-col items-start bg-white dark:bg-black"
   >
     <p class="mb-3 mt-6 text-4xl font-bold text-log-in-green">Roaming for:</p>
     <div
-      class="sticky bottom-10 top-20 z-10 flex flex-row items-center bg-white dark:bg-black"
+      class="bottom-10 top-20 z-10 flex flex-row items-center bg-white dark:bg-black"
     >
       <img
         class="mr-5 h-24 w-24 rounded-lg"
@@ -190,7 +190,7 @@
   >
     <Table class="h-full">
       <caption
-        class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+        class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
       >
         1. Roam for who?
       </caption>
@@ -279,11 +279,13 @@
     </Table>
     <br />
 
-    <p class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+    >
       2. Roam for what dates?
     </p>
     <div class="justify-center">
-      <p class="flex text-lg font-bold">BLOCKED DATES:</p>
+      <p class="flex text-lg font-bold text-red-600">BLOCKED DATES:</p>
       <ul>
         {#each data.facility.blockedDates as date}
           <li class="font-medium">
@@ -291,6 +293,8 @@
               date.end,
             ).toLocaleString()}
           </li>
+        {:else}
+          <p>There are no currently blocked dates.</p>
         {/each}
       </ul>
     </div>
@@ -357,7 +361,9 @@
 
     <br />
 
-    <p class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+    >
       3. Describe the roam
     </p>
     <p>
@@ -379,7 +385,9 @@
 
     <br />
 
-    <p class="p-5 text-left text-3xl font-bold text-gray-900 dark:text-white">
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+    >
       4. Final Information
     </p>
     <b>
@@ -408,9 +416,8 @@
         </li>
       {/each}
     </ul>
-
-    <br />
-
-    <Button color="green" pill type="submit" size="lg">Submit Roam</Button>
+    <div class="mb-20 mt-20 flex justify-center">
+      <Button color="green" pill type="submit" size="xl">Submit Roam</Button>
+    </div>
   </form>
 </div>

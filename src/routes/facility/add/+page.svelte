@@ -1,10 +1,7 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
-  import { invalidateAll } from "$app/navigation";
-  import type { ActionResult } from "@sveltejs/kit";
   import type { ActionData } from "./$types";
   import type { PageData } from "./$types";
-  import { Department } from "@prisma/client";
   import { Heading, Table, Button } from "flowbite-svelte";
 
   export let form: ActionData;
@@ -240,9 +237,11 @@
       class="w-full rounded-md border-gray-600 shadow-md"
     >
       <option value="" selected disabled>Department</option>
-      {#each Object.values(Department) as department}
-        <option>{department}</option>
-      {/each}
+      <option>GENERALPURPOSE</option>
+      <option>MAPEH</option>
+      <option>SCIENCE</option>
+      <option>MULTIMEDIA</option>
+      <option>MISCELLANEOUS</option>
     </select>
 
     <br />
