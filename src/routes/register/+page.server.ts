@@ -74,8 +74,6 @@ export const actions = {
         path: ".",
         ...sessionCookie.attributes
       })
-
-      console.log("User created:", response)
     } catch (err) {
       if (
         err instanceof PrismaClientKnownRequestError &&

@@ -141,8 +141,6 @@
         id: requestDates.length,
       },
     ];
-
-    console.log(requestDates);
   };
 
   const datesRemove = (id: number) => {

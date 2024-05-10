@@ -140,8 +140,6 @@ export const actions = {
           blockedDates
         }
       })
-
-      console.log(`New facility: ${newFacility}`)
     } else if (type === "equipment") {
       let blockedDates = Array.isArray(placeRequest.facility?.blockedDates)
         ? placeRequest.facility?.blockedDates
@@ -154,8 +152,6 @@ export const actions = {
           blockedDates
         }
       })
-
-      console.log(`New equipment: ${newEquipment}`)
     } else {
       throw error(400, "Invalid request, wrong type")
     }

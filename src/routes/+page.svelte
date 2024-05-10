@@ -10,10 +10,7 @@
 
   let loggedIn: boolean;
   let userRole: string;
-  if (data.isLoggedIn) {
-    loggedIn = true;
-  } else loggedIn = false;
-  console.log(`loggedIn status is: ${loggedIn}`);
+  loggedIn = !!data.isLoggedIn;
 
   let images = [
     "/background-homepage/bg_1.jpg",

@@ -3,7 +3,6 @@
   import { enhance } from "$app/forms";
   export let form: ActionData;
   let isHidden = true;
-  console.log(`form is ${form}`);
 
   const changePasswordVisibility = () => {
     isHidden = !isHidden;

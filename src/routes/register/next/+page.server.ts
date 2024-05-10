@@ -24,13 +24,7 @@ export const actions = {
     const roleInfo = Object.fromEntries(await request.formData())
     const { role, schoolId } = roleInfo
 
-    console.log(roleInfo)
-
-    console.log(`role: ${role}`)
-    console.log(`school id: ${schoolId}`)
-
     if (typeof role !== "string" || role == null || role === "") {
-      console.log("no user role selected")
       return fail(400, {
         noSelectedRole: true,
         error: "Please select a role.",

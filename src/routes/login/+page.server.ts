@@ -39,8 +39,6 @@ export const actions = {
         error: "User not found. Type your email correctly, or register first."
       })
 
-    console.log("User found:", user)
-
     if (
       typeof password !== "string" ||
       password.length < 8 ||

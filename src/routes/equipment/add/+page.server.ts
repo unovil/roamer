@@ -65,12 +65,6 @@ export const actions = {
       department: Department
     }
 
-    console.log(`title: ${title}`)
-    console.log(`description: ${description}`)
-    console.log(`file: ${file}`)
-    console.log(`admins: ${admins}`)
-    console.log(`department: ${department}`)
-
     if (!title || title == "") {
       return fail(400, {
         noTitle: true,
@@ -162,8 +156,6 @@ export const actions = {
       })
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
-        console.log(err)
-
         return fail(400, {
           someError: true,
           error: "Something went wrong. Please try again."

@@ -4,8 +4,6 @@ import { lucia } from "$lib/server/auth"
 import db from "$lib/prisma"
 
 export const load: PageServerLoad = async (event) => {
-  console.log(event.locals.user)
-
   return {
     username:
       event.locals?.user?.firstName + " " + event.locals?.user?.lastName,

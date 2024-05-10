@@ -4,8 +4,6 @@ import { lucia } from "$lib/server/auth"
 import db from "$lib/prisma"
 
 export const load: LayoutServerLoad = async (event) => {
-  console.log(event.locals.user)
-
   if (!event.locals.user) {
     return { isLoggedIn: false }
   }

@@ -80,8 +80,6 @@
           };
         })
       : null;
-
-  $: console.log(items);
 </script>
 
 <svelte:head>
