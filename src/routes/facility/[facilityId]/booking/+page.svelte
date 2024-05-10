@@ -121,8 +121,16 @@
     }
 
     const overlapping = data.facility.blockedDates.some((existingRange) => {
-      const existingStart = new Date(existingRange.start).getTime();
-      const existingEnd = new Date(existingRange.end).getTime();
+      const existingStart = existingRange.start.getTime();
+      const existingEnd = existingRange.end.getTime();
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
+      return end >= existingStart && start <= existingEnd;
+    });
+
+    const additionOverlapping = requestDates.some((existingRange) => {
+      const existingStart = existingRange.start.getTime();
+      const existingEnd = existingRange.end.getTime();
       const start = new Date(startDate).getTime();
       const end = new Date(endDate).getTime();
       return end >= existingStart && start <= existingEnd;
@@ -130,6 +138,10 @@
 
     if (overlapping) {
       datesError = "This date range overlaps with a blocked date range.";
+      return;
+    }
+    if (additionOverlapping) {
+      datesError = "This date range overlaps with another date range you set.";
       return;
     }
 

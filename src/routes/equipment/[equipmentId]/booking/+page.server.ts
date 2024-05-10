@@ -134,7 +134,7 @@ export const actions = {
         (dateRange) =>
           Number.isNaN(new Date(dateRange.start)) ||
           Number.isNaN(new Date(dateRange.end)) ||
-          Number.parseInt(dateRange.id)
+          Number.isNaN(Number.parseInt(dateRange.id))
       )
     ) {
       return fail(400, {
