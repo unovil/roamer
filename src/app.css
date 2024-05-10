@@ -8,10 +8,10 @@
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url("/fonts/Trocchi-Regular.ttf");
   }
 }
 
+/* all images now have this property to prevent compressing in resizing */
 img {
   object-fit: contain;
 }
