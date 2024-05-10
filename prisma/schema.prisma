@@ -109,8 +109,8 @@ model Equipment {
 model Request {
   id            Int           @id @default(autoincrement())
   description   String        @db.TinyText
-  facility      Facility?     @relation(name: "FacilityToRequest", fields: [facilityId], references: [id])
-  equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
+  facility      Facility?     @relation(name: "FacilityToRequest", fields: [facilityId], references: [id], onDelete: Cascade)
+  equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id], onDelete: Cascade)
   students      Student[]     @relation(name: "StudentToRequest")
   admins        Admin[]       @relation(name: "AdminToRequest")
   dateCreated   DateTime      @default(now())
