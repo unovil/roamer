@@ -54,7 +54,11 @@
         <NavLi href="/search">Search</NavLi>
         <NavLi href="/about">About Roamer</NavLi>
         <div class="flex cursor-pointer items-center pl-5 md:order-2">
-          <Avatar src={data.user?.pfp} />
+          {#if data.user?.pfp.length == 0}
+            <Avatar>{data.user?.firstName[0]}{data.user?.lastName[0]}</Avatar>
+          {:else}
+            <Avatar src={data.user?.pfp} />
+          {/if}
           <ChevronDownOutline class="ml-2 h-5 w-5" />
           <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
         </div>
