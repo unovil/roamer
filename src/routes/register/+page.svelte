@@ -1,13 +1,10 @@
 <script lang="ts">
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
-  import { Label, Helper, Input } from "flowbite-svelte";
+  import { Label, Helper } from "flowbite-svelte";
   export let form: ActionData;
-  let isHidden = true;
-
-  const changePasswordVisibility = () => {
-    isHidden = !isHidden;
-  };
+  let password = "",
+    confirmPassword = "";
 
   let previewUrl = "";
   const onFileChange = (event: Event) => {
@@ -52,6 +49,11 @@
     <form
       method="post"
       use:enhance={() => {
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
         return async ({ update }) => {
           await update();
         };
@@ -84,19 +86,23 @@
 
       <div class="relative">
         <input
-          type={isHidden ? "password" : "text"}
+          type="password"
           placeholder="Password"
           name="password"
+          bind:value={password}
           class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
           class:border-red-500={form?.invalidPass}
         />
-        <button
-          type="button"
-          on:click={changePasswordVisibility}
-          class="absolute inset-y-0 right-0 rounded-md bg-gray-200 px-3 py-2 text-gray-600"
-        >
-          {isHidden ? "Show" : "Hide"}
-        </button>
+      </div>
+
+      <div class="relative">
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          bind:value={confirmPassword}
+          class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
+          class:border-red-500={form?.invalidPass}
+        />
       </div>
 
       <Label defaultClass="text-left text-sm rtl:text-right font-medium block"
