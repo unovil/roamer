@@ -1,10 +1,14 @@
 <script lang="ts">
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
-  import { Label, Helper } from "flowbite-svelte";
+  import PrivacyPolicy from "./PrivacyPolicy.svelte";
+  import { Label, Helper, Modal, Checkbox } from "flowbite-svelte";
   export let form: ActionData;
   let password = "",
     confirmPassword = "";
+
+  let clickOutsideModal = false;
+  let value = false;
 
   let previewUrl = "";
   const onFileChange = (event: Event) => {
@@ -126,10 +130,25 @@
         helperClass="text-xs font-normal text-gray-500 dark:text-gray-300 text-left"
         >Upload a JPEG or PNG file.</Helper
       >
-      <div class="mb-2 flex items-center justify-start"></div>
+      <div class="mb-6 mt-2">
+        <Checkbox bind:checked={value}
+          ><span
+            >I agree to the <button
+              type="button"
+              class="text-primary-700 hover:underline"
+              on:click={() => {
+                clickOutsideModal = true;
+              }}>Privacy Policy</button
+            >.</span
+          ></Checkbox
+        >
+      </div>
       <button
         type="submit"
-        class="rounded-md bg-log-in-green px-4 py-2 text-white shadow transition duration-300 ease-in-out hover:bg-green-500"
+        disabled={!value}
+        class="rounded-md px-4 py-2 text-white shadow transition duration-300 ease-in-out {value
+          ? 'bg-log-in-green hover:bg-green-500'
+          : 'bg-gray-300'}"
       >
         Register
       </button>
@@ -144,3 +163,12 @@
     </div>
   </div>
 </div>
+
+<Modal
+  title="Privacy Policy"
+  bind:open={clickOutsideModal}
+  autoclose
+  outsideclose
+>
+  <PrivacyPolicy />
+</Modal>
