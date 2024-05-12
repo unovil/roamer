@@ -5,6 +5,9 @@ import { fail, redirect } from "@sveltejs/kit"
 import { lucia } from "$lib/server/auth"
 import { Argon2id } from "oslo/password"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
+import path, { extname } from "path"
+import { writeFile } from "node:fs/promises"
+import Jimp from "jimp"
 
 export const load: PageServerLoad = async (event) => {
   if (event.locals.user) {
@@ -14,45 +17,71 @@ export const load: PageServerLoad = async (event) => {
 
 export const actions = {
   default: async ({ request, cookies }) => {
-    const formData = await request.formData()
-    const email = formData.get("email")
-    const firstName = formData.get("firstName")
-    const lastName = formData.get("lastName")
-    const password = formData.get("password")
+    const formInfo = Object.fromEntries(await request.formData())
+    const { email, firstName, lastName, password, pfp } = formInfo as {
+      email: string
+      firstName: string
+      lastName: string
+      password: string
+      pfp: File
+    }
 
-    if (
-      typeof email !== "string" ||
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
-    ) {
+    let filePath = ""
+
+    if (!email || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)) {
       return fail(400, {
         invalidEmail: true,
         error: "Invalid email address."
       })
     }
 
-    if (typeof firstName !== "string" || firstName.trim().length == 0) {
+    if (!firstName || firstName.trim().length == 0) {
       return fail(400, {
         invalidFirstName: true,
         error: "First name should not be empty."
       })
     }
 
-    if (typeof lastName !== "string" || lastName.trim().length == 0) {
+    if (!lastName || lastName.trim().length == 0) {
       return fail(400, {
         invalidLastName: true,
         error: "Last name should not be empty."
       })
     }
 
-    if (
-      typeof password !== "string" ||
-      password.length < 8 ||
-      password.length > 32
-    ) {
+    if (!password || password.length < 8 || password.length > 32) {
       return fail(400, {
         invalidPass: true,
         error: "Password must be between 8 and 32 characters."
       })
+    }
+
+    if (!(!pfp.name || pfp.name === "undefined" || !pfp.size)) {
+      filePath = path.join(
+        "uploads",
+        `pfp-${crypto.randomUUID()}${extname(pfp.name)}`
+      )
+
+      const value = await Jimp.read(Buffer.from(await pfp.arrayBuffer()))
+
+      // Calculate scale factor
+      const scaleFactor = Math.max(
+        1024 / value.bitmap.width,
+        1024 / value.bitmap.height
+      )
+
+      // Resize the image
+      value.scale(scaleFactor)
+
+      // Calculate the coordinates for cropping
+      const x = value.bitmap.width / 2 - 512
+      const y = value.bitmap.height / 2 - 512
+
+      // Crop the image
+      await value
+        .crop(x, y, 1024, 1024)
+        .quality(70)
+        .writeAsync(path.join("static", filePath))
     }
 
     const hashedPassword = await new Argon2id().hash(password)
@@ -64,7 +93,8 @@ export const actions = {
           email: email.trim().toLowerCase() as string,
           firstName: firstName.trim() as string,
           lastName: lastName.trim() as string,
-          hashedPassword: hashedPassword as string
+          hashedPassword: hashedPassword as string,
+          pfp: filePath
         }
       })
 
@@ -75,6 +105,7 @@ export const actions = {
         ...sessionCookie.attributes
       })
     } catch (err) {
+      console.log(err)
       if (
         err instanceof PrismaClientKnownRequestError &&
         err.code === "P2002" // unique constraint

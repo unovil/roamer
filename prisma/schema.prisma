@@ -19,6 +19,7 @@ model User {
   email          String    @unique
   firstName      String
   lastName       String
+  pfp            String    @default("")
   school         School?   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   role           UserRole  @default(STUDENT)
   admin          Admin?    @relation(name: "AdminToUser")

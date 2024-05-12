@@ -1,11 +1,26 @@
 <script lang="ts">
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
+  import { Label, Helper, Input } from "flowbite-svelte";
   export let form: ActionData;
   let isHidden = true;
 
   const changePasswordVisibility = () => {
     isHidden = !isHidden;
+  };
+
+  let previewUrl = "";
+  const onFileChange = (event: Event) => {
+    const fileElement = event?.target as HTMLInputElement;
+    const file = fileElement.files ? fileElement.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   };
   // used for conditional css, if needed.
   /* form?.invalidEmail
@@ -34,7 +49,15 @@
       <p class="mb-2 overflow-auto break-words text-red-600">{form.error}</p>
     {/if}
 
-    <form method="post" use:enhance>
+    <form
+      method="post"
+      use:enhance={() => {
+        return async ({ update }) => {
+          await update();
+        };
+      }}
+      enctype="multipart/form-data"
+    >
       <input
         type="email"
         placeholder="Email address"
@@ -75,6 +98,28 @@
           {isHidden ? "Show" : "Hide"}
         </button>
       </div>
+
+      <Label defaultClass="text-left text-sm rtl:text-right font-medium block"
+        >Choose a profile picture: <span class="text-gray-500"
+          >(Not required)</span
+        ></Label
+      >
+      <div class="flex justify-center">
+        <input
+          type="file"
+          name="pfp"
+          class="w-full rounded-md shadow"
+          accept=".jpg, .jpeg, .png"
+          on:change={onFileChange}
+        />
+        {#if previewUrl}
+          <img src={previewUrl} alt="Preview" class="h-24" />
+        {/if}
+      </div>
+      <Helper
+        helperClass="text-xs font-normal text-gray-500 dark:text-gray-300 text-left"
+        >Upload a JPEG or PNG file.</Helper
+      >
       <div class="mb-2 flex items-center justify-start"></div>
       <button
         type="submit"
