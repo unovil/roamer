@@ -11,6 +11,8 @@
     Dropdown,
     DropdownItem,
     DropdownDivider,
+    DropdownHeader,
+    Avatar,
   } from "flowbite-svelte";
   import { ChevronDownOutline } from "flowbite-svelte-icons";
   export let data: LayoutData;
@@ -34,8 +36,11 @@
           Roamer
         </span>
       </NavBrand>
-      <NavHamburger on:click={toggle} />
-      <NavUl {hidden} activeUrl={pageUrl}>
+      <NavUl
+        {hidden}
+        activeUrl={pageUrl}
+        ulClass="flex flex-col p-3 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:text-sm md:font-medium items-center"
+      >
         <NavLi
           href={data.isStudent
             ? "/dashboard"
@@ -47,13 +52,22 @@
         </NavLi>
         <NavLi href="/approvals">Approvals</NavLi>
         <NavLi href="/search">Search</NavLi>
-        <NavLi class="text-profile-text-green cursor-pointer">
-          {`${data.user?.firstName} ${data.user?.lastName}`}<ChevronDownOutline
-            class="ms-2 inline h-6 w-6 text-primary-800 dark:text-white"
-          />
-        </NavLi>
-        <Dropdown class="z-20 w-44">
-          <DropdownItem href="/about">About Roamer</DropdownItem>
+        <NavLi href="/about">About Roamer</NavLi>
+        <div class="flex cursor-pointer items-center pl-5 md:order-2">
+          <Avatar src={data.user?.pfp} />
+          <ChevronDownOutline class="ml-2 h-5 w-5" />
+          <NavHamburger class1="w-full md:flex md:w-auto md:order-1" />
+        </div>
+        <Dropdown class="z-20 w-auto">
+          <DropdownHeader>
+            <span class="text-bold block text-sm text-primary-600"
+              >{data.user?.firstName} {data.user?.lastName}</span
+            >
+            <span class="block truncate text-sm font-medium"
+              >{data.user?.email}</span
+            >
+          </DropdownHeader>
+          <DropdownItem href="/profile">Edit profile</DropdownItem>
           <DropdownDivider />
           <form method="post">
             <button
@@ -61,7 +75,10 @@
               formaction="/dashboard?/logout"
               class="w-full"
             >
-              <DropdownItem>Sign out</DropdownItem>
+              <DropdownItem
+                defaultClass="font-medium py-2 px-4 text-sm hover:bg-red-200 dark:hover:bg-gray-700 text-red-500"
+                >Sign out</DropdownItem
+              >
             </button>
           </form>
         </Dropdown>

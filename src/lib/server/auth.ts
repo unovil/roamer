@@ -43,4 +43,5 @@ interface DatabaseUserAttributes {
   admin: Admin | null
   student: Student | null
   schoolId: number | null
+  pfp: string
 }
