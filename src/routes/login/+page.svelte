@@ -2,11 +2,6 @@
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
   export let form: ActionData;
-  let isHidden = true;
-
-  const changePasswordVisibility = () => {
-    isHidden = !isHidden;
-  };
 
   // conditional css, if needed
   /* form?.invalidEmail
@@ -44,21 +39,12 @@
       />
       <div class="relative">
         <input
-          type={isHidden ? "password" : "text"}
           placeholder="Password"
           name="password"
+          type="password"
           class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
-          id="password"
           class:border-red-500={form?.incorrectPass || form?.invalidPass}
         />
-
-        <button
-          type="button"
-          on:click={changePasswordVisibility}
-          class="absolute inset-y-0 right-0 rounded-md bg-gray-200 px-3 py-2 text-gray-600"
-        >
-          {isHidden ? "Show" : "Hide"}
-        </button>
       </div>
       <button
         type="submit"

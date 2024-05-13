@@ -74,6 +74,8 @@ export const actions = {
       where: { id: locals.user?.id },
       data: { hashedPassword }
     })
+
+    return { type: "password", success: "Password successfully updated." }
   },
   changeEmail: async ({ request, locals }) => {
     const formInfo = Object.fromEntries(await request.formData())
@@ -108,6 +110,8 @@ export const actions = {
       where: { id: locals.user?.id },
       data: { email: newEmail }
     })
+
+    return { type: "email", success: "Email successfully updated." }
   },
   changePfp: async ({ request, locals }) => {
     const formInfo = Object.fromEntries(await request.formData())
@@ -164,5 +168,7 @@ export const actions = {
       where: { id: locals.user?.id },
       data: { pfp: newFilePath }
     })
+
+    return { type: "pfp", success: "Profile picture successfully updated." }
   }
 } satisfies Actions
