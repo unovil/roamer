@@ -26,7 +26,9 @@
   <title>Roamer | Search{searchTerm ? ` - "${searchTerm}"` : ""}</title>
 </svelte:head>
 
-<div class="mb-10 mt-10 flex items-start justify-center text-3xl font-bold">
+<div
+  class="mb-10 mt-10 flex items-start justify-center text-2xl font-bold sm:text-lg md:text-3xl lg:text-4xl"
+>
   <h1>Roaming for something?</h1>
 </div>
 
@@ -54,7 +56,7 @@
 {#if data.searchCat === "equipment" || data.searchCat === "facility"}
   {#if searchTerm}
     <div
-      class="mx-auto flex h-auto w-3/4 justify-start rounded-md border border-gray-300 p-4 shadow-md"
+      class="mx-auto flex h-auto w-3/4 justify-start rounded-md border border-gray-300 p-4 shadow-md sm:w-3/4"
     >
       {#if typeof results !== "undefined" && results !== null && results.length > 0}
         <table class="w-full">

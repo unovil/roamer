@@ -87,9 +87,13 @@
 </svelte:head>
 
 <div class="flex h-full w-full flex-col items-center bg-white p-4 text-center">
-  <p class="mb-5 mt-0 text-6xl font-bold">Approvals</p>
-  <div class="mt-4 flex h-screen w-3/4 flex-col items-center rounded-md p-4">
-    <div class="h-sc w-full rounded-lg border-2 border-gray-300 p-4">
+  <p class="mb-3 mt-0 text-4xl font-bold sm:text-2xl md:text-6xl">Approvals</p>
+  <div
+    class="mt-4 flex h-screen w-full flex-col items-center rounded-md p-4 sm:w-3/4"
+  >
+    <div
+      class="h-sc w-full overflow-x-auto rounded-lg border-2 border-gray-300 p-4"
+    >
       {#if items.length > 0}
         <table class="w-full">
           <thead></thead>
@@ -97,9 +101,9 @@
             <!-- TODO: FAULTY STYLE -->
             {#each items as item (item.requestId)}
               <tr
-                class="flex w-full items-center justify-between border-b hover:bg-green-100"
+                class="flex w-full flex-col items-start justify-between border-b hover:bg-green-100 sm:flex-row sm:items-center"
               >
-                <div class="flex items-center">
+                <div class="mb-4 flex w-full items-center sm:mb-0 sm:w-auto">
                   <td class="w-20 pl-3 pr-1"
                     ><img
                       src={item.place.image}
@@ -129,37 +133,39 @@
                     {/if}
                   </td>
                 </div>
-                <div class="flex items-center">
+                <div class="mb-4 flex w-full items-center sm:mb-0 sm:w-auto">
                   <td class="mr-8 text-lg font-semibold">
                     <p class={overallStatusChecker(item).class}>
                       {overallStatusChecker(item).text}
                     </p>
                   </td>
-                  <td>
-                    {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
-                      <button
-                        class="text-lg font-semibold text-black hover:text-log-in-green"
-                        on:click={() => {
-                          defaultModal = true;
-                          selectedItem = item;
-                          addReview = true;
-                        }}
-                      >
-                        Add a review {">"}
-                      </button>
-                    {:else}
-                      <button
-                        class="text-lg font-semibold text-black hover:text-log-in-green"
-                        on:click={() => {
-                          defaultModal = true;
-                          selectedItem = item;
-                          addReview = false;
-                        }}
-                      >
-                        See reviews {">"}
-                      </button>
-                    {/if}
-                  </td>
+                  <div class="flex w-full items-center justify-end sm:w-auto">
+                    <td>
+                      {#if data.isValidAdmin && selfAdminStatus?.find((status) => item.requestId === status.id)?.status === "WAITING"}
+                        <button
+                          class="text-lg font-semibold text-black hover:text-log-in-green"
+                          on:click={() => {
+                            defaultModal = true;
+                            selectedItem = item;
+                            addReview = true;
+                          }}
+                        >
+                          Add a review {">"}
+                        </button>
+                      {:else}
+                        <button
+                          class="text-lg font-semibold text-black hover:text-log-in-green"
+                          on:click={() => {
+                            defaultModal = true;
+                            selectedItem = item;
+                            addReview = false;
+                          }}
+                        >
+                          See reviews {">"}
+                        </button>
+                      {/if}
+                    </td>
+                  </div>
                 </div>
               </tr>
             {/each}

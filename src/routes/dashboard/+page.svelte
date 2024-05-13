@@ -21,11 +21,15 @@
   <title>Roamer | Dashboard</title>
 </svelte:head>
 
-<div class="flex w-full flex-col items-center p-4 text-center">
-  <h1 class="text-6xl font-semibold">
+<div
+  class="mt-10 flex flex-col items-center px-4 text-center sm:px-8 sm:text-center md:px-16 lg:px-32"
+>
+  <h1 class="text-4xl font-semibold sm:text-5xl md:text-6xl">
     Welcome, <strong>{data.userInfo.firstName}</strong>!
   </h1>
-  <h1 class="m-4 mt-3 text-3xl font-semibold">
+  <h1
+    class="mb-4 mt-3 text-base font-semibold sm:text-xl md:text-2xl lg:text-4xl"
+  >
     Looking for something to roam about?
   </h1>
 
@@ -35,6 +39,7 @@
       searchTerm = term;
       if (query != "") goto(`/search?${query}`);
     }}
+    class="w-full sm:w-3/4 md:w-full"
   >
     <div class="flex w-full justify-between">
       <input
@@ -59,12 +64,15 @@
     </div>
   </form>
 </div>
-<div class="mx-32 my-8 flex justify-between">
-  <div class="mr-2 w-3/4 rounded-md border border-gray-300 p-4 shadow">
+<div class="mx-4 my-8 flex flex-col justify-between sm:mx-32 sm:flex-row">
+  <div
+    class="mb-4 w-full rounded-md border border-gray-300 p-4 shadow sm:mb-0 sm:mr-2 sm:w-3/4"
+  >
     <Table hoverable={true}>
       <caption
-        class=" mb-5 text-center text-3xl font-bold text-green-900 dark:text-green-300"
-        >Section: {data?.sectionInfo?.section ?? "null"}</caption
+        class="mb-5 flex justify-center text-center text-3xl font-bold text-green-900 dark:text-green-300"
+      >
+        Section: {data?.sectionInfo?.section ?? "null"}</caption
       >
 
       <TableHead>
@@ -88,7 +96,9 @@
     </Table>
   </div>
 
-  <div class="ml-2 w-3/4 rounded-md border border-gray-300 p-4 shadow">
+  <div
+    class="mt-4 w-full rounded-md border border-gray-300 p-4 shadow sm:ml-2 sm:mt-0 sm:w-3/4"
+  >
     <caption
       class=" mb-5 flex justify-center text-center text-3xl font-bold text-green-900 dark:text-green-300"
       >Recent Bookings:
