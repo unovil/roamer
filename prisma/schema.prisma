@@ -19,6 +19,7 @@ model User {
   email          String    @unique
   firstName      String
   lastName       String
+  pfp            String    @default("")
   school         School?   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
   role           UserRole  @default(STUDENT)
   admin          Admin?    @relation(name: "AdminToUser")
@@ -62,7 +63,7 @@ model Admin {
   equipments Equipment[] @relation(name: "EquipmentToAdmin")
   requests   Request[]   @relation(name: "AdminToRequest")
 
-  /// [DepartmentsType]
+  /// [Departments]
   departments Json
 }
 
@@ -84,10 +85,10 @@ model Facility {
   name        String
   description String     @db.Text
   image       String
-  department  Department @default(MISC)
+  department  Department @default(MISCELLANEOUS)
   requests    Request[]  @relation(name: "FacilityToRequest")
 
-  /// [DatesType]
+  /// [RangeDates]
   blockedDates Json
 }
 
@@ -99,28 +100,29 @@ model Equipment {
   admins      Admin[]    @relation(name: "EquipmentToAdmin")
   description String     @db.TinyText
   image       String
-  department  Department @default(MISC)
+  department  Department @default(MISCELLANEOUS)
   requests    Request[]  @relation(name: "EquipmentToRequest")
 
-  /// [DatesType]
+  /// [RangeDates]
   blockedDates Json
 }
 
 model Request {
   id            Int           @id @default(autoincrement())
   description   String        @db.TinyText
-  facility      Facility?     @relation(name: "FacilityToRequest", fields: [facilityId], references: [id])
-  equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id])
+  facility      Facility?     @relation(name: "FacilityToRequest", fields: [facilityId], references: [id], onDelete: Cascade)
+  equipment     Equipment?    @relation(name: "EquipmentToRequest", fields: [equipmentId], references: [id], onDelete: Cascade)
   students      Student[]     @relation(name: "StudentToRequest")
   admins        Admin[]       @relation(name: "AdminToRequest")
+  dateCreated   DateTime      @default(now())
 
   facilityId  Int?
   equipmentId Int?
 
-  /// [DatesType]
+  /// [RangeDates]
   requestDates Json
 
-  /// [RequestStatusType]
+  /// [RequestStatuses]
   requestStatus Json
 }
 
@@ -130,9 +132,9 @@ enum UserRole {
 }
 
 enum Department {
-  SCIENCE
-  MATH
+  GENERALPURPOSE
   MAPEH
-  MISC
-  LANGUAGE
+  SCIENCE
+  MULTIMEDIA
+  MISCELLANEOUS
 }

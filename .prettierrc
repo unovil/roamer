@@ -1,0 +1,25 @@
+{
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "parser": "svelte",
+        "embeddedLanguageFormatting": "auto"
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript",
+        "semi": false,
+        "quoteProps": "consistent",
+        "singleQuote": false,
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "trailingComma": "none",
+        "endOfLine": "auto"
+      }
+    }
+  ]
+}

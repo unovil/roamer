@@ -1,34 +1,34 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { Department } from "@prisma/client";
-import { lucia } from "$lib/server/auth";
-import type { AuthRequest, Session, User } from "lucia";
-
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
-			user: import("lucia").User | null;
-			session: import("lucia").Session | null;
-		}
+  namespace App {
+    // interface Error {}
+    interface Locals {
+      user: import("lucia").User | null
+      session: import("lucia").Session | null
+    }
 
-		interface PageData {
-			user?: User;
-		}
-		// interface PageState {}
-		// interface Platform {}
-	}
+    interface PageData {
+      user?: User
+    }
+    // interface PageState {}
+    // interface Platform {}
+  }
 
-	namespace PrismaJson {
-		type DepartmentsType = { departments: Array<Department>?}
-		type DatesType = { start: Date, end: Date }[]
-		type RequestStatusType = { adminId: number, requestStatus: "APPROVED" | "WAITING" | "REJECTED" }[]
-	}
+  namespace PrismaJson {
+    type RequestStatus = "APPROVED" | "WAITING" | "REJECTED"
+
+    type Departments = {
+      departments: Array<import("@prisma/client").Department>?
+    }
+    type RangeDates = { start: Date; end: Date }[]
+    type RequestStatuses = {
+      adminId: import("@prisma/client").Admin["id"]
+      requestStatus: RequestStatus
+      reason: string
+    }[]
+  }
 }
 
-type Departments = PrismaJson.DepartmentsType;
-type Dates = PrismaJson.DatesType;
-type RequestStatus = PrismaJson.RequestStatusType;
-
-export { Departments, Dates, RequestStatus };
+export {}

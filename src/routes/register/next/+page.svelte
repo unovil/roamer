@@ -23,33 +23,33 @@
 
     sections.sort((a, b) => {
       if (a.grade === b.grade) {
-        return a.name.localeCompare(b.name)
+        return a.name.localeCompare(b.name);
       } else {
-        return a.grade - b.grade
+        return a.grade - b.grade;
       }
-    }) 
+    });
 
     // to trigger reactivity
-    sections = sections
+    sections = sections;
   }
 </script>
 
-{#if form?.error}
-  {form?.error}
-{/if}
+<svelte:head>
+  <title>Roamer | Register</title>
+</svelte:head>
 
 {#if !roleSuccess}
-  <Role {form} />
+  <Role {form} error={form?.error} />
 {:else}
-  <p>Role picked: {roleSelected}</p>
-  <p>School found: {schoolName}</p>
+  <!-- <p>Role picked: {roleSelected}</p>
+  <p>School found: {schoolName}</p> -->
 {/if}
 
 {#if roleSuccess}
-  <br />
-
   <RoleNext
     roleSelected={roleSelected ?? "student"}
+    school={schoolName}
     sections={sections ?? []}
+    error={form?.error}
   />
 {/if}

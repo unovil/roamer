@@ -1,13 +1,27 @@
 <script lang="ts">
   import type { ActionData } from "./$types";
   import { enhance } from "$app/forms";
+  import PrivacyPolicy from "./PrivacyPolicy.svelte";
+  import { Label, Helper, Modal, Checkbox } from "flowbite-svelte";
   export let form: ActionData;
-  let isHidden = true;
-  console.log(`form is ${form}`);
+  let password = "",
+    confirmPassword = "";
 
-  const changePasswordVisibility = () => {
-    if (isHidden == true) isHidden = false;
-    else isHidden = true;
+  let clickOutsideModal = false;
+  let value = false;
+
+  let previewUrl = "";
+  const onFileChange = (event: Event) => {
+    const fileElement = event?.target as HTMLInputElement;
+    const file = fileElement.files ? fileElement.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   };
   // used for conditional css, if needed.
   /* form?.invalidEmail
@@ -17,27 +31,44 @@
     form?.duplicateUser */
 </script>
 
+<svelte:head>
+  <title>Roamer | Register</title>
+</svelte:head>
+
 <div class="flex h-screen items-center justify-center bg-gray-100">
   <div
-    class="bg-white rounded-lg p-6 shadow-md text-center font-sans-serif w-80"
+    class="font-sans-serif w-80 rounded-lg bg-white p-6 text-center shadow-md"
   >
     <h2
-      class="text-lg font-semi-bold mb-6 flex items-center justify-center font-trocchi text-log-in-green transform scale-150"
+      class="font-semi-bold mb-6 flex scale-150 transform items-center justify-center font-trocchi text-lg text-log-in-green"
     >
-      <img src="/logo.png" alt="Logo" class="h-8 mr-2" />
+      <img src="/logo.png" alt="Logo" class="mr-2 h-8" />
       Roamer
     </h2>
 
     {#if form?.error}
-      <p class="text-red-600 overflow-auto break-words mb-2">{form.error}</p>
+      <p class="mb-2 overflow-auto break-words text-red-600">{form.error}</p>
     {/if}
 
-    <form method="post" use:enhance>
+    <form
+      method="post"
+      use:enhance={() => {
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        return async ({ update }) => {
+          await update();
+        };
+      }}
+      enctype="multipart/form-data"
+    >
       <input
         type="email"
         placeholder="Email address"
         name="email"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidEmail || form?.duplicateUser}
       />
 
@@ -45,7 +76,7 @@
         type="text"
         placeholder="First Name"
         name="firstName"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidFirstName}
       />
 
@@ -53,38 +84,91 @@
         type="text"
         placeholder="Last Name"
         name="lastName"
-        class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+        class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
         class:border-red-500={form?.invalidLastName}
       />
 
       <div class="relative">
         <input
-          type={isHidden ? "password" : "text"}
+          type="password"
           placeholder="Password"
           name="password"
-          class="block border border-gray-300 rounded-md w-full p-2 mb-2 shadow"
+          bind:value={password}
+          class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
           class:border-red-500={form?.invalidPass}
-          id="password"
         />
-        <button
-          type="button"
-          on:click={changePasswordVisibility}
-          class="absolute inset-y-0 right-0 px-3 py-2 bg-gray-200 text-gray-600 rounded-md"
-          >{isHidden ? "Show" : "Hide"}</button
+      </div>
+
+      <div class="relative">
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          bind:value={confirmPassword}
+          class="mb-2 block w-full rounded-md border border-gray-300 p-2 shadow"
+          class:border-red-500={form?.invalidPass}
+        />
+      </div>
+
+      <Label defaultClass="text-left text-sm rtl:text-right font-medium block"
+        >Choose a profile picture: <span class="text-gray-500"
+          >(Not required)</span
+        ></Label
+      >
+      <div class="flex justify-center">
+        <input
+          type="file"
+          name="pfp"
+          class="w-full rounded-md shadow"
+          accept=".jpg, .jpeg, .png"
+          on:change={onFileChange}
+        />
+        {#if previewUrl}
+          <img src={previewUrl} alt="Preview" class="h-24" />
+        {/if}
+      </div>
+      <Helper
+        helperClass="text-xs font-normal text-gray-500 dark:text-gray-300 text-left"
+        >Upload a JPEG or PNG file.</Helper
+      >
+      <div class="mb-6 mt-2">
+        <Checkbox bind:checked={value}
+          ><span
+            >I agree to the <button
+              type="button"
+              class="text-primary-700 hover:underline"
+              on:click={() => {
+                clickOutsideModal = true;
+              }}>Privacy Policy</button
+            >.</span
+          ></Checkbox
         >
       </div>
-      <div class="flex items-center justify-start mb-2"></div>
       <button
         type="submit"
-        class="bg-log-in-green text-white rounded-md px-4 py-2 shadow hover:bg-green-500 transition duration-300 ease-in-out"
-        >Register</button
+        disabled={!value}
+        class="rounded-md px-4 py-2 text-white shadow transition duration-300 ease-in-out {value
+          ? 'bg-log-in-green hover:bg-green-500'
+          : 'bg-gray-300'}"
       >
+        Register
+      </button>
     </form>
     <div class="mt-5">
       Registered already? <a
         href="/login"
-        class="text-green-500 mt-1 hover:text-log-in-green">Sign in here.</a
+        class="mt-1 text-green-500 hover:text-log-in-green"
       >
+        Sign in here.
+      </a>
     </div>
   </div>
 </div>
+
+<Modal
+  title="Privacy Policy"
+  bind:open={clickOutsideModal}
+  autoclose
+  outsideclose
+>
+  <PrivacyPolicy />
+</Modal>

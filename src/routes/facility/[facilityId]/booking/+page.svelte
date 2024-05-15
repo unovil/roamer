@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import type { ActionData, PageData } from "./$types";
+  import { Button, Table } from "flowbite-svelte";
 
   export let data: PageData;
   export let form: ActionData;
@@ -13,7 +14,7 @@
   let descriptionText: string = "";
   let selectAll: boolean = false;
 
-  let requestDates: Array<{ start: Date; end: Date, id: number }> = [];
+  let requestDates: Array<{ start: Date; end: Date; id: number }> = [];
   let datesError: string = "";
 
   let startDate: string = "";
@@ -35,10 +36,10 @@
       .filter((student) => {
         return (
           `${student.firstName.toLowerCase()} ${student.lastName.toLowerCase()}`.includes(
-            searchName.toLowerCase()
+            searchName.toLowerCase(),
           ) &&
           `${student.grade} - ${student.section.toLowerCase()}`.includes(
-            searchSection.toLowerCase()
+            searchSection.toLowerCase(),
           ) &&
           student.email.toLowerCase().includes(searchEmail.toLowerCase())
         );
@@ -73,7 +74,7 @@
 
   const checkWhetherSelectedAll = () => {
     selectAll = filteredStudents.every((student) =>
-      checkedStudentIds.has(student.id)
+      checkedStudentIds.has(student.id),
     );
   };
 
@@ -99,8 +100,13 @@
       return;
     }
 
-    if (requestDates.find((date) => date.start === new Date(startDate) && date.end === new Date(endDate))) {
-      datesError = "This date range is already added."
+    if (
+      requestDates.find(
+        (date) =>
+          date.start === new Date(startDate) && date.end === new Date(endDate),
+      )
+    ) {
+      datesError = "This date range is already added.";
       return;
     }
 
@@ -114,18 +120,28 @@
       return;
     }
 
-    const overlapping = data.facility.blockedDates.some(existingRange => {
-      const existingStart = new Date(existingRange.start).getTime();
-      const existingEnd = new Date(existingRange.end).getTime();
+    const overlapping = data.facility.blockedDates.some((existingRange) => {
+      const existingStart = existingRange.start.getTime();
+      const existingEnd = existingRange.end.getTime();
       const start = new Date(startDate).getTime();
       const end = new Date(endDate).getTime();
-      return (
-        end >= existingStart && start <= existingEnd
-      )
-    })
+      return end >= existingStart && start <= existingEnd;
+    });
+
+    const additionOverlapping = requestDates.some((existingRange) => {
+      const existingStart = existingRange.start.getTime();
+      const existingEnd = existingRange.end.getTime();
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
+      return end >= existingStart && start <= existingEnd;
+    });
 
     if (overlapping) {
       datesError = "This date range overlaps with a blocked date range.";
+      return;
+    }
+    if (additionOverlapping) {
+      datesError = "This date range overlaps with another date range you set.";
       return;
     }
 
@@ -134,11 +150,9 @@
       {
         start: new Date(startDate),
         end: new Date(endDate),
-        id: requestDates.length
+        id: requestDates.length,
       },
     ];
-
-    console.log(requestDates);
   };
 
   const datesRemove = (id: number) => {
@@ -146,185 +160,274 @@
   };
 </script>
 
-<p>You are now roaming for: <b>{data.facility.name}</b></p>
+<svelte:head>
+  <title>Roamer | Facility | {data.facility.name} (Booking)</title>
+</svelte:head>
 
-{#if form?.error}
-  <p>{form?.error}</p>
-{/if}
-<br />
+<div class="mx-auto flex max-w-screen-lg flex-col">
+  <div
+    class="bottom-10 top-20 z-10 flex flex-col items-start bg-white dark:bg-black"
+  >
+    <p class="mb-3 mt-6 text-4xl font-bold text-log-in-green">Roaming for:</p>
+    <div
+      class="bottom-10 top-20 z-10 flex flex-row items-center bg-white dark:bg-black"
+    >
+      <img
+        class="mr-5 h-24 w-24 rounded-lg"
+        src={`/${data.facility.image}`}
+        alt=""
+      />
+      <div>
+        <p class="text-3xl"><b>{data.facility.name}</b></p>
+      </div>
+    </div>
+  </div>
+  {#if form?.error}
+    <p class="font-semibold text-red-600">{form?.error}</p>
+  {/if}
+  <br />
 
-<form
-  method="post"
-  use:enhance={({ formData }) => {
-    formData.append("studentIds", JSON.stringify([...checkedStudentIds]));
-    formData.append("requestDates", JSON.stringify(requestDates));
+  <form
+    method="post"
+    use:enhance={({ formData }) => {
+      formData.append("studentIds", JSON.stringify([...checkedStudentIds]));
+      formData.append("requestDates", JSON.stringify(requestDates));
 
-    return async ({ update }) => {
-      await update();
-    };
-  }}
->
-  <p>1. Roam for who?</p>
+      return async ({ update }) => {
+        await update();
+      };
+    }}
+  >
+    <Table class="h-full">
+      <caption
+        class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+      >
+        1. Roam for who?
+      </caption>
 
-  <div class="max-h-[250px] overflow-auto">
+      <div class="max-h-[300px] overflow-auto">
+        <table>
+          <thead>
+            <tr class="sticky top-0 bg-white">
+              <th class="text-center">
+                <div class="mr-1 text-lg text-black">Select</div>
+                <div class="ml-0">
+                  <input
+                    type="checkbox"
+                    class="ml-4 text-green-500"
+                    bind:checked={selectAll}
+                    on:change={toggleAll}
+                  />
+                </div>
+              </th>
+              <th class="text-center">
+                <div class="text-lg text-black">Name</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Filter by name..."
+                    class="w-full rounded-md text-left font-normal"
+                    bind:value={searchName}
+                    on:input={checkWhetherSelectedAll}
+                  />
+                </div>
+              </th>
+              <th class="text-center">
+                <div class="text-lg text-black">Email</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Filter by email..."
+                    class="w-full rounded-md text-left font-normal"
+                    bind:value={searchEmail}
+                    on:input={checkWhetherSelectedAll}
+                  />
+                </div>
+              </th>
+              <th class="text-center">
+                <div class="text-lg text-black">Section</div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Filter by section..."
+                    class="w-full rounded-md text-left font-normal"
+                    bind:value={searchSection}
+                    on:input={checkWhetherSelectedAll}
+                  />
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each Object.values(filteredStudents) as student (student.id)}
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="ml-4 text-green-500"
+                    checked={checkedStudentIds.has(student.id)}
+                    disabled={student.id === data.userStudentId}
+                    on:change={() =>
+                      (checkedStudentIds = toggleCheck(
+                        student.id,
+                        checkedStudentIds,
+                      ))}
+                  />
+                </td>
+                <td class="text-base text-black">
+                  {student.lastName}, {student.firstName}
+                </td>
+                <td class="text-base text-black">{student.email}</td>
+                <td class="text-base text-black">
+                  {student.grade} - {student.section}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </Table>
+    <br />
+
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+    >
+      2. Roam for what dates?
+    </p>
+    <div class="justify-center">
+      <p class="flex text-lg font-bold text-red-600">BLOCKED DATES:</p>
+      <ul>
+        {#each data.facility.blockedDates as date}
+          <li class="font-medium">
+            {new Date(date.start).toLocaleString()} - {new Date(
+              date.end,
+            ).toLocaleString()}
+          </li>
+        {:else}
+          <p>There are no currently blocked dates.</p>
+        {/each}
+      </ul>
+    </div>
+    <br />
+
     <table>
-      <thead>
-        <tr class="sticky top-0 bg-white">
-          <th class="text-left">
-            <div>Select</div>
-            <div>
-              <input
-                type="checkbox"
-                bind:checked={selectAll}
-                on:change={toggleAll}
-              />
-            </div>
-          </th>
-          <th class="text-left">
-            <div>Name</div>
-            <div>
-              <input
-                type="text"
-                placeholder="Filter by name..."
-                class="font-normal text-left w-full"
-                bind:value={searchName}
-                on:input={checkWhetherSelectedAll}
-              />
-            </div>
-          </th>
-          <th class="text-left">
-            <div>Email</div>
-            <div>
-              <input
-                type="text"
-                placeholder="Filter by email..."
-                class="font-normal text-left w-full"
-                bind:value={searchEmail}
-                on:input={checkWhetherSelectedAll}
-              />
-            </div>
-          </th>
-          <th class="text-left">
-            <div>Section</div>
-            <div>
-              <input
-                type="text"
-                placeholder="Filter by section..."
-                class="font-normal text-left w-full"
-                bind:value={searchSection}
-                on:input={checkWhetherSelectedAll}
-              />
-            </div>
-          </th>
-        </tr>
+      <thead class="flex text-lg font-bold">
+        REQUESTING FOR THE FOLLOWING:
       </thead>
       <tbody>
-        {#each Object.values(filteredStudents) as student (student.id)}
+        {#each requestDates as requestDateRange (requestDateRange.id)}
           <tr>
-            <td>
-              <input
-                type="checkbox"
-                checked={checkedStudentIds.has(student.id)}
-                disabled={student.id === data.userStudentId}
-                on:change={() =>
-                  (checkedStudentIds = toggleCheck(
-                    student.id,
-                    checkedStudentIds
-                  ))}
-              />
+            <td class="mb-4 mt-4 font-semibold">
+              {new Date(requestDateRange.start).toLocaleString()} to {new Date(
+                requestDateRange.end,
+              ).toLocaleString()}
             </td>
-            <td>{student.lastName}, {student.firstName}</td>
-            <td>{student.email}</td>
-            <td>{student.grade} - {student.section}</td>
+            <td>
+              <Button
+                color="red"
+                class="mr-2"
+                pill
+                on:click={() => {
+                  datesRemove(requestDateRange.id);
+                }}
+              >
+                Remove
+              </Button>
+            </td>
+            <td></td>
           </tr>
         {/each}
+        <tr>
+          <td>
+            <input
+              type="datetime-local"
+              class="rounded-md"
+              bind:value={startDate}
+              on:change={() => {
+                datesError = "";
+              }}
+            />
+            to
+            <input
+              type="datetime-local"
+              class="rounded-md"
+              bind:value={endDate}
+              on:change={() => {
+                datesError = "";
+              }}
+            />
+          </td>
+
+          <td>
+            <Button color="green" class="ml-2 mr-2" pill on:click={datesAdd}>
+              Add
+            </Button>
+          </td>
+          <td class="font-semibold text-red-600">{datesError}</td>
+        </tr>
       </tbody>
     </table>
-  </div>
+    <br />
 
-  <br />
+    <br />
 
-  <p>2. Roam for what dates?</p>
-  <p>Note that these dates are not available:</p>
-  <ul>
-    {#each data.facility.blockedDates as date}
-      <li>
-        {new Date(date.start).toLocaleString()} to {new Date(
-          date.end
-        ).toLocaleString()}
-      </li>
-    {/each}
-  </ul>
-  <br />
-
-  <table>
-    <thead></thead>
-    <tbody>
-      {#each requestDates as requestDateRange (requestDateRange.id)}
-      <tr>
-        <td>{new Date(requestDateRange.start).toLocaleString()} to {new Date(requestDateRange.end).toLocaleString()}</td>
-        <td><button type="button" on:click={()=>{datesRemove(requestDateRange.id)}}>Remove</button></td>
-        <td></td>
-      </tr>
-      {/each}
-      <tr>
-        <td>
-          <input type="datetime-local" bind:value={startDate} on:change={()=>{datesError = ""}} /> (start) to
-          <input type="datetime-local" bind:value={endDate} on:change={()=>{datesError = ""}}/> (end)
-        </td>
-
-        <td><button type="button" on:click={datesAdd}>Add</button></td>
-        <td>{datesError}</td>
-      </tr>
-    </tbody>
-  </table>
-  <br />
-
-  <br />
-
-  <p>3. Why do you need this facility?</p>
-  <p>
-    <i
-      class={descriptionText.length > 1500
-        ? "text-red-600 font-bold"
-        : "text-gray-400"}
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
     >
-      {descriptionText.length}/1500 characters
-    </i>
-  </p>
-  <textarea
-    name="requestDescription"
-    bind:value={descriptionText}
-    contenteditable
-  ></textarea> <br />
+      3. Describe the roam
+    </p>
+    <p>
+      <i
+        class={descriptionText.length > 1500
+          ? "font-bold text-red-600"
+          : "text-gray-400"}
+      >
+        <p class="flex justify-end">{descriptionText.length}/1500 characters</p>
+      </i>
+    </p>
+    <textarea
+      name="requestDescription"
+      class="h-80 w-full"
+      bind:value={descriptionText}
+      contenteditable
+    ></textarea>
+    <br />
 
-  <br />
+    <br />
 
-  <p>3. Final Information</p>
-  <b>
-    You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size >
-    1
-      ? "s"
-      : ""}:
-  </b>
-  <ul>
-    {#each checkedStudentIds as studentId (studentId)}
-      <li>
-        {data.students[studentId].firstName}
-        {data.students[studentId].lastName}
-        <i>({data.students[studentId].email})</i>
-      </li>
-    {/each}
-  </ul>
-  <br />
-  <b>To have a successful application, the Roam should be approved by:</b>
-  <ul>
-    {#each data.admins as admin (admin.id)}
-      <li>{admin.firstName} {admin.lastName} <i>({admin.email})</i></li>
-    {/each}
-  </ul>
-
-  <br />
-
-  <button type="submit">Submit Roam</button>
-</form>
+    <p
+      class="pb-5 pt-5 text-left text-3xl font-bold text-gray-900 dark:text-white"
+    >
+      4. Final Information
+    </p>
+    <b>
+      You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size >
+      1
+        ? "s"
+        : ""}:
+    </b>
+    <ul>
+      {#each checkedStudentIds as studentId (studentId)}
+        <li>
+          {data.students[studentId].firstName}
+          {data.students[studentId].lastName}
+          <i>({data.students[studentId].email})</i>
+        </li>
+      {/each}
+    </ul>
+    <br />
+    <b>To have a successful application, the Roam should be approved by:</b>
+    <ul>
+      {#each data.admins as admin (admin.id)}
+        <li>
+          {admin.firstName}
+          {admin.lastName}
+          <i>({admin.email})</i>
+        </li>
+      {/each}
+    </ul>
+    <div class="mb-20 mt-20 flex justify-center">
+      <Button color="green" pill type="submit" size="xl">Submit Roam</Button>
+    </div>
+  </form>
+</div>
