@@ -7,18 +7,24 @@
   let role: "ADMIN" | "STUDENT" | null = null;
 </script>
 
-<div class="flex h-screen items-center justify-center bg-gray-100">
+<div class="flex h-screen items-center justify-center bg-gray-100 px-4 sm:px-4">
   <div
-    class="font-sans-serif w-full rounded-lg bg-white p-6 text-center shadow-md sm:w-3/4 md:w-2/5"
+    class="font-sans-serif w-full rounded-lg bg-white p-6 text-center shadow-md sm:w-4/5 md:w-1/2 lg:w-1/3 xl:w-1/4"
   >
     <h2
-      class="mb-2 flex scale-150 transform items-center justify-center text-2xl font-bold text-log-in-green"
+      class="mb-2 flex items-center justify-center text-2xl font-bold text-log-in-green sm:text-xl md:text-2xl lg:text-2xl"
     >
       Welcome to <p class="ml-2 font-trocchi">Roamer</p>
-      <img src="/logo.png" alt="Logo" class="ml-2 mr-2 h-8" />
+      <img
+        src="/logo.png"
+        alt="Logo"
+        class="ml-2 mr-2 h-4 sm:h-8 md:h-10 lg:h-12"
+      />
       !
     </h2>
-    <p class="text-md mb-3 mt-1 flex justify-center font-medium">
+    <p
+      class="md:text-md mb-3 mt-1 flex justify-center text-sm font-medium sm:text-sm"
+    >
       Before continuing, we just need you to answer these.
     </p>
 

@@ -104,18 +104,19 @@
         </span>
       </NavBrand>
       {#if data.isLoggedIn !== false}
-        <NavHamburger on:click={toggle} />
-        <NavUl {hidden} activeUrl={pageUrl}>
-          <NavLi
-            href={data.isStudent
-              ? "/dashboard"
-              : data.isAdmin
-                ? "/admindashboard"
-                : ""}
-          >
-            Dashboard
-          </NavLi>
-        </NavUl>
+        <div class={`sm:block ${hidden ? "hidden" : ""}`}>
+          <NavUl activeUrl={pageUrl}>
+            <NavLi
+              href={data.isStudent
+                ? "/dashboard"
+                : data.isAdmin
+                  ? "/admindashboard"
+                  : ""}
+            >
+              Dashboard
+            </NavLi>
+          </NavUl>
+        </div>
       {/if}
     </Navbar>
   {/if}

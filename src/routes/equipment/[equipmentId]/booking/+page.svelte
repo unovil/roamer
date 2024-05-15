@@ -401,7 +401,7 @@
       4. Final Information
     </p>
     <b>
-      You will roam this facility for {checkedStudentIds.size} student{checkedStudentIds.size >
+      You will use this equipment for {checkedStudentIds.size} student{checkedStudentIds.size >
       1
         ? "s"
         : ""}:

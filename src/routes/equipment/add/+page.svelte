@@ -245,7 +245,9 @@
 
     <br />
     <div class="mb-20 mt-20 flex justify-center">
-      <Button color="green" pill type="submit" size="xl">Add a facility</Button>
+      <Button color="green" pill type="submit" size="xl"
+        >Add an equipment</Button
+      >
     </div>
   </form>
 </div>

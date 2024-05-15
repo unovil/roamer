@@ -28,38 +28,41 @@
       <div
         class="flex flex-col items-start justify-between sm:flex-row sm:items-center"
       >
-        <div>
-          <h1
-            class="text-2xl font-bold text-log-in-green sm:text-3xl md:text-4xl"
-          >
-            {data.equipment.name}
-          </h1>
-          {#each admins as admin (admin.id)}
-            <p
-              class="mt-4 text-sm font-semibold sm:mt-0 sm:text-base md:text-lg"
+        <div class="flex flex-col items-start sm:flex-col sm:items-start">
+          <div>
+            <h1
+              class="text-2xl font-bold text-log-in-green sm:text-3xl md:text-4xl"
             >
-              {admin.user.firstName + " " + admin.user.lastName}
-              <i> ({admin.user.email})</i>
-            </p>
-          {/each}
+              {data.equipment.name}
+            </h1>
+            <div class="flex flex-col items-start">
+              {#each admins as admin (admin.id)}
+                <p
+                  class="mt-4 text-sm font-semibold sm:mt-0 sm:text-base md:text-lg"
+                >
+                  {admin.user.firstName + " " + admin.user.lastName}
+                  <i> ({admin.user.email})</i>
+                </p>
+              {/each}
+            </div>
+          </div>
         </div>
-        <p class="text-lg font-semibold">{data.equipment.department}</p>
-      </div>
-      <div class="mt-4 sm:absolute sm:right-10 sm:mt-0">
-        <Button
-          color="green"
-          pill
-          size="xl"
-          href={`${$page.url}/booking`}
-          disabled={data.user.admin ? true : false}
-        >
-          Roam
-        </Button>
-        {#if data.user.admin}
-          <Tooltip placement="bottom"
-            >Administrators cannot roam for facilities.</Tooltip
+        <div class="mt-4 sm:absolute sm:right-10 sm:mt-0">
+          <Button
+            color="green"
+            pill
+            size="xl"
+            href={`${$page.url}/booking`}
+            disabled={data.user.admin ? true : false}
           >
-        {/if}
+            Roam
+          </Button>
+          {#if data.user.admin}
+            <Tooltip placement="bottom"
+              >Administrators cannot roam for facilities.</Tooltip
+            >
+          {/if}
+        </div>
       </div>
     </div>
   </div>
