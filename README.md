@@ -17,15 +17,15 @@ This is a website dedicated to seamless school function through the efficient ma
   - [x] An equipment table
   - [x] A facilities table
   - [x] A booking table
-- [ ] The homepage should have the following features:
-  - [ ] A search bar for equipment, facilities, and people
-  - [ ] A "welcome" with your LRN and the class you're part of
-  - [ ] A "recently booked" section
-- [ ] When borrowing, it should have the options:
-  - [ ] What to borrow?
-  - [ ] What range of time to borrow? Display calendar here
-  - [ ] Who will borrow? Yourself only by default, add people from same section or other sections (has to be approved by the others, unless it's the whole section and you're the president)
-  - [ ] Who will be concerned? Each facility or equipment has at least one person concerned
+- [x] The homepage should have the following features:
+  - [x] A search bar for equipment, facilities, and people
+  - [x] A "welcome" with your LRN and the class you're part of
+  - [x] A "recently booked" section
+- [x] When borrowing, it should have the options:
+  - [x] What to borrow?
+  - [x] What range of time to borrow? Display calendar here
+  - [x] Who will borrow? Yourself only by default, add people from same section or other sections (has to be approved by the others, unless it's the whole section and you're the president)
+  - [x] Who will be concerned? Each facility or equipment has at least one person concerned
 
 ## Contribution and Reproduction
 
